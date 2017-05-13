@@ -1,0 +1,6 @@
+function doSomething(){
+	alert("Test");
+}
+
+document.writeln("<br>");
+doSomething();

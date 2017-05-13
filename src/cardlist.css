@@ -1,0 +1,91 @@
+.card-list-head {
+	padding-right:5px;
+	padding-left:5px;
+	width:300px;
+        background-color:#e1e4ea;
+}
+
+.card-container{
+	height:100vh;
+	overflow-y:scroll;
+	overflow-x:hidden;
+}
+
+.cardeditbutton{
+	width:10px;
+}
+
+.card{
+	width:330px;
+	position:relative;
+	border-radius:5px;
+	background-color:#ffffff;
+}
+
+.card:hover{
+	background-color:#e1e4ea;
+
+}
+
+.simple-header{
+	background-color:#e1e4ea;
+}
+
+.flat_button {
+  color:inherit;
+  width:30px;
+  height:30px;
+  background-color:#e1e4ea;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+}
+
+.flat_button:hover {
+  background-color:#b4b8c1;
+  text-shadow: -1px 1px #ccffff;
+}
+
+.section.flat_button:active {
+  background-color:inherit;
+  text-shadow: -1px 1px #193047;
+}
+
+.flat_button_z{
+ color:inherit;
+ width:30px;
+  background-color:inherit;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+  z-index:9999;
+  position:absolute;
+  right:3px;
+  top:10px;
+}
+
+.flat_button_z:hover {
+  background-color:#b4b8c1;
+  text-shadow: -1px 1px #ccffff;
+}
+
+.section.flat_button_z:active {
+  background-color:inherit;
+  text-shadow: -1px 1px #193047;
+}
+
+
+.bottom-card-section{
+  background-color:#e1e4ea;
+  height:10px;
+}
+
+.board-header-table{
+  width:900px;
+  border-spacing:10px;
+  background-color:#4286f4;
+}
+
+.board-table-cell{
+  width:340px;
+  background-color:#4286f4;
+}
+
