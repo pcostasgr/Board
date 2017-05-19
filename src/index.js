@@ -12,17 +12,10 @@ import TextField from 'material-ui/TextField';
 import DatePicker  from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton';
 
+import {getComponentDb} from './mockdb'
+
 injectTapEventPlugin();
 
-const CardDescription = () => (
-	
-	<TextField style={{width:"inherit"}}
-	      multiLine={true}
-	      rows={2}
-	      style={{backgroundColor:"#ffffff" }}
-
-	    />
-);
 
 var CardLayer2=React.createClass({
   render:function(){
@@ -32,7 +25,7 @@ var CardLayer2=React.createClass({
 	var listTotalCount=this.props.listTotalCount;
 	var isVisible=this.props.visible;
 	
-	if(listTotalCount==0 && dateValue==null){
+	if(listTotalCount==0 && dateValue==0){
 		return null;	
 	}
 
@@ -46,20 +39,23 @@ var CardLayer2=React.createClass({
 
 	var list=[];
 	
-	var date_=new Date();
-	if(dateValue!=null){
-		list.push(<td style={{align:"left"}}>  <DatePicker hintText="Portrait Dialog" defaultDate={dateValue} container="inline" autoOk="true" />  </td>);
+	var dateValue_;
+	if(dateValue!=0){
+		dateValue_=new Date(dateValue);
+		list.push(<td style={{align:"left"}}>  <DatePicker hintText="Portrait Dialog" defaultDate={dateValue_} container="inline" autoOk="true" />  </td>);
 	}
 
-	if(listTotalCount>0){
+	if(listTotalCount>0){				
 		list.push(<td style={{align:"right"}} > <b> {listCompleteCount}/{listTotalCount}</b> </td> );
 	}
 
 	return (
 		<div>
-			<table style={{width:"100%"}} ><tr>
+			<table style={{width:"100%"}} >
+			<tbody>
+			<tr>
 			{list}
-			</tr></table>
+			</tr></tbody></table>
 		</div>
         );
   }	
@@ -91,11 +87,13 @@ class CardColorLabelRow extends React.Component{
 		var data=this.props.data.rows;
 		var list=[];
 		var column={};
+		var id_="";
 		for(var c=0;c<colNo;c++){
 			column=data[c];
+			id_="ccrlr"+c
 			list.push(
-			<td>
-				<div style={{backgroundColor:column.color, width:column.width, height:column.height }} />
+			<td key={id_}>
+				<div key={id_} style={{backgroundColor:column.color, width:column.width, height:column.height }} />
 			</td>
 			);
 		}
@@ -111,8 +109,8 @@ class CardColorLabelRows extends React.Component{i
 	}
 
 	render(){
-		var rowsData=this.props.data;
-		var rowsNo=rowsData.data.length;
+		var rowsData=this.props.labelItems;
+		var rowsNo=rowsData.length;
 		var list=[];
 
 
@@ -121,8 +119,8 @@ class CardColorLabelRows extends React.Component{i
 
 		var jsonRow={};
 		for(var i=0;i<rowsNo;i++){
-			jsonRow=rowsData.data[i];
-			list.push( <CardColorLabelRow  data= {jsonRow}  /> );
+			jsonRow=rowsData[i];
+			list.push( <CardColorLabelRow key={i}  data= {jsonRow}  /> );
 		}	
 	
 		return (
@@ -152,11 +150,6 @@ class CardColorLabels extends React.Component{
 		});
 	}
 	
-
-	debug_render(){
-	}
-	
-	
 	render(){
 		
 		if(this.props.rowCount==0){
@@ -164,12 +157,13 @@ class CardColorLabels extends React.Component{
 		}
 
 		var jsonData=getColorLabelData();
-		
-		if(jsonData==null){			
+	        var labelItems=this.props.labelItems;
+	
+		if(labelItems==null){			
 			return null;
 		}
 
-		if(jsonData.data.length==0){
+		if(labelItems.length==0){
 			return null;
 		}
 		
@@ -180,12 +174,9 @@ class CardColorLabels extends React.Component{
 					<tr>
 						<th>
 							< table style={{width:"inherit"}} onMouseOver={this.onMouseOver} >
-							< CardColorLabelRows data={jsonData} />
+							< CardColorLabelRows labelItems={labelItems} />
 							</table>
 						</th>
-
-						{/*<th style={{align:"right",width:30}}> <button className="flat_button" style={{visibility:this.state.buttonVisible}}  >...</button> 
-						</th>*/}
 					</tr>
 				</tbody>
 			</table>
@@ -193,7 +184,6 @@ class CardColorLabels extends React.Component{
 	}
 }
 
-var someJson={value1:10 , value2:20};
 
 class CardComponent extends React.Component{
 	constructor(props){
@@ -216,16 +206,23 @@ class CardComponent extends React.Component{
 		 this.setState({
 			editButtonVisible:"hidden"
 		});
+
 	}
 
 
 	render(){
+		var component_id=this.props.comid;
+		console.log("render " + component_id);
+		
+		var cardDate=this.props.cardDate;
+
 		return (			
+
 			<div  className="card" style={{position:"relative",width:this.props.width }} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} >
 				<button className="flat_button_z" style={{visibility:this.state.editButtonVisible }} >...</button>
-				<CardColorLabels rowCount={this.props.rowCount} />
-				<TextField style={{width:"inherit"}} multiLine={true} rows={2} />
-				<CardLayer2 dateValue={new Date()} listTotalCount={this.props.listCount} visible={this.props.card2Visible} />
+				<CardColorLabels rowCount={this.props.rowCount} labelItems={this.props.labelItems} />
+				<TextField id={"textField"+this.props.comid} style={{width:"inherit"}} multiLine={true} rows={1} defaultValue={this.props.description} />
+				<CardLayer2 dateValue={cardDate} listTotalCount={this.props.listCount} visible={this.props.cardIsVisible} />
 				<div className="bottom-card-section" ></div>
 			</div>
 		);
@@ -236,33 +233,58 @@ class CardListContainer extends React.Component{
 
 	constructor(props){
 		super(props);
+		this.flatButtonClick=this.flatButtonClick.bind(this);
 	}
 	
+        flatButtonClick(){
+		this.props.callf(1);
+		console.log("test test test flat button");
+	}
+
 	render(){
+		var listCount=0;
+		var cardData=this.props.data.cardData.map(function(e){
+			return <CardComponent comid={e.id} compBackColor="#ffffff" className="flag_button_z"  
+			listCount={e.listItems.length} width='300'  rowCount="1" cardIsVisible="true" 
+			description={e.title} cardDate={e.cardDate} listItems={e.listItems} labelItems={e.labelItems} />;
+		});
+		
+		console.log('card-data:' + this.props.data.cardData[0].id);
+	
 		return (
 			<div className="simple-header" style={{width:320 }} >
-				<div style={{width:320,height:30}}>
-				<table className="simple-header" style={{width:"100%",height:30}}>
+				<table style={{width:"100%"}}><tbody>
 					<tr>
-						 <td className="simple-header" style={{ width:310}}> <b>{this.props.cardTitle }</b> </td> 
-						<td style={{align:"right",width:30}}> <button className="flat_button"  >...</button> </td>
+						<td>
+							<table style={{width:"100%",height:30}}><tbody>
+								<tr>
+									 <td className="simple-header" > <b>{this.props.listTitle }</b> </td> 
+									<td style={{align:"right",width:30}}> 
+										<button className="flat_button" onClick={this.flatButtonClick} >...</button> 
+									</td>
+								</tr>
+							</tbody></table>
+						</td>
+
+					</tr>
+					<tr>
+						<td>	
+							<div  className="card-container" >
+							{cardData}
+							</div>
+						</td><td style={{width:30}}></td>
 					</tr>	
-				</table>
-				</div>
-				<div  className="card-container" style={{width:320}} >
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1" width="300"  rowCount="1" card2Visible="true" />
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1"  width="300" rowCount="0" card2Visible="true"/>
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1"  width="300" rowCount="3"/>
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1"  width="300" rowCount="0" cardVisible="true "/>
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1"  width="300" rowCount="1" cardVisible="true"/>
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1"  width="300" rowCount="1"/>
-					<CardComponent compBackColor="#ffffff" className="flag_button_z"  listCount="1"  width="300" rowCount="0"/>
-				</div>
+				</tbody></table>
 			</div>
 
 		);
 	}
 }
+
+CardListContainer.propTypes = {
+  callf: React.PropTypes.func.isRequired,
+};
+
 
 class CardListComponent extends React.Component{
 	constructor(props){
@@ -273,7 +295,7 @@ class CardListComponent extends React.Component{
 		return(
 		<div className="card-list-head" >
 			<MuiThemeProvider>
-				<CardListContainer cardTitle="This is a title 3"  />
+				<CardListContainer listTitle={this.props.listTitle} callf={this.props.callf} data={this.props.data} />
 			</MuiThemeProvider>
 
 		</div>
@@ -282,30 +304,83 @@ class CardListComponent extends React.Component{
 	}
 }
 
-class CardBoard extends React.Component{
+class PopUpDim extends React.Component{
 	constructor(props){
 		super(props);
+		this.buttonClick=this.buttonClick.bind(this);		
 	}
-
+	
+	buttonClick(){
+		console.log("div button click");
+		this.props.callf();
+	}
+		
 	render(){
-		return (
-			<div>
-				<table className="board-header-table">
-					<tr>
-						<td className="board-table-cell">
-							<CardListComponent/>						
-						</td>
-						<td sclassName="board-table-cell">
-							<CardListComponent/>
-						</td>
-
-
-					</tr>
-				</table>
+		return (	
+			<div className="popup-div" style={{ top:100,left:50,visibility:this.props.visibility}}>
+				<button onClick={this.buttonClick} >click me</button>
 			</div>
 		);
 	}
 }
+
+class CardBoard extends React.Component{
+	constructor(props){
+		super(props);
+		this.disableContainer=this.disableContainer.bind(this);
+		this.enableContainer=this.enableContainer.bind(this);
+		this.state={
+			divPointerEvent:"all"
+			,opacity:1
+			,editMenuVisibility:"hidden"};
+	}
+	
+	disableContainer(e){
+		 this.setState({
+			divPointerEvent:"none"
+			,opacity:0.4
+			,editMenuVisibility:"visible"
+		});
+	}
+
+	enableContainer(){
+		 this.setState({
+			divPointerEvent:"all"
+			,opacity:1
+			,editMenuVisibility:"hidden"
+		});
+		alert('enable');
+	}
+
+	render(){
+		var g__=getComponentDb();
+		
+		var listData=g__.lists.map(function(e){
+			return 	<td id={"tdlist" + e.listItem} className="board-table-cell">
+				<CardListComponent listTitle={e.listTitle} callf={this.disableContainer} data={e} />				
+			</td>
+
+		},this);
+		
+		var callbackf_=this.callbackFunc;
+		return (
+			<div className="list-header" >
+				<div>	
+				<table className="board-header-table" style={{pointerEvents:this.state.divPointerEvent
+				,opacity:this.state.opacity}}><tbody>
+					<tr>
+					{listData}
+					</tr>
+				</tbody></table>
+				</div>
+				<PopUpDim callf={this.enableContainer} visibility={this.state.editMenuVisibility} />				 
+			</div>
+		);
+	}
+}
+
+
+
 
 /*This is a commecnt functions rendered as func() */
 ReactDOM.render(

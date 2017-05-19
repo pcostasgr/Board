@@ -1,8 +1,14 @@
+.list-header{
+	border-radius:10px;
+}
+
 .card-list-head {
 	padding-right:5px;
+	padding-top:2px;
 	padding-left:5px;
-	width:300px;
+	width:320px;
         background-color:#e1e4ea;
+	border-radius:5px;
 }
 
 .card-container{
@@ -53,6 +59,7 @@
 .flat_button_z{
  color:inherit;
  width:30px;
+ height:30px;
   background-color:inherit;
   text-shadow: -1px 1px #417cb8;
   border: none;
@@ -80,12 +87,30 @@
 
 .board-header-table{
   width:900px;
-  border-spacing:10px;
-  background-color:#4286f4;
+  z-index:0;
 }
 
 .board-table-cell{
   width:340px;
   background-color:#4286f4;
 }
+.popup-div{
+  z-index:1;
+  width:250px;
+  height:250px;
+  position:absolute;
+  background-color:red;
+}
 
+.disable-buttons{
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.list-menu{
+  z-index:1;
+  width:250px;
+  height:250px;
+  position:absolute;
+  background-color:#ffffff;
+}
