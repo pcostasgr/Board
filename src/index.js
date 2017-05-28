@@ -190,8 +190,23 @@ class CardComponent extends React.Component{
 		super(props);
 		this.onMouseOver=this.onMouseOver.bind(this);
 		this.onMouseOut=this.onMouseOut.bind(this);
-		this.state={editButtonVisible:"hidden"};
+		this.onCardMenuEvent=this.onCardMenuEvent.bind(this);
+		this.onButtonClick=this.onButtonClick.bind(this);
+		this.state={editButtonVisible:"hidden",name:"CardComponent"};
+		this.name="CardComponent";
+	}
+	
+	onButtonClick(){
+		var component=ReactDOM.findDOMNode(this);
+		var rect = component.getBoundingClientRect();
+		var offsetWidth=component.offsetWidth;
+		var menuPos={topValue:rect.top,leftValue:rect.left+offsetWidth};
 
+		this.props.menuEvent(menuPos,this);
+
+	}
+	
+	onCardMenuEvent(e){
 	}
 
 	onMouseOver(){
@@ -212,14 +227,14 @@ class CardComponent extends React.Component{
 
 	render(){
 		var component_id=this.props.comid;
-		console.log("render " + component_id);
+		console.log("Card Component render " + component_id);
 		
 		var cardDate=this.props.cardDate;
 
 		return (			
 
 			<div  className="card" style={{position:"relative",width:this.props.width }} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} >
-				<button className="flat_button_z" style={{visibility:this.state.editButtonVisible }} >...</button>
+				<button className="flat_button_z" style={{visibility:this.state.editButtonVisible }} onClick={this.onButtonClick} >...</button>
 				<CardColorLabels rowCount={this.props.rowCount} labelItems={this.props.labelItems} />
 				<TextField id={"textField"+this.props.comid} style={{width:"inherit"}} multiLine={true} rows={1} defaultValue={this.props.description} />
 				<CardLayer2 dateValue={cardDate} listTotalCount={this.props.listCount} visible={this.props.cardIsVisible} />
@@ -234,31 +249,58 @@ class CardListContainer extends React.Component{
 	constructor(props){
 		super(props);
 		this.flatButtonClick=this.flatButtonClick.bind(this);
+		this.onListTitleChange=this.onListTitleChange.bind(this);
+		this.state={listTitle:this.props.listTitle};
+		this.name="CardListContainer";
 	}
-	
-        flatButtonClick(){
-		this.props.callf(1);
-		console.log("test test test flat button");
+		
+
+        componentDidMount(){
 	}
 
+	onListTitleChange(title){
+		this.setState({listTitle:title});
+	}
+
+	testReactDom(){
+		var component=ReactDOM.findDOMNode(this);
+		var rect = component.getBoundingClientRect();
+		console.log(rect.top, rect.right, rect.bottom, rect.left);
+		alert("rect:"+rect.top+" "+rect.right+" "+rect.left);
+	}
+
+
+        flatButtonClick(){
+		var component=ReactDOM.findDOMNode(this);
+		var rect = component.getBoundingClientRect();
+		var offsetWidth=component.offsetWidth;
+		var menuPos={topValue:rect.top,leftValue:rect.left+offsetWidth};
+
+		this.props.menuEvent(menuPos,this);
+		console.log("test test test flat button");
+	}
+	
 	render(){
 		var listCount=0;
 		var cardData=this.props.data.cardData.map(function(e){
 			return <CardComponent comid={e.id} compBackColor="#ffffff" className="flag_button_z"  
 			listCount={e.listItems.length} width='300'  rowCount="1" cardIsVisible="true" 
-			description={e.title} cardDate={e.cardDate} listItems={e.listItems} labelItems={e.labelItems} />;
-		});
+			description={e.title} cardDate={e.cardDate} listItems={e.listItems} labelItems={e.labelItems} 
+			 menuEvent={this.props.menuEvent}	
+		 />;
+		},this);
 		
 		console.log('card-data:' + this.props.data.cardData[0].id);
-	
+		
+
 		return (
-			<div className="simple-header" style={{width:320 }} >
+			<div  className="simple-header" style={{width:320 }} >
 				<table style={{width:"100%"}}><tbody>
 					<tr>
 						<td>
 							<table style={{width:"100%",height:30}}><tbody>
 								<tr>
-									 <td className="simple-header" > <b>{this.props.listTitle }</b> </td> 
+									 <td className="simple-header" > <b>{this.state.listTitle }</b> </td> 
 									<td style={{align:"right",width:30}}> 
 										<button className="flat_button" onClick={this.flatButtonClick} >...</button> 
 									</td>
@@ -282,43 +324,64 @@ class CardListContainer extends React.Component{
 }
 
 CardListContainer.propTypes = {
-  callf: React.PropTypes.func.isRequired,
+  menuEvent: React.PropTypes.func.isRequired,
 };
 
+function getEventTarget(e) {
+    e = e || window.event;
+    return e.target || e.srcElement; 
+}
 
-class CardListComponent extends React.Component{
+class CardMenuList extends React.Component{
 	constructor(props){
 		super(props);
+		this.onClickEvent=this.onClickEvent.bind(this);
+		this.listValue="";
+	}
+        
+	onClickEvent(e){
+		var target = getEventTarget(event);
+    		this.listValue=target.innerHTML;
+    	    	this.props.callf(this.listValue) ;
+	}
+	
+	componentDidMount(){
+		var ul=ReactDOM.findDOMNode(this);
+		ul.onclick = this.onClickEvent;
 	}
 
 	render(){
 		return(
-		<div className="card-list-head" >
-			<MuiThemeProvider>
-				<CardListContainer listTitle={this.props.listTitle} callf={this.props.callf} data={this.props.data} />
-			</MuiThemeProvider>
-
-		</div>
-
-		);	
+			
+		<ul id="cardlist" className="card-menu-list" style={{ top:this.props.topValue,left:this.props.leftValue,visibility:this.props.visibility}}>
+			  <li><a  href="#home">Home</a></li>
+			  <li><a href="#news">News</a></li>
+			  <li><a href="#contact">Contact</a></li>
+			  <li><a href="#about">About</a></li>
+		</ul>
+	
+		);
 	}
 }
 
 class PopUpDim extends React.Component{
 	constructor(props){
 		super(props);
-		this.buttonClick=this.buttonClick.bind(this);		
+		this.buttonClick=this.buttonClick.bind(this);	
+		this.state={textbox:"",name:"test"};	
 	}
-	
+       	
 	buttonClick(){
 		console.log("div button click");
-		this.props.callf();
+
+		this.props.callf(this.input.value);
 	}
 		
 	render(){
 		return (	
-			<div className="popup-div" style={{ top:100,left:50,visibility:this.props.visibility}}>
-				<button onClick={this.buttonClick} >click me</button>
+			<div name="PopUpDim" className="popup-div" style={{ top:this.props.topValue,left:this.props.leftValue,visibility:this.props.visibility}}>
+				<button onClick={this.buttonClick} >click me</button><br></br>
+				Value:<input type="text" name="description_field" ref={(input)=>{this.input=input;} }  />
 			</div>
 		);
 	}
@@ -329,42 +392,95 @@ class CardBoard extends React.Component{
 		super(props);
 		this.disableContainer=this.disableContainer.bind(this);
 		this.enableContainer=this.enableContainer.bind(this);
+
 		this.state={
 			divPointerEvent:"all"
 			,opacity:1
-			,editMenuVisibility:"hidden"};
+			,editMenuVisibility:"hidden"
+			,menuTopValue:100
+			,menuLeftValue:100
+			,cardListTitle:"",
+			cardMenuVisibility:"hidden"};
 	}
 	
-	disableContainer(e){
-		 this.setState({
-			divPointerEvent:"none"
-			,opacity:0.4
-			,editMenuVisibility:"visible"
-		});
-	}
+	disableContainer(rect,componentRef){
+		
+		this.listContainer=componentRef;
+		
+		if(this.listContainer.name.localeCompare("CardListContainer")==0){
+			 this.setState({
+				divPointerEvent:"none"
+				,opacity:0.4
+				,editMenuVisibility:"visible"
+				,menuTopValue:rect.topValue
+				,menuLeftValue:rect.leftValue
+			});
 
-	enableContainer(){
+		}	
+		
+		if(this.listContainer.name.localeCompare("CardComponent")==0){
+			
+			 this.setState({
+				divPointerEvent:"none"
+				,opacity:0.4
+				,cardMenuVisibility:"visible"
+				,menuTopValue:rect.topValue
+				,menuLeftValue:rect.leftValue
+			});
+		}
+
+	
+
+	}
+	
+	enableContainer(e){
 		 this.setState({
 			divPointerEvent:"all"
 			,opacity:1
 			,editMenuVisibility:"hidden"
+			,cardMenuVisibility:"hidden"
 		});
-		alert('enable');
-	}
 
+	        if(this.listContainer.name.localeCompare("CardListContainer")==0){
+			this.listContainer.onListTitleChange(e);
+		}	
+		
+		if(this.listContainer.name.localeCompare("CardComponent")==0){
+			this.listContainer.onCardMenuEvent(e);
+		}
+
+	}
+	
+		
 	render(){
 		var g__=getComponentDb();
 		
+		
 		var listData=g__.lists.map(function(e){
 			return 	<td id={"tdlist" + e.listItem} className="board-table-cell">
-				<CardListComponent listTitle={e.listTitle} callf={this.disableContainer} data={e} />				
+				
+				<div className="card-list-head" >
+					<MuiThemeProvider>
+						<CardListContainer listTitle={e.listTitle} menuEvent={this.disableContainer} data={e} popup={this.popup}/>
+					</MuiThemeProvider>
+
+				</div>
+
 			</td>
 
 		},this);
 		
 		var callbackf_=this.callbackFunc;
+                var topValue=100;
+		var leftValue=50;
 		return (
 			<div className="list-header" >
+				<CardMenuList visibility={this.state.cardMenuVisibility} callf={this.enableContainer}
+					topValue={this.state.menuTopValue} 
+					leftValue={this.state.menuLeftValue}   />
+
+				<PopUpDim callf={this.enableContainer} visibility={this.state.editMenuVisibility} topValue={this.state.menuTopValue} leftValue={this.state.menuLeftValue} 
+				ref={(popup)=>{this.popup=popup;}} />				 
 				<div>	
 				<table className="board-header-table" style={{pointerEvents:this.state.divPointerEvent
 				,opacity:this.state.opacity}}><tbody>
@@ -372,15 +488,13 @@ class CardBoard extends React.Component{
 					{listData}
 					</tr>
 				</tbody></table>
+
 				</div>
-				<PopUpDim callf={this.enableContainer} visibility={this.state.editMenuVisibility} />				 
+
 			</div>
 		);
 	}
 }
-
-
-
 
 /*This is a commecnt functions rendered as func() */
 ReactDOM.render(
