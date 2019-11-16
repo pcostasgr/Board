@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './../cardlist.css';
-import BoardActionTypes from './../actions/BoardActionTypes';
-import BoardBasicStore from './../stores/BoardStores';
  
-import injectTapEventPlugin from 'react-tap-event-plugin';
+//import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -12,12 +10,16 @@ import TextField from 'material-ui/TextField';
 import DatePicker  from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton';
 
-import {getComponentDb} from './../mockdb'
-injectTapEventPlugin();
+import {getComponentDb} from './../mockdb';
+//injectTapEventPlugin();
 
 
-var CardLayer2=React.createClass({
-  render:function(){
+class CardLayer2 extends React.Component {
+  constructor(props){
+  	super(props);
+  }
+
+  render(){
 	
  	var dateValue=this.props.dateValue;
 	var listCompleteCount=this.props.listCompleteCount;
@@ -58,7 +60,7 @@ var CardLayer2=React.createClass({
 		</div>
         );
   }	
-});
+};
 
 function getColorLabelData(){
 	return { columnNo:4,data:[
@@ -322,9 +324,9 @@ class CardListContainer extends React.Component{
 	}
 }
 
-CardListContainer.propTypes = {
-  menuEvent: React.PropTypes.func.isRequired,
-};
+//CardListContainer.propTypes = {
+  //menuEvent: React.PropTypes.func.isRequired,
+//};
 
 function getEventTarget(e) {
     e = e || window.event;
@@ -339,7 +341,7 @@ class CardMenuList extends React.Component{
 	}
         
 	onClickEvent(e){
-		var target = getEventTarget(event);
+		var target = getEventTarget(window.event);
     		this.listValue=target.innerHTML;
     	    	this.props.callf(this.listValue) ;
 	}
