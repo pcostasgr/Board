@@ -1,20 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
 import './../cardlist.css';
- 
-//import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import {createStore} from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import DatePicker  from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton';
-
-import {getComponentDb} from './../mockdb';
-//injectTapEventPlugin();
+import {addList} from './../actions/actions';
 
 
-class CardLayer2 extends React.Component {
+
+
+
+//store.dispatch(G));
+
+	class CardLayer2 extends React.Component {
   constructor(props){
   	super(props);
   }
@@ -228,7 +230,7 @@ class CardComponent extends React.Component{
 
 	render(){
 		var component_id=this.props.comid;
-		console.log("Card Component render " + component_id);
+		//console.log("Card Component render " + component_id);
 		
 		var cardDate=this.props.cardDate;
 
@@ -283,15 +285,21 @@ class CardListContainer extends React.Component{
 	
 	render(){
 		var listCount=0;
+
+	//	console.log("cardData length:" + this.props.data.cardData.length);
+
+	//	if(this.props.data.cardData.length==0) return (null);
+
 		var cardData=this.props.data.cardData.map(function(e){
-			return <CardComponent comid={e.id} compBackColor="#ffffff" className="flag_button_z"  
-			listCount={e.listItems.length} width='300'  rowCount="1" cardIsVisible="true" 
-			description={e.title} cardDate={e.cardDate} listItems={e.listItems} labelItems={e.labelItems} 
-			 menuEvent={this.props.menuEvent}	
-		 />;
+				return <CardComponent comid={e.id} compBackColor="#ffffff" className="flag_button_z"  
+					listCount={e.listItems.length} width='300'  rowCount="1" cardIsVisible="true" 
+					description={e.title} cardDate={e.cardDate} listItems={e.listItems} labelItems={e.labelItems} 
+				 	menuEvent={this.props.menuEvent}	
+		 		/>;
+
 		},this);
 		
-		console.log('card-data:' + this.props.data.cardData[0].id);
+		//console.log('card-data:' + this.props.data.cardData[0].id);
 		
 
 		return (
@@ -331,6 +339,10 @@ class CardListContainer extends React.Component{
 function getEventTarget(e) {
     e = e || window.event;
     return e.target || e.srcElement; 
+}
+
+function showConsole(){
+	console.log("Test Console");
 }
 
 class CardMenuList extends React.Component{
@@ -454,10 +466,14 @@ class CardBoard extends React.Component{
 	
 		
 	render(){
-		var g__=getComponentDb();
-		
-		
-		var listData=g__.lists.map(function(e){
+		//var g__=getComponentDb();
+		var cardList=this.props.boardList;
+	
+	//	console.log("---------------------------------------------------------------");
+		//console.log(cardList);
+	//	console.log("---------------------------------------------------------------");
+
+		var listData=cardList.map(function(e){
 			return 	<td id={"tdlist" + e.listItem} className="board-table-cell">
 				
 				<div className="card-list-head" >
@@ -476,6 +492,8 @@ class CardBoard extends React.Component{
 		var leftValue=50;
 		return (
 			<div className="list-header" >
+				<button id="newListButton1"  onClick={ () => {this.props.createNewListEvent() }} >Add new list</button>
+
 				<CardMenuList visibility={this.state.cardMenuVisibility} callf={this.enableContainer}
 					topValue={this.state.menuTopValue} 
 					leftValue={this.state.menuLeftValue}   />
@@ -497,6 +515,21 @@ class CardBoard extends React.Component{
 	}
 }
 
+const mapStateToProps = (state) => {
+	return {boardList:state.lists};
+};
 
-export default CardBoard;
+function mapDispatchToProps(dispatch){
+	return {
+		createNewListEvent: () => {
+			dispatch (addList("Brand New List"))
+			//console.log("This is a test:"+Math.random());
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(CardBoard);
 

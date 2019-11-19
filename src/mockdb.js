@@ -55,8 +55,10 @@ export function getComponentDb(){
 				{color:"#9c0000",width:50,height:10},
 				{color:"#9c0000",width:50,height:10}]},
 				]}
-			]}
 
+		
+			]}
+			
 		]
 	};
 }
