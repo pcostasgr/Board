@@ -1,4 +1,5 @@
 import React from 'react';
+import CardColorLabelRows from './CardColorLabelRows';
 
 function getColorLabelData(){
 	return { columnNo:4,data:[
