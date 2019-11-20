@@ -49,9 +49,6 @@ class CardListContainer extends React.Component {
     render() {
         var listCount = 0;
 
-        // 	console.log("cardData length:" + this.props.data.cardData.length);
-        // 	if(this.props.data.cardData.length==0) return (null);
-
         var cardData = this
             .props
             .data
@@ -73,14 +70,12 @@ class CardListContainer extends React.Component {
 
             }, this);
 
-        //console.log('card-data:' + this.props.data.cardData[0].id);
-
         return (
             <div
                 className="simple-header"
                 style={{
-                width: 320
-            }}>
+                    width: 350
+                }}>
                 <table style={{
                     width: "100%"
                 }}>
