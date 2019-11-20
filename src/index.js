@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import store from './store/index.js';
 
-import CardBoard from './views/CardBoard';
+import CardBoard from './Components/CardBoard';
 
 render(
 	<Provider store={store} >
