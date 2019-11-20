@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import './../cardlist.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {addList} from './../actions/actions';
+import {addList} from '../actions/actions';
 import PopUpDim from './PopUpDim';
 import CardMenuList from './CardMenuList';
 import CardListContainer from './CardListContainer';
