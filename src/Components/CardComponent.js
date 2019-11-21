@@ -44,8 +44,6 @@ class CardComponent extends React.Component {
     onCardMenuEvent(e) {}
 
     onMouseOver() {
-        {/*alert('Test OnMousOver')*/
-        }
         this.setState({editButtonVisible: "visible"});
     }
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import './../cardlist.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {addList} from '../actions/actions';
 import PopUpDim from './PopUpDim';
 import CardMenuList from './CardMenuList';
 import CardListContainer from './CardListContainer';
+import {addList} from './../reducers/ListReducer';
+
 
 class CardBoard extends React.Component {
     constructor(props) {
@@ -64,11 +65,6 @@ class CardBoard extends React.Component {
     render() {
         //var g__=getComponentDb();
         var cardList = this.props.boardList;
-
-        //	console.log("---------------------------------------------------------------"
-        // ); console.log(cardList);
-        // 	console.log("---------------------------------------------------------------"
-        // );
 
         var listData = cardList.map(function (e) {
             return <td id={"tdlist" + e.listItem} className="board-table-cell">
@@ -137,14 +133,14 @@ class CardBoard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {boardList: state.lists};
+    console.log(state);
+    return {boardList: state.listDisplay.lists};
 };
 
 function mapDispatchToProps(dispatch) {
     return {
         createNewListEvent: () => {
             dispatch(addList("Brand New List"))
-            //console.log("This is a test:"+Math.random());
         }
     };
 };
