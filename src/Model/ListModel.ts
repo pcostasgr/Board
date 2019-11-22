@@ -39,7 +39,7 @@ export type ListData={
         
     }
 
-/*Normaized Types*/ 
+/*Normalized Types*/ 
     export type ListHeaderNorm={
         listid:number
         listTitle:string
