@@ -1,50 +1,24 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
-import {getComponentDb} from '../store/mockdb'
+import {getComponentDb} from './../store/mockdb'
 
-type Nullable<T> = T | null
-
-type ListItem={
-    item:string
-    description?:string
-    done:number
-}
-
-type LabelItem={
-    color:string
-    width:number
-    height:number
-}
-
-type LabelItemRows={
-    rows:Nullable<LabelItem[]>
-}
-type CardData={
-    id:number
-    title:string
-    cardDate:Nullable<string>
-    listItems:Nullable<ListItem[]>
-    labelItems:Nullable<LabelItemRows[]>
-}
+import * as lm from './../Model/ListModel'
 
 
-type ListData={
-    listid:number
-    listTitle:string
-    cardData:Nullable<CardData[]>
-}
+/*let initialState:lm.ListDataArray={
+    lists:[{
+        listid:0,
+        listTitle:" ",
+        cardData:[]
+    }]
+};*/
 
-type ListDataArray={
-    lists:ListData[]
-}
-
-let initialState:ListDataArray=getComponentDb();
-
+let initialState:lm.ListDataArray=getComponentDb();
 const listDisplaySlice=createSlice(
     {
         name:"listDisplay",
         initialState,
         reducers:{
-            addList(state:ListDataArray,action:PayloadAction<string>){
+            addList(state:lm.ListDataArray,action:PayloadAction<string>){
                 let count=state.lists.length+1;
                 state.lists.push({
                     listid:count,
