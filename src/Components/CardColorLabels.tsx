@@ -1,24 +1,20 @@
 import React from 'react';
 import CardColorLabelRows from './CardColorLabelRows';
+import * as m from '../model/ListModel';
 
-function getColorLabelData(){
-	return { columnNo:4,data:[
-			{rows:[{color:"#9c0000",width:50,height:10},
-				{color:"#9c0000",width:50,height:10},
-				{color:"#9c0000",width:50,height:10},
-				{color:"#9c0000",width:50,height:10}]},
-			{rows:[{color:"#9c0000",width:50,height:10},
-				{color:"#9c0000",width:50,height:10},
-				{color:"#9c0000",width:50,height:10},
-				{color:"#9c0000",width:50,height:10}]},
-			{rows:[{color:"#9c0000",width:50,height:10}]}
-			]
-		};
+
+type CardColorLabelProps={
+	labelItems:m.Nullable<m.LabelItemRows[]>;
+	rowCount:number
 }
 
+type CardColorLabelState={
+	buttonVisible:"hidden" | "visible"
+	rowsVisible:"hidden" | "visible"
+}
 
-class CardColorLabels extends React.Component{
-	constructor(props){
+class CardColorLabels extends React.Component<CardColorLabelProps,CardColorLabelState>{
+	constructor(props:CardColorLabelProps){
 		super(props);
 		this.onMouseOver=this.onMouseOver.bind(this);
 		this.state={
@@ -30,7 +26,7 @@ class CardColorLabels extends React.Component{
 	
 	onMouseOver(){
 		 {/*alert('Mouse Over Event'); */}
-		 var isvisible=(this.state.buttonVisible==="hidden")?"visible":"hidden";
+		 var isvisible:m.TVisibility=(this.state.buttonVisible==="hidden")?"visible":"hidden";
 		 this.setState({
 			buttonVisible:isvisible
 		});
@@ -42,8 +38,7 @@ class CardColorLabels extends React.Component{
 			return null;
 		}
 
-		var jsonData=getColorLabelData();
-	        var labelItems=this.props.labelItems;
+	    var labelItems=this.props.labelItems;
 	
 		if(labelItems==null || labelItems.length==0){			
 			return null;

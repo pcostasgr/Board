@@ -1,7 +1,7 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {getComponentDb} from './../store/mockdb'
 
-import * as lm from './../Model/ListModel'
+import * as lm from '../model/ListModel'
 
 
 /*let initialState:lm.ListDataArray={

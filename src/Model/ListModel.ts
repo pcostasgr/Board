@@ -1,6 +1,7 @@
 
 
 
+export type TVisibility = "hidden" | "visible"
 export type Nullable<T> = T | null
 
 export type ListItem={
@@ -39,6 +40,11 @@ export type ListData={
         
     }
 
+export type MenuPosType={
+    topValue:number;
+    leftValue:number;
+}
+    
 /*Normalized Types*/ 
     export type ListHeaderNorm={
         listid:number

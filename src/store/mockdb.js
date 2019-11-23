@@ -216,7 +216,7 @@ export function getComponentDb() {
 
 export function getComponentDb2() {
     return {
-        listsHeaders: [
+        listHeaders: [
             {
                 listid: 1,
                 listTitle: "List 1",
@@ -227,7 +227,7 @@ export function getComponentDb2() {
                 CardDataIds: [4, 5, 6]
             }
         ],
-        CardData: [
+        cardData: [
             {
                 id: 1,
                 title: "title1",
@@ -286,7 +286,7 @@ export function getComponentDb2() {
                 labelItems: []
             }
         ],
-        ListItems: [
+        listItems: [
             {
                 item: 1,
                 description: "list item 1",
@@ -325,7 +325,7 @@ export function getComponentDb2() {
                 done: 0
             }
         ],
-        LabelItemsRows: [
+        labelItemsRows: [
             {
                 id: 1,
                 color: "#9c0000",

@@ -1,19 +1,34 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
+import {Nullable} from '../model/ListModel';
 
-class CardLayer2 extends React.Component {
-    constructor(props) {
+type CardLayer2Props={
+    dateValue:string;
+    listCompletedCount:number;
+    listTotalCount:number;
+    visible:string;
+}
+
+class CardLayer2 extends React.Component<CardLayer2Props> {
+    constructor(props:CardLayer2Props) {
         super(props);
     }
 
     render() {
 
         var dateValue = this.props.dateValue;
-        var listCompleteCount = this.props.listCompleteCount;
+
+        console.log("DateValue:" +dateValue);
+
+        var listCompleteCount = this.props.listCompletedCount;
         var listTotalCount = this.props.listTotalCount;
         var isVisible = this.props.visible;
 
-        if (listTotalCount == 0 && dateValue == 0) {
+        console.log("listTotalCount:" + listTotalCount);
+        console.log("isVisible:"+isVisible);
+        console.log("listCompletedCount:"+listCompleteCount);
+
+        if (listTotalCount == 0 && dateValue == "") {
             return null;
         }
 
@@ -21,24 +36,32 @@ class CardLayer2 extends React.Component {
             return null;
         }
 
+        console.log("PASS 0");
+
         if (!listCompleteCount) {
             listCompleteCount = 0;
         }
 
         var list = [];
 
+        console.log("PASS 1");
+
         var dateValue_;
-        if (dateValue != 0) {
-            dateValue_ = new Date(dateValue);
+        if (dateValue != "") {
+            
+            console.log("PASS 2");
+            dateValue_=new Date("1/1/2019");
+
+            console.log("date:" + dateValue_);
             list.push(
                 <td style={{
-                    align: "left"
+                    textAlign: "left"
                 }}>
                     <DatePicker
                         hintText="Portrait Dialog"
                         defaultDate={dateValue_}
                         container="inline"
-                        autoOk="true"/>
+                        autoOk={true}/>
                 </td>
             );
         }
@@ -46,7 +69,7 @@ class CardLayer2 extends React.Component {
         if (listTotalCount > 0) {
             list.push(
                 <td style={{
-                    align: "right"
+                    textAlign: "right"
                 }}>
                     <b>
                         {listCompleteCount}/{listTotalCount}</b>

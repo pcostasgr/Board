@@ -3,9 +3,30 @@ import ReactDOM from 'react-dom';
 import CardLayer2 from './CardLayer2';
 import CardColorLabels from './CardColorLabels';
 import TextField from 'material-ui/TextField';
+import { TVisibility,Nullable,LabelItemRows,MenuPosType } from '../model/ListModel';
 
-class CardComponent extends React.Component {
-    constructor(props) {
+
+type CardComponentProps={
+    menuEvent:(m:MenuPosType,t:any)=>void;
+    width:string;
+    cardDate:string;
+    comid:number;
+    rowCount:number;
+    listCount:number;
+    cardIsVisible:string;
+    description:string;
+    labelItems:Nullable<LabelItemRows[]>;
+}
+
+type CardComponentState={
+    name:string,
+    editButtonVisible:TVisibility;
+}
+
+class CardComponent extends React.Component<CardComponentProps,CardComponentState> {
+    name:string;
+
+    constructor(props:CardComponentProps) {
         super(props);
         this.onMouseOver = this
             .onMouseOver
@@ -27,7 +48,7 @@ class CardComponent extends React.Component {
     }
 
     onButtonClick() {
-        var component = ReactDOM.findDOMNode(this);
+        var component:any = ReactDOM.findDOMNode(this);
         var rect = component.getBoundingClientRect();
         var offsetWidth = component.offsetWidth;
         var menuPos = {
@@ -41,7 +62,7 @@ class CardComponent extends React.Component {
 
     }
 
-    onCardMenuEvent(e) {}
+    onCardMenuEvent(e:any) {}
 
     onMouseOver() {
         this.setState({editButtonVisible: "visible"});
@@ -90,6 +111,7 @@ class CardComponent extends React.Component {
                 <CardLayer2
                     dateValue={cardDate}
                     listTotalCount={this.props.listCount}
+                    listCompletedCount={0}
                     visible={this.props.cardIsVisible}/>
                 <div className="bottom-card-section"></div>
             </div>

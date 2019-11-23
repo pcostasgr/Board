@@ -1,10 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CardComponent from './CardComponent';
+import {MenuPosType,CardData,ListData,Nullable} from '../model/ListModel';
 
-class CardListContainer extends React.Component {
+type CardListContainerProps={
+    listTitle:string;
+    menuEvent:(m:MenuPosType,t:any)=>void;
+    data:Nullable<ListData>;
+}
 
-    constructor(props) {
+type CardListContainerState={
+    listTitle:string;
+}
+    
+class CardListContainer extends React.Component<CardListContainerProps,CardListContainerState> {
+    name:string;
+
+    constructor(props:CardListContainerProps) {
         super(props);
         this.flatButtonClick = this
             .flatButtonClick
@@ -20,20 +32,20 @@ class CardListContainer extends React.Component {
 
     componentDidMount() {}
 
-    onListTitleChange(title) {
+    onListTitleChange(title:string) {
         this.setState({listTitle: title});
     }
 
     testReactDom() {
-        var component = ReactDOM.findDOMNode(this);
-        var rect = component.getBoundingClientRect();
-        console.log(rect.top, rect.right, rect.bottom, rect.left);
-        alert("rect:" + rect.top + " " + rect.right + " " + rect.left);
+        var component:any = ReactDOM.findDOMNode(this);
+        var rect:any = component.getBoundingClientRect();
+        //console.log(rect.top, rect.right, rect.bottom, rect.left);
+        //alert("rect:" + rect.top + " " + rect.right + " " + rect.left);
     }
 
     flatButtonClick() {
-        var component = ReactDOM.findDOMNode(this);
-        var rect = component.getBoundingClientRect();
+        var component:any = ReactDOM.findDOMNode(this);
+        var rect:any = component.getBoundingClientRect();
         var offsetWidth = component.offsetWidth;
         var menuPos = {
             topValue: rect.top,
@@ -48,27 +60,28 @@ class CardListContainer extends React.Component {
 
     render() {
         var listCount = 0;
-
+        var me=this.props.menuEvent;
         var cardData = this
             .props
-            .data
-            .cardData
-            .map(function (e) {
+            .data?
+            this.props.data.cardData?
+            this.props.data.cardData
+            .map(function (e:CardData) {
                 return <CardComponent
                     comid={e.id}
-                    compBackColor="#ffffff"
-                    className="flag_button_z"
-                    listCount={e.listItems.length}
+                    //compBackColor="#ffffff"
+                    //className="flag_button_z"
+                    listCount={e.listItems?e.listItems.length:0}
                     width='300'
-                    rowCount="1"
+                    rowCount={1}
                     cardIsVisible="true"
                     description={e.title}
-                    cardDate={e.cardDate}
-                    listItems={e.listItems}
+                    cardDate={e.cardDate?e.cardDate:""}
+                    //listItems={e.listItems}
                     labelItems={e.labelItems}
-                    menuEvent={this.props.menuEvent}/>;
+                    menuEvent={me}/>;
 
-            }, this);
+            }, this):[]:[];
 
         return (
             <div
@@ -94,7 +107,7 @@ class CardListContainer extends React.Component {
                                             </td>
                                             <td
                                                 style={{
-                                                align: "right",
+                                                //align: "right",
                                                 width: 30
                                             }}>
                                                 <button className="flat_button" onClick={this.flatButtonClick}>...</button>
