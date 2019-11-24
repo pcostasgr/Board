@@ -3,20 +3,20 @@ import ReactDOM from 'react-dom';
 import CardComponent from './CardComponent';
 import {MenuPosType,CardData,ListData,Nullable} from '../model/ListModel';
 
-type CardListContainerProps={
+type CardComponentListProps={
     listTitle:string;
     menuEvent:(m:MenuPosType,t:any)=>void;
     data:Nullable<ListData>;
 }
 
-type CardListContainerState={
+type CardComponentListState={
     listTitle:string;
 }
     
-class CardListContainer extends React.Component<CardListContainerProps,CardListContainerState> {
+class CardComponentList extends React.Component<CardComponentListProps,CardComponentListState> {
     name:string;
 
-    constructor(props:CardListContainerProps) {
+    constructor(props:CardComponentListProps) {
         super(props);
         this.flatButtonClick = this
             .flatButtonClick
@@ -36,26 +36,20 @@ class CardListContainer extends React.Component<CardListContainerProps,CardListC
         this.setState({listTitle: title});
     }
 
-    testReactDom() {
-        var component:any = ReactDOM.findDOMNode(this);
-        var rect:any = component.getBoundingClientRect();
-        //console.log(rect.top, rect.right, rect.bottom, rect.left);
-        //alert("rect:" + rect.top + " " + rect.right + " " + rect.left);
-    }
-
     flatButtonClick() {
         var component:any = ReactDOM.findDOMNode(this);
         var rect:any = component.getBoundingClientRect();
         var offsetWidth = component.offsetWidth;
         var menuPos = {
             topValue: rect.top,
-            leftValue: rect.left + offsetWidth
+            leftValue: rect.left + offsetWidth,
+            data:this.state.listTitle
         };
 
+        //console.log("flagButton data:" + menuPos.data);
         this
             .props
             .menuEvent(menuPos, this);
-        console.log("test test test flat button");
     }
 
     render() {
@@ -137,4 +131,4 @@ class CardListContainer extends React.Component<CardListContainerProps,CardListC
     }
 }
 
-export default CardListContainer;
+export default CardComponentList;

@@ -4,7 +4,7 @@ import './../cardlist.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PopUpDim from './PopUpDim';
 import CardMenuList from './CardMenuList';
-import CardListContainer from './CardListContainer';
+import CardComponentList from './CardComponentList';
 import {addList} from '../reducers/ListReducer';
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../model/ListModel';
 
@@ -21,6 +21,7 @@ type CardBoardState={
     menuLeftValue:number;
     cardListTitle:string;
     cardMenuVisibility:TVisibility;
+    selectedTitle:string;
 }
 
 class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
@@ -29,6 +30,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     enableContainer_:(e:any)=>void;
     listContainer:any;
     popup:any;
+    selectedListTitle:string 
 
     constructor(props:CardBoardProps) {
         
@@ -52,41 +54,42 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
             menuTopValue: 100,
             menuLeftValue: 100,
             cardListTitle: "",
-            cardMenuVisibility: "hidden"
-        };
+            cardMenuVisibility: "hidden",
+            selectedTitle:""
+        }
+
+        this.selectedListTitle="";
+
     }
 
-    disableContainer(rect:any, componentRef:any) {
+    async disableContainer(rect:any, componentRef:any) {
         this.listContainer = componentRef;
+        this.selectedListTitle=rect.data;
+
         if (this.listContainer.name.localeCompare("CardListContainer") == 0) {
-            this.setState({divPointerEvent: "none", opacity: 0.4, editMenuVisibility: "visible",
-             menuTopValue: rect.topValue, menuLeftValue: rect.leftValue});
-            console.log("PASS A---------------------");
+            await this.setState({divPointerEvent: "none", opacity: 0.4, editMenuVisibility: "visible",
+             menuTopValue: rect.topValue, menuLeftValue: rect.leftValue
+             ,selectedTitle:this.selectedListTitle});
         }
 
         if (this.listContainer.name.localeCompare("CardComponent") == 0) {
-
-            this.setState({divPointerEvent: "none", opacity: 0.4, cardMenuVisibility: "visible", menuTopValue: rect.topValue, menuLeftValue: rect.leftValue});
-            console.log("PASS B---------------------");
+            this.setState({divPointerEvent: "none", opacity: 0.4, 
+            cardMenuVisibility: "visible", 
+            menuTopValue: rect.topValue, menuLeftValue: rect.leftValue
+        });
         }
-
     }
 
     enableContainer(e:any) {
+
+       this.selectedListTitle=e;
+       console.log("3 selectedTitle:" + this.selectedListTitle);
+
        this.setState({divPointerEvent:"all", opacity: 1, editMenuVisibility: "hidden",
          cardMenuVisibility: "hidden"});
          
-       /*  this.state = {
-            divPointerEvent: "all",
-            opacity: 1,
-            editMenuVisibility: "hidden",
-            menuTopValue: 100,
-            menuLeftValue: 100,
-            cardListTitle: "",
-            cardMenuVisibility: "hidden"
-        };*/
-
         if (this.listContainer.name.localeCompare("CardListContainer") == 0) {
+
             this
                 .listContainer
                 .onListTitleChange(e);
@@ -101,7 +104,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     }
 
     render() {
-        //var g__=getComponentDb();
         var cardList = this.props.boardList;
         var popup_=this.popup;
         var menuEvent=this.disableContainer_;
@@ -110,7 +112,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
 
                 <div className="card-list-head">
                     <MuiThemeProvider>
-                        <CardListContainer
+                        <CardComponentList
                             listTitle={e.listTitle}
                             menuEvent={menuEvent}
                             data={e}
@@ -142,14 +144,17 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     topValue={this.state.menuTopValue}
                     leftValue={this.state.menuLeftValue}/>
 
+                <MuiThemeProvider>
                 <PopUpDim
+                    initTextValue={this.state.selectedTitle}
                     callf={this.enableContainer}
                     visibility={this.state.editMenuVisibility}
                     topValue={this.state.menuTopValue}
                     leftValue={this.state.menuLeftValue}
-                    ref={(popup) => {
+                    ref={(popup:any) => {
                     this.popup = popup;
                 }}/>
+                </MuiThemeProvider>
                 <div>
                     <table
                         className="board-header-table"

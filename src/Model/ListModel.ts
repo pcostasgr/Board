@@ -43,6 +43,7 @@ export type ListData={
 export type MenuPosType={
     topValue:number;
     leftValue:number;
+    data:any;
 }
     
 /*Normalized Types*/ 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CardLayer2 from './CardLayer2';
+import CardDateLayer from './CardDateLayer';
 import CardColorLabels from './CardColorLabels';
 import TextField from 'material-ui/TextField';
 import { TVisibility,Nullable,LabelItemRows,MenuPosType } from '../model/ListModel';
@@ -53,13 +53,13 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
         var offsetWidth = component.offsetWidth;
         var menuPos = {
             topValue: rect.top,
-            leftValue: rect.left + offsetWidth
+            leftValue: rect.left + offsetWidth,
+            data:""
         };
 
         this
             .props
             .menuEvent(menuPos, this);
-
     }
 
     onCardMenuEvent(e:any) {}
@@ -69,10 +69,7 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
     }
 
     onMouseOut() {
-        {/*alert('Test OnMousOver')*/
-        }
         this.setState({editButtonVisible: "hidden"});
-
     }
 
     render() {
@@ -108,7 +105,7 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
                     multiLine={true}
                     rows={1}
                     defaultValue={this.props.description}/>
-                <CardLayer2
+                <CardDateLayer
                     dateValue={cardDate}
                     listTotalCount={this.props.listCount}
                     listCompletedCount={0}
