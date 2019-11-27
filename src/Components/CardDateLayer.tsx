@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'material-ui/DatePicker';
+import {KeyboardDatePicker} from '@material-ui/pickers';
 
 type CardDateLayerProps={
     dateValue:string;
@@ -9,9 +9,20 @@ type CardDateLayerProps={
 }
 
 class CardDateLayer extends React.Component<CardDateLayerProps> {
+    dateValue:Date;
+
     constructor(props:CardDateLayerProps) {
         super(props);
+        //this.dateValue=this.props.dateValue;
+        this.dateValue=new Date();
     }
+
+    handleDateChange=(date:any)=> {
+        //setSelectedDate(date);
+        this.dateValue=date;
+        console.log("selected date:" + date);
+       // this.dateValue=new Date();
+    };
 
     render() {
 
@@ -43,12 +54,26 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
                 <td style={{
                     textAlign: "left"
                 }}>
-                    <DatePicker
+                   {/*} <KeyboardDatePicker
                         hintText="Portrait Dialog"
                         defaultDate={dateValue_}
                         container="inline"
-                        autoOk={true}/>
-                </td>
+            autoOk={true}/>*/}
+                    <KeyboardDatePicker
+                            disableToolbar
+                            variant="inline"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Date picker inline"
+                            value={this.dateValue}
+                            format="dd/MM/yyyy"
+                            onChange={this.handleDateChange}
+                            autoOk={true}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                    />    
+                                    </td>
             );
         }
 

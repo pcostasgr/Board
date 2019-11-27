@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CardDateLayer from './CardDateLayer';
 import CardColorLabels from './CardColorLabels';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import { TVisibility,Nullable,LabelItemRows,MenuPosType } from '../model/ListModel';
 
 
@@ -72,11 +72,17 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
         this.setState({editButtonVisible: "hidden"});
     }
 
+    handleChange = (name:any) => (event:any) => {
+       // this.setState({ [name]: event.target.value });
+      };
+
     render() {
         var component_id = this.props.comid;
-        //console.log("Card Component render " + component_id);
+        console.log("Card Component render " + component_id);
 
         var cardDate = this.props.cardDate;
+        
+        var textFieldId:string="textField"+this.props.comid;
 
         return (
 
@@ -98,13 +104,14 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
                     rowCount={this.props.rowCount}
                     labelItems={this.props.labelItems}/>
                 <TextField
-                    id={"textField" + this.props.comid}
-                    style={{
-                    width: "inherit"
-                }}
-                    multiLine={true}
-                    rows={1}
-                    defaultValue={this.props.description}/>
+                    id={textFieldId}
+                    name="textField"
+                     margin="normal"
+                    //label=""
+                   // multiLine rowsMax="1"
+                    defaultValue={this.props.description}
+                    onChange={this.handleChange('multiline')}
+                    />
                 <CardDateLayer
                     dateValue={cardDate}
                     listTotalCount={this.props.listCount}

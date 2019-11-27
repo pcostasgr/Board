@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {addCard} from './../reducers/ListReducer';
-import TextField from 'material-ui/TextField';
+//import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import classes from '*.module.css';
 
 type PopUpDimProps={
@@ -26,11 +27,10 @@ class PopUpDim extends React.Component<PopUpDimProps,PopUpDimState>{
 		this.buttonClick_=this.buttonClick.bind(this);	
 		this.addNewCard=this.addNewCard.bind(this);
 		this.handleTextFieldChange=this.handleTextFieldChange.bind(this);
-		console.log("Init Text Value:" + this.props.initTextValue);
+		
 		this.state={
 			titleValue:this.props.initTextValue
 		}
-		
 	}
 
 	buttonClick(){
@@ -44,14 +44,22 @@ class PopUpDim extends React.Component<PopUpDimProps,PopUpDimState>{
 
 	handleTextFieldChange(e:any){
 		this.setState({titleValue:e.target.value});
+		console.log("handleTextFieldChange");
 	}
+
+	
+
 	render(){
+
+		console.log("render init:" + this.props.initTextValue);
+
+		
 		return (	
 			<div id="PopUpDim" className="popup-div" style={{ top:this.props.topValue,
 			left:this.props.leftValue,visibility:this.props.visibility}}>
 				<button onClick={this.buttonClick_} >Accept</button><br></br>
 
-				  Value:<TextField
+				  {/*Value:<TextField
 					id={"textField"}
 					name="description_field"
                     style={{
@@ -60,10 +68,19 @@ class PopUpDim extends React.Component<PopUpDimProps,PopUpDimState>{
                     multiLine={true}
                     rows={1}
 					defaultValue={this.props.initTextValue}
-					value={this.state.titleValue}
+					//value={this.state.titleValue}
+					onChange={this.handleTextFieldChange}
+				/>*/}
+
+
+				<TextField
+					id="textField"
+					label="Value"
+					name="description_field"
+					multiline rowsMax="1"
+					defaultValue={this.props.initTextValue}
 					onChange={this.handleTextFieldChange}
 					/>
-
 				<button onClick={this.addNewCard}  >Add Card</button>/>
 			</div>
 		);
@@ -81,4 +98,11 @@ function mapDispatchToProps(dispatch:any) {
 	}
 };
 
-export default connect(null, mapDispatchToProps)(PopUpDim);
+const mapStateToProps = (state:any) => {
+    //console.log(state);
+    return {
+        initTextValue:state.popUpDisplay
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PopUpDim);
