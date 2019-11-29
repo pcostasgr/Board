@@ -3,30 +3,31 @@ import ReactDOM from 'react-dom';
 import CardDateLayer from './CardDateLayer';
 import CardColorLabels from './CardColorLabels';
 import TextField from '@material-ui/core/TextField';
-import { TVisibility,Nullable,LabelItemRows,MenuPosType } from '../model/ListModel';
+import InputBase from '@material-ui/core/InputBase';
+import {TVisibility, Nullable, LabelItemRows, MenuPosType} from '../model/ListModel';
 
-
-type CardComponentProps={
-    menuEvent:(m:MenuPosType,t:any)=>void;
-    width:string;
-    cardDate:string;
-    comid:number;
-    rowCount:number;
-    listCount:number;
-    cardIsVisible:string;
-    description:string;
-    labelItems:Nullable<LabelItemRows[]>;
+type CardComponentProps = {
+    menuEvent: (m : MenuPosType, t : any) => void;
+    width: string;
+    cardDate: string;
+    comid: number;
+    rowCount: number;
+    listCount: number;
+    cardIsVisible: string;
+    description: string;
+    labelItems: Nullable < LabelItemRows[] >;
 }
 
-type CardComponentState={
-    name:string,
-    editButtonVisible:TVisibility;
+type CardComponentState = {
+    name: string,
+    editButtonVisible: TVisibility;
 }
 
-class CardComponent extends React.Component<CardComponentProps,CardComponentState> {
-    name:string;
+class CardComponent extends React.Component < CardComponentProps,
+CardComponentState > {
+    name : string;
 
-    constructor(props:CardComponentProps) {
+    constructor(props : CardComponentProps) {
         super(props);
         this.onMouseOver = this
             .onMouseOver
@@ -48,13 +49,14 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
     }
 
     onButtonClick() {
-        var component:any = ReactDOM.findDOMNode(this);
+        var component : any = ReactDOM.findDOMNode(this);
         var rect = component.getBoundingClientRect();
         var offsetWidth = component.offsetWidth;
-        var menuPos = {
+        var menuPos:MenuPosType = {
             topValue: rect.top,
             leftValue: rect.left + offsetWidth,
-            data:""
+            id:0,
+            data: ""
         };
 
         this
@@ -62,7 +64,7 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
             .menuEvent(menuPos, this);
     }
 
-    onCardMenuEvent(e:any) {}
+    onCardMenuEvent(e : any) {}
 
     onMouseOver() {
         this.setState({editButtonVisible: "visible"});
@@ -72,17 +74,17 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
         this.setState({editButtonVisible: "hidden"});
     }
 
-    handleChange = (name:any) => (event:any) => {
-       // this.setState({ [name]: event.target.value });
-      };
+    handleChange = (name : any) => (event : any) => {
+        // this.setState({ [name]: event.target.value });
+    }
 
     render() {
         var component_id = this.props.comid;
         console.log("Card Component render " + component_id);
 
         var cardDate = this.props.cardDate;
-        
-        var textFieldId:string="textField"+this.props.comid;
+
+        var textFieldId : string = "textField" + this.props.comid;
 
         return (
 
@@ -103,15 +105,10 @@ class CardComponent extends React.Component<CardComponentProps,CardComponentStat
                 <CardColorLabels
                     rowCount={this.props.rowCount}
                     labelItems={this.props.labelItems}/>
-                <TextField
-                    id={textFieldId}
-                    name="textField"
-                     margin="normal"
-                    //label=""
-                   // multiLine rowsMax="1"
-                    defaultValue={this.props.description}
-                    onChange={this.handleChange('multiline')}
-                    />
+                <TextField id={textFieldId} // name="textField"
+                    margin="normal" multiline defaultValue={this.props.description} onChange={this.handleChange('multiline')} InputProps={{
+                    disableUnderline: true
+                }}/>
                 <CardDateLayer
                     dateValue={cardDate}
                     listTotalCount={this.props.listCount}

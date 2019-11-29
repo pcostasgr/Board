@@ -4,6 +4,7 @@ import CardComponent from './CardComponent';
 import {MenuPosType,CardData,ListData,Nullable} from '../model/ListModel';
 
 type CardComponentListProps={
+    listId:number;
     listTitle:string;
     menuEvent:(m:MenuPosType,t:any)=>void;
     data:Nullable<ListData>;
@@ -43,10 +44,10 @@ class CardComponentList extends React.Component<CardComponentListProps,CardCompo
         var menuPos = {
             topValue: rect.top,
             leftValue: rect.left + offsetWidth,
+            id:this.props.listId,
             data:this.state.listTitle
         };
 
-        //console.log("flagButton data:" + menuPos.data);
         this
             .props
             .menuEvent(menuPos, this);

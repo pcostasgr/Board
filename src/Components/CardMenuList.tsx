@@ -36,7 +36,7 @@ class CardMenuList extends React.Component<CardMenuListProps>{
 			
 		<ul id="cardlist" className="card-menu-list" style={{ top:this.props.topValue,left:this.props.leftValue,
 		visibility:this.props.visibility}}>
-			  <li><a  href="#home">Home</a></li>
+			  <li><a  href="#Delete List">Home</a></li>
 			  <li><a href="#news">News</a></li>
 			  <li><a href="#contact">Contact</a></li>
 			  <li><a href="#about">About</a></li>

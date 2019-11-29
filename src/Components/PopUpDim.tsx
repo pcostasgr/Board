@@ -4,21 +4,20 @@ import {addCard} from './../reducers/ListReducer';
 //import TextField from 'material-ui/TextField';
 import TextField from '@material-ui/core/TextField';
 import classes from '*.module.css';
-
+import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 type PopUpDimProps={
 	initTextValue:string;	
-	callf:(v:string)=>void;
+	selectedListId:number;	
 	topValue:number;
 	leftValue:number;
 	visibility:"hidden" | "visible";
-	createNewCardEvent:()=>void;
+	createNewCardEvent:(listId:number,cardTitle:string)=>void;
+    setPopUpTextTitleEvent:(value:string)=>void;
+	callf:(v:string)=>void;
 }
 
-type PopUpDimState={
-	titleValue:string
-}
 
-class PopUpDim extends React.Component<PopUpDimProps,PopUpDimState>{
+class PopUpDim extends React.Component<PopUpDimProps>{
 
 	buttonClick_:()=>void;
 
@@ -34,54 +33,38 @@ class PopUpDim extends React.Component<PopUpDimProps,PopUpDimState>{
 	}
 
 	buttonClick(){
-		console.log(this.state.titleValue);
-		this.props.callf(this.state.titleValue);
+		this.props.callf(this.props.initTextValue);
 	}
 	
 	addNewCard(){
-		this.props.createNewCardEvent();
+		this.props.createNewCardEvent(
+			this.props.selectedListId,
+			"New Card"
+		);
+		this.props.callf(this.props.initTextValue);
 	}
 
 	handleTextFieldChange(e:any){
-		this.setState({titleValue:e.target.value});
-		console.log("handleTextFieldChange");
+		this.props.setPopUpTextTitleEvent(e.target.value);
 	}
-
-	
 
 	render(){
 
-		console.log("render init:" + this.props.initTextValue);
-
-		
 		return (	
-			<div id="PopUpDim" className="popup-div" style={{ top:this.props.topValue,
+			<div id="PopUpDimCard" className="popup-div" style={{ top:this.props.topValue,
 			left:this.props.leftValue,visibility:this.props.visibility}}>
 				<button onClick={this.buttonClick_} >Accept</button><br></br>
 
-				  {/*Value:<TextField
-					id={"textField"}
-					name="description_field"
-                    style={{
-						color:"#FFFFFF"
-					}}
-                    multiLine={true}
-                    rows={1}
-					defaultValue={this.props.initTextValue}
-					//value={this.state.titleValue}
-					onChange={this.handleTextFieldChange}
-				/>*/}
-
-
 				<TextField
-					id="textField"
+					id="popUpDimId"
 					label="Value"
 					name="description_field"
 					multiline rowsMax="1"
+					value={this.props.initTextValue}
 					defaultValue={this.props.initTextValue}
 					onChange={this.handleTextFieldChange}
 					/>
-				<button onClick={this.addNewCard}  >Add Card</button>/>
+				<button onClick={this.addNewCard}> Add Card</button>
 			</div>
 		);
 	}
@@ -89,11 +72,15 @@ class PopUpDim extends React.Component<PopUpDimProps,PopUpDimState>{
 
 function mapDispatchToProps(dispatch:any) {
     return {
-        createNewCardEvent: () => {
+        createNewCardEvent: (listId:number,cardTitle:string) => {
             dispatch(addCard({
-				listId:1,cardTitle:'Brand New List'
+				listId:listId
+				,cardTitle:cardTitle
 			})
 			)
+		},
+		setPopUpTextTitleEvent:(value:string) =>{
+            dispatch(setPopUpTextTitle(value))
 		}
 	}
 };

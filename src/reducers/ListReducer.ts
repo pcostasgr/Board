@@ -21,9 +21,14 @@ const listDisplaySlice=createSlice(
                 return state;
             },
             addCard(state:lm.ListDataArray,action:PayloadAction<AddCardPayLoad>){
-                var found= state.lists.findIndex( elem => {
-                    return elem.listid==action.payload.listId
+                console.log("payload:" + action.payload.listId);
+
+                var found= state.lists.findIndex( (elem) => {
+
+                console.log("list id:" + elem.listid);
+                    return elem.listid===action.payload.listId
                 } );
+                
                 
                 var dateNow=new Date();
 

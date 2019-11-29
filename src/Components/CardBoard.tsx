@@ -37,6 +37,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     listContainer:any;
     popup:any;
     selectedListTitle:string 
+    selectedListId:number;
 
     constructor(props:CardBoardProps) {
         
@@ -65,13 +66,15 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         }
 
         this.selectedListTitle="";
+        this.selectedListId=0;
 
     }
 
      disableContainer(rect:any, componentRef:any) {
         this.listContainer = componentRef;
         this.selectedListTitle=rect.data;
-        
+        this.selectedListId=rect.id;
+
         this.props.setPopUpTextTitleEvent(this.selectedListTitle);
 
         if (this.listContainer.name.localeCompare("CardListContainer") == 0) {
@@ -93,7 +96,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     enableContainer(e:any) {
 
        this.selectedListTitle=e;
-       console.log("3 selectedTitle:" + this.selectedListTitle);
 
        this.setState({divPointerEvent:"all", opacity: 1, editMenuVisibility: "hidden",
          cardMenuVisibility: "hidden"});
@@ -122,10 +124,10 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                 <div className="card-list-head">
                    
                         <CardComponentList
+                            listId={e.listid}
                             listTitle={e.listTitle}
                             menuEvent={menuEvent}
                             data={e}
-                            //popup={popup_}
                             />
                  
                 </div>
@@ -163,14 +165,11 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     leftValue={this.state.menuLeftValue}/>
 
                 <PopUpDim
-                   // initTextValue={this.props.popUpInitialValue}
+                    selectedListId={this.selectedListId}
                     callf={this.enableContainer}
                     visibility={this.state.editMenuVisibility}
                     topValue={this.state.menuTopValue}
                     leftValue={this.state.menuLeftValue}
-                    //ref={(popup:any) => {
-                    //this.popup = popup;
-            //    }
             />
 
                 <div>
