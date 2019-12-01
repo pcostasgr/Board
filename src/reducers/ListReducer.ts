@@ -2,7 +2,7 @@ import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {getComponentDb} from './../store/mockdb'
 
 import * as lm from '../model/ListModel'
-import {AddCardPayLoad} from './../model/PayLoads'
+import {AddCardPayLoad,DelCardPayload} from './../model/PayLoads'
 
 let initialState:lm.ListDataArray=getComponentDb();
 const listDisplaySlice=createSlice(
@@ -21,30 +21,37 @@ const listDisplaySlice=createSlice(
                 return state;
             },
             addCard(state:lm.ListDataArray,action:PayloadAction<AddCardPayLoad>){
-                console.log("payload:" + action.payload.listId);
-
-                var found= state.lists.findIndex( (elem) => {
-
-                console.log("list id:" + elem.listid);
+                var listIndex= state.lists.findIndex( (elem) => {
                     return elem.listid===action.payload.listId
                 } );
                 
-                
+                if(listIndex==-1) return state;
+
                 var dateNow=new Date();
 
-                if(found==-1) return state;
-
-                var cardData=state.lists[found].cardData;
+                var cardData=state.lists[listIndex].cardData;
 
                 if(!cardData){
                     cardData=[];
                 }
+                
+                var maxCardId:number=Math.max.apply(Math,state.lists.map((elem)=>{
+    
+                    var cards:lm.Nullable<lm.CardData[]>=elem.cardData;
+                    if(!cards) return 0;
 
-               var cardid=cardData.length+1;
+                     return Math.max.apply(Math,cards.map(
+                        (cardElem:lm.CardData)=>{return cardElem.id;}
+                        ));
+                    
+                }));
+                
+                var cardid=maxCardId+1;
+                var title=action.payload.cardTitle+ " " + cardid;
 
                 cardData.push({
                             id:cardid,
-                            title:action.payload.cardTitle,
+                            title:title,
                             cardDate:dateNow.toDateString(),
                             listItems:[],
                             labelItems:[]
@@ -53,13 +60,40 @@ const listDisplaySlice=createSlice(
 
                 return state;
             },
+            deleteCard(state:lm.ListDataArray,action:PayloadAction<DelCardPayload>){
+
+                var listIndex= state.lists.findIndex( (elem) => {
+                    return elem.listid===action.payload.listId
+                });
+                
+                if(listIndex==-1) return state;
+
+                var cardData=state.lists[listIndex].cardData;
+
+                if(cardData){
+
+                    var cardIndex=cardData.findIndex((elem)=>{
+                        return elem.id==action.payload.cardId;
+                    });
+                    
+                    if(cardIndex==-1) return state;
+
+                    cardData=cardData.splice(cardIndex,1);
+
+                    return state;
+                }
+                return state;
+                
+            }
+            ,
         }
     }
 )
 
 export const {
     addList,
-    addCard
+    addCard,
+    deleteCard
 }=listDisplaySlice.actions
 
 export default listDisplaySlice.reducer;

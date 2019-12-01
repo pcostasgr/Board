@@ -5,6 +5,7 @@ import popUpReducer from './PopUpReducer'
 const rootReducer=combineReducers({
     listDisplay:listDisplayReducer,
     popUpDisplay:popUpReducer,
+
 })
 
 export default rootReducer;

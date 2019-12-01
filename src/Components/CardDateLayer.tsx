@@ -18,7 +18,6 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
 
     handleDateChange=(date:any)=> {
         this.dateValue=date;
-        console.log("selected date:" + date);
     };
 
     render() {

@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {addCard} from './../reducers/ListReducer';
-//import TextField from 'material-ui/TextField';
 import TextField from '@material-ui/core/TextField';
-import classes from '*.module.css';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
+
 type PopUpDimProps={
 	initTextValue:string;	
 	selectedListId:number;	
@@ -19,6 +18,7 @@ type PopUpDimProps={
 
 class PopUpDim extends React.Component<PopUpDimProps>{
 
+
 	buttonClick_:()=>void;
 
 	constructor(props:PopUpDimProps){
@@ -30,7 +30,9 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 		this.state={
 			titleValue:this.props.initTextValue
 		}
+
 	}
+
 
 	buttonClick(){
 		this.props.callf(this.props.initTextValue);
@@ -86,7 +88,6 @@ function mapDispatchToProps(dispatch:any) {
 };
 
 const mapStateToProps = (state:any) => {
-    //console.log(state);
     return {
         initTextValue:state.popUpDisplay
     };

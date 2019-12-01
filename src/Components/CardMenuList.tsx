@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {deleteCard} from './../reducers/ListReducer';
+import {connect} from 'react-redux';
+
 
 function getEventTarget(e:any) {
     e = e || window.event;
@@ -7,11 +10,15 @@ function getEventTarget(e:any) {
 }
 
 type CardMenuListProps={
+	selectedListId:number;
+	selectedCardId:number;
 	callf:(v:string)=>void;
 	topValue:number;
 	leftValue:number;
 	visibility:"hidden" | "visible";
+	deleteCardEvent:(listid:number,cardId:number)=>void;
 }
+
 class CardMenuList extends React.Component<CardMenuListProps>{
 	listValue:string;
 	constructor(props:CardMenuListProps){
@@ -33,18 +40,40 @@ class CardMenuList extends React.Component<CardMenuListProps>{
 
 	render(){
 		return(
-			
-		<ul id="cardlist" className="card-menu-list" style={{ top:this.props.topValue,left:this.props.leftValue,
-		visibility:this.props.visibility}}>
-			  <li><a  href="#Delete List">Home</a></li>
-			  <li><a href="#news">News</a></li>
-			  <li><a href="#contact">Contact</a></li>
-			  <li><a href="#about">About</a></li>
-		</ul>
-	
+			<div id="cardlist" className="card-menu-list" 
+			style={{ top:this.props.topValue,left:this.props.leftValue,
+				visibility:this.props.visibility}}>
+				<button
+					id="deleteCardButton"
+                    onClick={() => {
+                   this
+                        .props
+                        .deleteCardEvent(
+							this.props.selectedListId,
+							this.props.selectedCardId)
+                }}
+				>Delete Card
+				</button>
+				<ul >
+					<li><a href="#Delete List" >Delete List</a></li>
+					<li><a href="#news">News</a></li>
+					<li><a href="#contact">Contact</a></li>
+					<li><a href="#about">About</a></li>
+				</ul>
+			</div>
 		);
 	}
 }
 
+function mapDispatchToProps(dispatch:any) {
+    return {
+        deleteCardEvent: (listid:number,cardid:number) => {
 
-export default CardMenuList;
+			console.log("listid:" + listid + " deleteCardEvent:" + cardid)
+            dispatch(deleteCard({listId:listid,cardId:cardid})
+			)
+		},
+	}
+};
+
+export default connect(null, mapDispatchToProps)(CardMenuList);

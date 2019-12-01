@@ -43,7 +43,8 @@ export type ListData={
 export type MenuPosType={
     topValue:number;
     leftValue:number;
-    id:number,
+    id:number;
+    cardId:number;
     data:any;
 }
     

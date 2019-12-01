@@ -38,6 +38,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     popup:any;
     selectedListTitle:string 
     selectedListId:number;
+    selectedCardId:number;
 
     constructor(props:CardBoardProps) {
         
@@ -67,13 +68,14 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
 
         this.selectedListTitle="";
         this.selectedListId=0;
-
+        this.selectedCardId=0;
     }
 
      disableContainer(rect:any, componentRef:any) {
         this.listContainer = componentRef;
         this.selectedListTitle=rect.data;
         this.selectedListId=rect.id;
+        this.selectedCardId=rect.cardId;
 
         this.props.setPopUpTextTitleEvent(this.selectedListTitle);
 
@@ -159,10 +161,13 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
 
 
                 <CardMenuList
+                    selectedListId={this.selectedListId}
+                    selectedCardId={this.selectedCardId}
                     visibility={this.state.cardMenuVisibility}
                     callf={this.enableContainer}
                     topValue={this.state.menuTopValue}
-                    leftValue={this.state.menuLeftValue}/>
+                    leftValue={this.state.menuLeftValue}
+                />
 
                 <PopUpDim
                     selectedListId={this.selectedListId}
@@ -170,7 +175,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     visibility={this.state.editMenuVisibility}
                     topValue={this.state.menuTopValue}
                     leftValue={this.state.menuLeftValue}
-            />
+                />
 
                 <div>
                     <table

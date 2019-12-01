@@ -11,6 +11,7 @@ type CardComponentProps = {
     width: string;
     cardDate: string;
     comid: number;
+    listId:number;
     rowCount: number;
     listCount: number;
     cardIsVisible: string;
@@ -23,7 +24,7 @@ type CardComponentState = {
     editButtonVisible: TVisibility;
 }
 
-class CardComponent extends React.Component < CardComponentProps,
+class CardComponent extends React.PureComponent < CardComponentProps,
 CardComponentState > {
     name : string;
 
@@ -43,8 +44,9 @@ CardComponentState > {
             .bind(this);
         this.state = {
             editButtonVisible: "hidden",
-            name: "CardComponent"
+            name: this.props.description
         };
+
         this.name = "CardComponent";
     }
 
@@ -55,7 +57,8 @@ CardComponentState > {
         var menuPos:MenuPosType = {
             topValue: rect.top,
             leftValue: rect.left + offsetWidth,
-            id:0,
+            cardId:this.props.comid,
+            id:this.props.listId,
             data: ""
         };
 
@@ -74,21 +77,23 @@ CardComponentState > {
         this.setState({editButtonVisible: "hidden"});
     }
 
-    handleChange = (name : any) => (event : any) => {
-        // this.setState({ [name]: event.target.value });
+    handleChange = (e: any)=> {
+        console.log("name:" + e.target.value);
+         this.setState({ name: e.target.value });
     }
 
+
     render() {
-        var component_id = this.props.comid;
-        console.log("Card Component render " + component_id);
+        var componentId = this.props.comid;
+        console.log("Card Component render " + componentId+ " " +this.props.description);
 
         var cardDate = this.props.cardDate;
 
         var textFieldId : string = "textField" + this.props.comid;
-
+        var divId="CardComponentId"+componentId;
         return (
 
-            <div
+            <div id={divId}
                 className="card"
                 style={{
                 position: "relative",
@@ -102,11 +107,15 @@ CardComponentState > {
                     visibility: this.state.editButtonVisible
                 }}
                     onClick={this.onButtonClick}>...</button>
-                <CardColorLabels
+                <CardColorLabels key={componentId}
                     rowCount={this.props.rowCount}
                     labelItems={this.props.labelItems}/>
-                <TextField id={textFieldId} // name="textField"
-                    margin="normal" multiline defaultValue={this.props.description} onChange={this.handleChange('multiline')} InputProps={{
+                <TextField key={textFieldId} 
+                    margin="normal"
+                     multiline
+                    value={this.state.name}
+                    defaultValue={this.props.description} 
+                    onChange={this.handleChange} InputProps={{
                     disableUnderline: true
                 }}/>
                 <CardDateLayer

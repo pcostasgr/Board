@@ -14,7 +14,7 @@ type CardComponentListState={
     listTitle:string;
 }
     
-class CardComponentList extends React.Component<CardComponentListProps,CardComponentListState> {
+class CardComponentList extends React.PureComponent<CardComponentListProps,CardComponentListState> {
     name:string;
 
     constructor(props:CardComponentListProps) {
@@ -45,7 +45,8 @@ class CardComponentList extends React.Component<CardComponentListProps,CardCompo
             topValue: rect.top,
             leftValue: rect.left + offsetWidth,
             id:this.props.listId,
-            data:this.state.listTitle
+            data:this.state.listTitle,
+            cardId:0
         };
 
         this
@@ -56,23 +57,24 @@ class CardComponentList extends React.Component<CardComponentListProps,CardCompo
     render() {
         var listCount = 0;
         var me=this.props.menuEvent;
+        var listid:number=this.props.listId;
         var cardData = this
             .props
             .data?
             this.props.data.cardData?
             this.props.data.cardData
             .map(function (e:CardData) {
+
                 return <CardComponent
+                    key={e.id}
                     comid={e.id}
-                    //compBackColor="#ffffff"
-                    //className="flag_button_z"
+                    listId={listid}
                     listCount={e.listItems?e.listItems.length:0}
                     width='300'
                     rowCount={1}
                     cardIsVisible="true"
                     description={e.title}
                     cardDate={e.cardDate?e.cardDate:""}
-                    //listItems={e.listItems}
                     labelItems={e.labelItems}
                     menuEvent={me}/>;
 
@@ -131,5 +133,6 @@ class CardComponentList extends React.Component<CardComponentListProps,CardCompo
         );
     }
 }
+
 
 export default CardComponentList;
