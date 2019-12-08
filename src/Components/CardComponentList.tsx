@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CardComponent from './CardComponent';
 import {MenuPosType,CardData,ListData,Nullable} from '../model/ListModel';
+import TextField from '@material-ui/core/TextField';
 
 type CardComponentListProps={
     listId:number;
@@ -58,6 +59,7 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         var listCount = 0;
         var me=this.props.menuEvent;
         var listid:number=this.props.listId;
+        var listHeaderTextId="listHeaderTextId"+listid
         var cardData = this
             .props
             .data?
@@ -84,36 +86,31 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
             <div
                 className="simple-header"
                 style={{
-                    width: 350
+                    width:350
                 }}>
                 <table style={{
                     width: "100%"
                 }}>
                     <tbody>
-                        <tr>
-                            <td>
-                                <table
-                                    style={{
-                                    width: "100%",
-                                    height: 30
-                                }}>
-                                    <tbody>
-                                        <tr>
-                                            <td className="simple-header">
-                                                <b>{this.state.listTitle}</b>
-                                            </td>
-                                            <td
-                                                style={{
-                                                //align: "right",
-                                                width: 30
-                                            }}>
-                                                <button className="flat_button" onClick={this.flatButtonClick}>...</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
+                        <tr >
+                                <td>
+                                    <div className="list-header-div-content" id={"ListHeaderFieldIdv"+listid}>
+                                        <span> 
+                                            <TextField
+                                                key={listHeaderTextId}
+                                                value={this.state.listTitle}
+                                                defaultValue={this.state.listTitle}
+                                                //onChange={this.handleChange}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
 
+                                                style={{ width:300}}
+                                            />
+                                        </span>
+                                        <span><button className="flat_button" onClick={this.flatButtonClick}>...</button></span>
+                                    </div>
+                                </td>
                         </tr>
                         <tr>
                             <td>
@@ -121,10 +118,6 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
                                     {cardData}
                                 </div>
                             </td>
-                            <td
-                                style={{
-                                width: 30
-                            }}></td>
                         </tr>
                     </tbody>
                 </table>

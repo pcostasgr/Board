@@ -11,13 +11,38 @@ const listDisplaySlice=createSlice(
         initialState,
         reducers:{
             addList(state:lm.ListDataArray,action:PayloadAction<string>){
-                let count=state.lists.length+1;
+               var maxListId=0;
+                if(state.lists.length>0){
+                        var maxListId:number=Math.max.apply(Math,state.lists.map((elem)=>{
+        
+                        return elem.listid
+                    }));
+                }
+                
+                var newKey=maxListId+1;
                 state.lists.push({
-                    listid:count,
-                    listTitle:action.payload,
+                    listid:newKey,
+                    listTitle:action.payload+ newKey,
                     cardData:[]
                 });
                 
+                return state;
+            },
+
+            deleteList(state:lm.ListDataArray,action:PayloadAction<number>){
+                
+                console.log("selIndex",action.payload);
+                var listIndex=state.lists.findIndex(
+                    (elem)=>{
+                        return elem.listid===action.payload;
+                    }
+                );
+                
+                if(listIndex !=-1){
+                    state.lists.splice(listIndex,1);
+                }
+
+                console.log("listIndex Total Lists{1}",listIndex,state.lists.length);
                 return state;
             },
             addCard(state:lm.ListDataArray,action:PayloadAction<AddCardPayLoad>){
@@ -92,6 +117,7 @@ const listDisplaySlice=createSlice(
 
 export const {
     addList,
+    deleteList,
     addCard,
     deleteCard
 }=listDisplaySlice.actions

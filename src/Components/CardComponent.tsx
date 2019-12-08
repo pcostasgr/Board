@@ -110,7 +110,8 @@ CardComponentState > {
                 <CardColorLabels key={componentId}
                     rowCount={this.props.rowCount}
                     labelItems={this.props.labelItems}/>
-                <TextField key={textFieldId} 
+                <TextField key={textFieldId}
+                     
                     margin="normal"
                      multiline
                     value={this.state.name}

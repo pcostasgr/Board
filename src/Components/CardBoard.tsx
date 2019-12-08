@@ -2,7 +2,7 @@ import React from 'react';
 import {connect, useSelector} from 'react-redux';
 import './../cardlist.css';
 //import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider, spacing } from 'material-ui/styles';
 
 import PopUpDim from './PopUpDim';
 import CardMenuList from './CardMenuList';
@@ -27,7 +27,6 @@ type CardBoardState={
     menuLeftValue:number;
     cardListTitle:string;
     cardMenuVisibility:TVisibility;
-    selectedTitle:string;
 }
 
 class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
@@ -36,7 +35,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     enableContainer_:(e:any)=>void;
     listContainer:any;
     popup:any;
-    selectedListTitle:string 
     selectedListId:number;
     selectedCardId:number;
 
@@ -62,27 +60,23 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
             menuTopValue: 100,
             menuLeftValue: 100,
             cardListTitle: "",
-            cardMenuVisibility: "hidden",
-            selectedTitle:""
+            cardMenuVisibility: "hidden"
         }
 
-        this.selectedListTitle="";
         this.selectedListId=0;
         this.selectedCardId=0;
     }
 
      disableContainer(rect:any, componentRef:any) {
         this.listContainer = componentRef;
-        this.selectedListTitle=rect.data;
         this.selectedListId=rect.id;
         this.selectedCardId=rect.cardId;
 
-        this.props.setPopUpTextTitleEvent(this.selectedListTitle);
+        this.props.setPopUpTextTitleEvent(rect.data);
 
         if (this.listContainer.name.localeCompare("CardListContainer") == 0) {
              this.setState({divPointerEvent: "none", opacity: 0.4, editMenuVisibility: "visible",
-             menuTopValue: rect.topValue, menuLeftValue: rect.leftValue
-             ,selectedTitle:this.selectedListTitle});
+             menuTopValue: rect.topValue, menuLeftValue: rect.leftValue});
         }
 
         if (this.listContainer.name.localeCompare("CardComponent") == 0) {
@@ -96,13 +90,16 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
     }
 
     enableContainer(e:any) {
-
-       this.selectedListTitle=e;
+       var refresh=false;
+       if(e!== ""){
+            refresh=true;
+       }
+       
 
        this.setState({divPointerEvent:"all", opacity: 1, editMenuVisibility: "hidden",
          cardMenuVisibility: "hidden"});
          
-        if (this.listContainer.name.localeCompare("CardListContainer") == 0) {
+        if (this.listContainer.name.localeCompare("CardListContainer") == 0 && refresh==true) {
             this
                 .listContainer
                 .onListTitleChange(e);
@@ -126,6 +123,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                 <div className="card-list-head">
                    
                         <CardComponentList
+                            key={"CardComponentList"+e.listid}
                             listId={e.listid}
                             listTitle={e.listTitle}
                             menuEvent={menuEvent}
@@ -177,13 +175,14 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     leftValue={this.state.menuLeftValue}
                 />
 
-                <div>
+                <div className="board-header-div-table">
                     <table
                         className="board-header-table"
                         style={{
                         pointerEvents:this.state.divPointerEvent,
                         opacity: this.state.opacity
                     }}>
+                        <col width="350"></col>
                         <tbody>
                             <tr>
                                 {listData}
