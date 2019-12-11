@@ -1,15 +1,11 @@
 import React from 'react';
 import {connect, useSelector} from 'react-redux';
-import './../cardlist.css';
-//import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { MuiThemeProvider, spacing } from 'material-ui/styles';
-
+import './../board.css';
 import PopUpDim from './PopUpDim';
 import CardMenuList from './CardMenuList';
 import CardComponentList from './CardComponentList';
 import {addList} from '../reducers/ListReducer';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
-
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../model/ListModel';
 
 type CardBoardProps={
@@ -180,9 +176,9 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                         className="board-header-table"
                         style={{
                         pointerEvents:this.state.divPointerEvent,
-                        opacity: this.state.opacity
+                        opacity: this.state.opacity,
                     }}>
-                        <col width="350"></col>
+                        <col width="250"></col>
                         <tbody>
                             <tr>
                                 {listData}

@@ -86,10 +86,11 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
             <div
                 className="simple-header"
                 style={{
-                    width:350
+                    width:350,
+                    border:0
                 }}>
                 <table style={{
-                    width: "100%"
+                    width: "100%", border:0
                 }}>
                     <tbody>
                         <tr >
@@ -116,7 +117,7 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
                             <td>
                                 <div className="card-container">
                                     {cardData}
-                                </div>
+                                            </div>
                             </td>
                         </tr>
                     </tbody>

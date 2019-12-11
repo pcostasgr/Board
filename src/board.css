@@ -8,7 +8,6 @@
     padding-left: 5px;
     width: 320px;
     background-color: #e1e4ea;
-    border-radius: 5px;
 }
 
 .card-container {
@@ -24,7 +23,7 @@
 .card {
     width: 330px;
     position: relative;
-    border-radius: 5px;
+    border-radius: 0px;
     background-color: #ffffff;
 }
 .card:hover {
@@ -89,6 +88,7 @@
     overflow-x: scroll;
     overflow-y: scroll;
     table-layout:auto;
+    border:none;
 }
 
 .board-table-row {
@@ -97,6 +97,8 @@
 .board-table-cell {
     background-color: #4286f4;
     padding:0 20px;
+    border:0;
+
 }
 .popup-div {
     z-index: 1;
