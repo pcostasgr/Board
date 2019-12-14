@@ -3,6 +3,7 @@ import {getComponentDb} from './../store/mockdb'
 
 import * as lm from '../model/ListModel'
 import {AddCardPayload,SelCardPayload} from './../model/PayLoads'
+import { ActionNoteAdd } from 'material-ui/svg-icons';
 
 let initialState:lm.ListDataArray=getComponentDb();
 
@@ -116,12 +117,11 @@ const listDisplaySlice=createSlice(
                 
                 var cardData=state.lists[listIndex].cardData;
                 if(cardData){
-                    cardData[cardIndex]=action.payload;
-                    
-                    return {...state,cardData:cardData[cardIndex]};
-                }else{
-                    return state;
-                }               return state;
+                    var cardDetail=cardData[cardIndex];
+                    cardDetail={...action.payload};
+                }    
+                return {...state,cardData:action.payload};
+                
            } 
         }
     }

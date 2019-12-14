@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {deleteCard,selectCard} from '../reducers/ListReducer';
+import {deleteCard,selectCard,updateCard} from '../reducers/ListReducer';
 import {connect} from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -24,6 +24,7 @@ type CardDetailViewProps={
 	leftValue:number;
 	visibility:"hidden" | "visible";
 	deleteCardEvent:(listid:number,cardId:number)=>void;
+	updateCardEvent:(card:CardData)=>void;
 }
 
 type CardDetailViewState={
@@ -68,10 +69,19 @@ class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewS
 	}
 
 	handleDateChange=(date:any)=> {
-		var formatedDate=date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-		this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
+		var month=date.getMonth();
+		month+=1;
+		var formatedDate=date.getFullYear() + "-" + month + "-" + date.getDate();
+		//this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
 		
-		console.log("handle:" +this.state.cardData.cardDate) ;
+		console.log("handle:" +formatedDate) ;
+		this.props.updateCardEvent(
+			{
+					...this.props.cardData,cardDate:formatedDate
+			}
+		);
+
+
 	};
 	
 	handleTextFieldChange(e:any){
@@ -83,7 +93,6 @@ class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewS
 		var date_;
 		if(this.state.cardData.cardDate!=null){
 			date_=new Date(this.state.cardData.cardDate);
-			date_=new Date();
 		}else{
 			date_=new Date();
 		}
@@ -99,7 +108,7 @@ class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewS
 				format="dd/MM/yyyy"
 				onChange={this.handleDateChange}
 				autoOk={true}
-				value={date_}
+				value={this.props.cardData.cardDate}
 				defaultValue={new Date(this.props.cardData.cardDate)}
 				KeyboardButtonProps={{
 					'aria-label': 'change date',
@@ -186,6 +195,9 @@ function mapDispatchToProps(dispatch:any) {
 			console.log("listid:" + listid + " deleteCardEvent:" + cardid)
             dispatch(deleteCard({listId:listid,cardId:cardid})
 			)
+		},
+		updateCardEvent:(card:CardData)=>{
+			dispatch(updateCard(card))
 		},
 	}
 };
