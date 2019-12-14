@@ -69,15 +69,11 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
 
                 return <CardComponent
                     key={e.id}
-                    comid={e.id}
+                    cardData={e}
                     listId={listid}
-                    listCount={e.listItems?e.listItems.length:0}
                     width='300'
                     rowCount={1}
                     cardIsVisible="true"
-                    description={e.title}
-                    cardDate={e.cardDate?e.cardDate:""}
-                    labelItems={e.labelItems}
                     menuEvent={me}/>;
 
             }, this):[]:[];

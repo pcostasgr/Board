@@ -2,17 +2,21 @@ import React from 'react';
 import {connect, useSelector} from 'react-redux';
 import './../board.css';
 import PopUpDim from './PopUpDim';
-import CardMenuList from './CardMenuList';
+import CardDetailView from './CardDetailView';
 import CardComponentList from './CardComponentList';
-import {addList} from '../reducers/ListReducer';
+import {addList,selectCard} from '../reducers/ListReducer';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../model/ListModel';
+import CardDateLayer from './CardDateLayer';
+import {CardData} from '../model/ListModel';
 
 type CardBoardProps={
     boardList:ListData[];
+    cardDetail:CardData;
     popUpInitialValue:string;
     createNewListEvent:()=>void;
     setPopUpTextTitleEvent:(value:string)=>void;
+    showCardDetail:(cardId:number,listId:number)=>void;
 }
 
 type CardBoardState={
@@ -77,9 +81,11 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
 
         if (this.listContainer.name.localeCompare("CardComponent") == 0) {
             this.setState({divPointerEvent: "none", opacity: 0.4, 
-            cardMenuVisibility: "visible", 
-            menuTopValue: rect.topValue, menuLeftValue: rect.leftValue
-        });
+                cardMenuVisibility: "visible", 
+                menuTopValue: rect.topValue, menuLeftValue: rect.leftValue
+            });
+
+            this.props.showCardDetail(this.selectedCardId,this.selectedListId);
         }
 
 
@@ -135,6 +141,8 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         //var callbackf_ = this.callbackFunc;
         var topValue = 100;
         var leftValue = 50;
+        
+
         return (
             <div className="list-header">
                 <button
@@ -154,7 +162,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                 }}>Add new list</button>
 
 
-                <CardMenuList
+                <CardDetailView
                     selectedListId={this.selectedListId}
                     selectedCardId={this.selectedCardId}
                     visibility={this.state.cardMenuVisibility}
@@ -197,7 +205,6 @@ const mapStateToProps = (state:any) => {
     //console.log(state);
     return {
         boardList: state.listDisplay.lists,
-        //popUpInitialValue:state.popUpDisplay
     };
 };
 
@@ -209,6 +216,10 @@ function mapDispatchToProps(dispatch:any) {
 
         setPopUpTextTitleEvent:(value:string) =>{
             dispatch(setPopUpTextTitle(value))
+        },
+
+        showCardDetail:(cardId:number,listId:number) =>{
+            dispatch(selectCard({cardId:cardId,listId:listId}))
         }
     };
 };

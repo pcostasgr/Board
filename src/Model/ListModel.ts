@@ -35,10 +35,10 @@ export type ListData={
     cardData:Nullable<CardData[]>
 }
 
-    export type ListDataArray={
-        lists:ListData[]
-        
-    }
+export type ListDataArray={
+    lists: ListData[]
+    cardData: CardData
+}
 
 export type MenuPosType={
     topValue:number;
@@ -77,4 +77,26 @@ export type MenuPosType={
         color:string
         width:number
         height:number
+    }
+
+//helper functions
+export function GetCardIndex(cardId:number,listData:ListData[]){
+
+    var cardIndex=-1;
+    var listIndex=-1;
+    var element;
+    for(var i=0;i<listData.length;i++){
+        element=listData[i];
+        cardIndex=element.cardData?
+        element.cardData.findIndex((elem)=>{
+            return elem.id===cardId;
+        })
+        :-1;
+
+        if(cardIndex!=-1) { 
+            listIndex=i;
+            break; 
+        }
+    }
+    return [cardIndex,listIndex];
 }

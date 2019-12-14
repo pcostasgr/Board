@@ -1,5 +1,4 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
-import { string } from 'prop-types'
 
 const popUpSlice=createSlice(
 {

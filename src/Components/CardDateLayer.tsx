@@ -8,16 +8,23 @@ type CardDateLayerProps={
     visible:string;
 }
 
-class CardDateLayer extends React.Component<CardDateLayerProps> {
+type CardDateLayerState={
     dateValue:Date;
+}
+
+class CardDateLayer extends React.Component<CardDateLayerProps,CardDateLayerState> {
 
     constructor(props:CardDateLayerProps) {
         super(props);
-        this.dateValue=new Date();
+        if (this.props.dateValue != "") {
+            this.state={dateValue:new Date(this.props.dateValue)};
+        }else{
+            this.state={dateValue:new Date()};
+        }
     }
 
     handleDateChange=(date:any)=> {
-        this.dateValue=date;
+        this.setState({dateValue:date});
     };
 
     render() {
@@ -55,7 +62,8 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
                             variant="inline"
                             margin="normal"
                             id="date-picker-inline"
-                            value={this.dateValue}
+                            value={this.state.dateValue}
+                            defaultValue={this.state.dateValue}
                             format="dd/MM/yyyy"
                             onChange={this.handleDateChange}
                             autoOk={true}

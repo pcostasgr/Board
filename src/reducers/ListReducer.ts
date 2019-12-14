@@ -2,9 +2,10 @@ import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {getComponentDb} from './../store/mockdb'
 
 import * as lm from '../model/ListModel'
-import {AddCardPayLoad,DelCardPayload} from './../model/PayLoads'
+import {AddCardPayload,SelCardPayload} from './../model/PayLoads'
 
 let initialState:lm.ListDataArray=getComponentDb();
+
 const listDisplaySlice=createSlice(
     {
         name:"listDisplay",
@@ -45,7 +46,7 @@ const listDisplaySlice=createSlice(
                 console.log("listIndex Total Lists{1}",listIndex,state.lists.length);
                 return state;
             },
-            addCard(state:lm.ListDataArray,action:PayloadAction<AddCardPayLoad>){
+            addCard(state:lm.ListDataArray,action:PayloadAction<AddCardPayload>){
                 var listIndex= state.lists.findIndex( (elem) => {
                     return elem.listid===action.payload.listId
                 } );
@@ -85,32 +86,43 @@ const listDisplaySlice=createSlice(
 
                 return state;
             },
-            deleteCard(state:lm.ListDataArray,action:PayloadAction<DelCardPayload>){
+            deleteCard(state:lm.ListDataArray,action:PayloadAction<SelCardPayload>){
 
-                var listIndex= state.lists.findIndex( (elem) => {
-                    return elem.listid===action.payload.listId
-                });
+               const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.cardId,state.lists);
+                if(cardIndex==-1) { return state; }
                 
-                if(listIndex==-1) return state;
-
                 var cardData=state.lists[listIndex].cardData;
-
-                if(cardData){
-
-                    var cardIndex=cardData.findIndex((elem)=>{
-                        return elem.id==action.payload.cardId;
-                    });
-                    
-                    if(cardIndex==-1) return state;
-
-                    cardData=cardData.splice(cardIndex,1);
-
-                    return state;
-                }
+                cardData=cardData?cardData.splice(cardIndex,1):[];
                 return state;
                 
             }
             ,
+            selectCard(state:lm.ListDataArray,action:PayloadAction<SelCardPayload>){
+                
+                const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.cardId,state.lists);
+                if(cardIndex==-1) { return state; }
+                
+                var cardData=state.lists[listIndex].cardData;
+                if(cardData){
+                    return {...state,cardData:cardData[cardIndex]};
+                }else{
+                    return state;
+                }
+            },
+
+           updateCard(state:lm.ListDataArray,action:PayloadAction<lm.CardData>){
+                const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.id,state.lists);
+                if(cardIndex==-1) { return state; }
+                
+                var cardData=state.lists[listIndex].cardData;
+                if(cardData){
+                    cardData[cardIndex]=action.payload;
+                    
+                    return {...state,cardData:cardData[cardIndex]};
+                }else{
+                    return state;
+                }               return state;
+           } 
         }
     }
 )
@@ -119,7 +131,9 @@ export const {
     addList,
     deleteList,
     addCard,
-    deleteCard
+    deleteCard,
+    selectCard,
+    updateCard
 }=listDisplaySlice.actions
 
 export default listDisplaySlice.reducer;

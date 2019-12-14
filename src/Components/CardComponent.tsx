@@ -3,20 +3,17 @@ import ReactDOM from 'react-dom';
 import CardDateLayer from './CardDateLayer';
 import CardColorLabels from './CardColorLabels';
 import TextField from '@material-ui/core/TextField';
-import InputBase from '@material-ui/core/InputBase';
-import {TVisibility, Nullable, LabelItemRows, MenuPosType} from '../model/ListModel';
+import {TVisibility, Nullable, LabelItemRows, MenuPosType,CardData} from '../model/ListModel';
+import ListReducer from '../reducers/ListReducer';
+
 
 type CardComponentProps = {
     menuEvent: (m : MenuPosType, t : any) => void;
     width: string;
-    cardDate: string;
-    comid: number;
     listId:number;
     rowCount: number;
-    listCount: number;
     cardIsVisible: string;
-    description: string;
-    labelItems: Nullable < LabelItemRows[] >;
+    cardData:CardData;
 }
 
 type CardComponentState = {
@@ -44,7 +41,7 @@ CardComponentState > {
             .bind(this);
         this.state = {
             editButtonVisible: "hidden",
-            name: this.props.description
+            name: this.props.cardData.title
         };
 
         this.name = "CardComponent";
@@ -57,7 +54,7 @@ CardComponentState > {
         var menuPos:MenuPosType = {
             topValue: rect.top,
             leftValue: rect.left + offsetWidth,
-            cardId:this.props.comid,
+            cardId:this.props.cardData.id,
             id:this.props.listId,
             data: ""
         };
@@ -84,13 +81,15 @@ CardComponentState > {
 
 
     render() {
-        var componentId = this.props.comid;
-        console.log("Card Component render " + componentId+ " " +this.props.description);
+        var componentId = this.props.cardData.id;
+        
 
-        var cardDate = this.props.cardDate;
+        var cardDate = this.props.cardData.cardDate?this.props.cardData.cardDate:"";
 
-        var textFieldId : string = "textField" + this.props.comid;
+        console.log("Card Component render " + componentId+ " " +this.props.cardData.title+ " date:" + cardDate);
+        var textFieldId : string = "textField" + this.props.cardData.id;
         var divId="CardComponentId"+componentId;
+        var listCount=this.props.cardData.listItems?this.props.cardData.listItems.length:0;
         return (
 
             <div id={divId}
@@ -109,19 +108,18 @@ CardComponentState > {
                     onClick={this.onButtonClick}>...</button>
                 <CardColorLabels key={componentId}
                     rowCount={this.props.rowCount}
-                    labelItems={this.props.labelItems}/>
+                    labelItems={this.props.cardData.labelItems}/>
                 <TextField key={textFieldId}
-                     
                     margin="normal"
                      multiline
                     value={this.state.name}
-                    defaultValue={this.props.description} 
+                    defaultValue={this.props.cardData.title} 
                     onChange={this.handleChange} InputProps={{
                     disableUnderline: true
                 }}/>
                 <CardDateLayer
                     dateValue={cardDate}
-                    listTotalCount={this.props.listCount}
+                    listTotalCount={listCount}
                     listCompletedCount={0}
                     visible={this.props.cardIsVisible}/>
                 <div className="bottom-card-section"></div>

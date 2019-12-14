@@ -1,11 +1,13 @@
 import { number } from "prop-types"
 
-export type AddCardPayLoad={
+export type AddCardPayload={
     listId:number,
     cardTitle:string ,
 }
 
-export type DelCardPayload={
+export type SelCardPayload={
     listId:number,
     cardId:number
 }
+
+

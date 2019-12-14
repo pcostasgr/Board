@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {addCard,deleteList} from './../reducers/ListReducer';
+
 import TextField from '@material-ui/core/TextField';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import List from '@material-ui/core/List';

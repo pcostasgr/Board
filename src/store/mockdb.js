@@ -211,6 +211,15 @@ export function getComponentDb() {
             }
 
         ]
+        ,
+        cardData:{
+            id:-1,
+            title:"",
+            cardDate:"",
+            listItems:[],
+            labelItems:[]
+        }
+
     };
 }
 

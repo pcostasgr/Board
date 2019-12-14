@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {deleteCard} from './../reducers/ListReducer';
+import {deleteCard,selectCard} from '../reducers/ListReducer';
 import {connect} from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import {KeyboardDatePicker} from '@material-ui/pickers';
+import {CardData} from '../model/ListModel';
+import { throwStatement } from '@babel/types';
 
 function getEventTarget(e:any) {
     e = e || window.event;
     return e.target || e.srcElement; 
 }
 
-type CardMenuListProps={
+type CardDetailViewProps={
+	cardData:CardData;
 	selectedListId:number;
 	selectedCardId:number;
 	callf:(v:string)=>void;
@@ -23,14 +26,20 @@ type CardMenuListProps={
 	deleteCardEvent:(listid:number,cardId:number)=>void;
 }
 
-class CardMenuList extends React.Component<CardMenuListProps>{
+type CardDetailViewState={
+	cardData:CardData
+}
+
+class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewState>{
 	listValue:string;
-	constructor(props:CardMenuListProps){
+	constructor(props:CardDetailViewProps){
 		super(props);
 		this.onClickEvent=this.onClickEvent.bind(this);
 		this.listValue="";
 		this.deleteCardEvent=this.deleteCardEvent.bind(this);
 		this.closeControl=this.closeControl.bind(this);
+
+		this.state={cardData:this.props.cardData};
 	}
         
 	onClickEvent(e:any){
@@ -58,15 +67,51 @@ class CardMenuList extends React.Component<CardMenuListProps>{
             this.closeControl();
 	}
 
-	handleDateChange(){
-
-	}
-
-	handleTextFieldChange(){
-
+	handleDateChange=(date:any)=> {
+		var formatedDate=date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+		this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
+		
+		console.log("handle:" +this.state.cardData.cardDate) ;
+	};
+	
+	handleTextFieldChange(e:any){
+        //this.setState({cardData:{...this.state.cardData,title:e.target.value}});
 	}
 
 	render(){
+		var dateField;
+		var date_;
+		if(this.state.cardData.cardDate!=null){
+			date_=new Date(this.state.cardData.cardDate);
+			date_=new Date();
+		}else{
+			date_=new Date();
+		}
+	
+		console.log("input date:" + this.state.cardData.cardDate);
+		if(this.props.cardData.cardDate!=null){
+
+			dateField=<KeyboardDatePicker
+				disableToolbar
+				variant="inline"
+				margin="normal"
+				id="date-picker-inline"
+				format="dd/MM/yyyy"
+				onChange={this.handleDateChange}
+				autoOk={true}
+				value={date_}
+				defaultValue={new Date(this.props.cardData.cardDate)}
+				KeyboardButtonProps={{
+					'aria-label': 'change date',
+				}}
+				InputProps={{
+					disableUnderline: true,
+				}}
+			/>    
+		}else{
+			dateField=null;
+		}
+
 		return(
 			<div id="cardlist" className="card-menu-list" 
 			style={{ top:this.props.topValue,left:this.props.leftValue,
@@ -77,10 +122,10 @@ class CardMenuList extends React.Component<CardMenuListProps>{
 						<td>
 							<TextField
 								id="popUpDimId"
-								label="Description"
 								name="description_field"
 								multiline rowsMax="10"
-								onChange={this.handleTextFieldChange}
+								defaultValue={this.props.cardData.title}
+								//onChange={this.handleTextFieldChange}
 								fullWidth={true}
 							/>
 						</td>
@@ -95,22 +140,7 @@ class CardMenuList extends React.Component<CardMenuListProps>{
 							<tr>
 								<td>Labels</td>
 								<td>
-									<KeyboardDatePicker
-										disableToolbar
-										variant="inline"
-										margin="normal"
-										id="date-picker-inline"
-										value={new Date()}
-										format="dd/MM/yyyy"
-										onChange={this.handleDateChange}
-										autoOk={true}
-										KeyboardButtonProps={{
-											'aria-label': 'change date',
-										}}
-										InputProps={{
-											disableUnderline: true,
-										}}
-									/>    
+								{dateField}
 								</td>
 							</tr>
 							<tr>
@@ -142,6 +172,13 @@ class CardMenuList extends React.Component<CardMenuListProps>{
 	}
 }
 
+
+const mapStateToProps = (state:any) => {
+    return {
+        cardData:state.listDisplay.cardData
+    };
+};
+
 function mapDispatchToProps(dispatch:any) {
     return {
         deleteCardEvent: (listid:number,cardid:number) => {
@@ -153,4 +190,4 @@ function mapDispatchToProps(dispatch:any) {
 	}
 };
 
-export default connect(null, mapDispatchToProps)(CardMenuList);
+export default connect(mapStateToProps, mapDispatchToProps)(CardDetailView);
