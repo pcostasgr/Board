@@ -4,6 +4,7 @@ import {getComponentDb} from './../store/mockdb'
 import * as lm from '../model/ListModel'
 import {AddCardPayload,SelCardPayload} from './../model/PayLoads'
 import { ActionNoteAdd } from 'material-ui/svg-icons';
+import { ListSubheader } from '@material-ui/core';
 
 let initialState:lm.ListDataArray=getComponentDb();
 
@@ -113,14 +114,41 @@ const listDisplaySlice=createSlice(
 
            updateCard(state:lm.ListDataArray,action:PayloadAction<lm.CardData>){
                 const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.id,state.lists);
-                if(cardIndex==-1) { return state; }
-                
+                if(cardIndex==-1) { return state; }                
+
                 var cardData=state.lists[listIndex].cardData;
+                               
                 if(cardData){
                     var cardDetail=cardData[cardIndex];
-                    cardDetail={...action.payload};
-                }    
-                return {...state,cardData:action.payload};
+
+                    console.log(
+                        "updateCard cardIndex:" + cardIndex + " date:" +action.payload.cardDate
+                    );
+
+                   
+                    var newState=state.lists.map((elem)=>{
+                        if(state.lists[listIndex].listid===elem.listid){
+                            var newCardState=
+                            elem.cardData?
+                            elem.cardData.map((cardElem)=>
+                            {   
+                                if(cardElem.id===cardDetail.id){
+                                    return action.payload
+                                }else{
+                                    return cardElem
+                                }
+                            }):[];
+                            return {...elem,cardData:newCardState}; 
+                        }else{
+                            return elem;
+                        }
+                    })
+                    return {lists:newState,cardData:action.payload};
+                } else {
+                    return state;
+                }
+
+                
                 
            } 
         }

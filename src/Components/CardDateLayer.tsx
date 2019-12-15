@@ -1,35 +1,45 @@
 import React from 'react';
 import {KeyboardDatePicker} from '@material-ui/pickers';
+import {connect} from 'react-redux';
+import {CardData} from '../model/ListModel';
+import {updateCard} from '../reducers/ListReducer';
 
 type CardDateLayerProps={
-    dateValue:string;
+    cardData:CardData;
     listCompletedCount:number;
     listTotalCount:number;
     visible:string;
+	updateCardLayerEvent:(card:CardData)=>void;
 }
 
-type CardDateLayerState={
-    dateValue:Date;
-}
 
-class CardDateLayer extends React.Component<CardDateLayerProps,CardDateLayerState> {
+class CardDateLayer extends React.Component<CardDateLayerProps> {
 
     constructor(props:CardDateLayerProps) {
         super(props);
-        if (this.props.dateValue != "") {
-            this.state={dateValue:new Date(this.props.dateValue)};
-        }else{
-            this.state={dateValue:new Date()};
-        }
     }
 
     handleDateChange=(date:any)=> {
-        this.setState({dateValue:date});
+        
+        var month=date.getMonth();
+		month+=1;
+		var formatedDate=date.getFullYear() + "-" + month + "-" + date.getDate();
+		//this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
+		
+		console.log("handle date layer:" +formatedDate) ;
+		this.props.updateCardLayerEvent(
+			{
+					...this.props.cardData,cardDate:formatedDate
+			}
+		);
+
     };
 
     render() {
 
-        var dateValue = this.props.dateValue;
+        var dateValue = this.props.cardData.cardDate;
+
+        console.log("card date layer:" + dateValue);
 
         var listCompleteCount = this.props.listCompletedCount;
         var listTotalCount = this.props.listTotalCount;
@@ -50,20 +60,21 @@ class CardDateLayer extends React.Component<CardDateLayerProps,CardDateLayerStat
         var list = [];
 
         var dateValue_;
-        if (dateValue != "") {
+        if (dateValue !=null) {
             dateValue_=new Date(dateValue);
 
             list.push(
                 <td style={{
                     textAlign: "left"
                 }}>
-                    <KeyboardDatePicker
+                   {/*} <KeyboardDatePicker
+                            key={"CardLayerDatePicker"+this.props.cardData.id}
                             disableToolbar
                             variant="inline"
                             margin="normal"
                             id="date-picker-inline"
-                            value={this.state.dateValue}
-                            defaultValue={this.state.dateValue}
+                            value={dateValue_}
+                            defaultValue={dateValue_}
                             format="dd/MM/yyyy"
                             onChange={this.handleDateChange}
                             autoOk={true}
@@ -73,7 +84,9 @@ class CardDateLayer extends React.Component<CardDateLayerProps,CardDateLayerStat
                             InputProps={{
                                  disableUnderline: true,
                             }}
-                    />    
+                        />*/}
+
+                    {dateValue} 
                                     </td>
             );
         }
@@ -105,4 +118,23 @@ class CardDateLayer extends React.Component<CardDateLayerProps,CardDateLayerStat
     }
 };
 
-export default CardDateLayer;
+/*
+const mapStateToProps = (state:any) => {
+    return {
+        cardData:state.listDisplay.cardData
+    };
+};*/
+
+function mapDispatchToProps(dispatch:any) {
+    
+    return {
+		updateCardLayerEvent:(card:CardData)=>{
+
+            console.log("upateCardLayerFired");
+			dispatch(updateCard(card))
+		},
+	}
+};
+
+//export default CardDateLayer;
+export default connect(null,mapDispatchToProps)(CardDateLayer);

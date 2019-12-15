@@ -96,7 +96,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
        if(e!== ""){
             refresh=true;
        }
-       
 
        this.setState({divPointerEvent:"all", opacity: 1, editMenuVisibility: "hidden",
          cardMenuVisibility: "hidden"});

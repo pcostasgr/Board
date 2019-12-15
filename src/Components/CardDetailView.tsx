@@ -27,11 +27,8 @@ type CardDetailViewProps={
 	updateCardEvent:(card:CardData)=>void;
 }
 
-type CardDetailViewState={
-	cardData:CardData
-}
 
-class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewState>{
+class CardDetailView extends React.Component<CardDetailViewProps>{
 	listValue:string;
 	constructor(props:CardDetailViewProps){
 		super(props);
@@ -75,13 +72,7 @@ class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewS
 		//this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
 		
 		console.log("handle:" +formatedDate) ;
-		this.props.updateCardEvent(
-			{
-					...this.props.cardData,cardDate:formatedDate
-			}
-		);
-
-
+		this.props.updateCardEvent({...this.props.cardData,cardDate:formatedDate});
 	};
 	
 	handleTextFieldChange(e:any){
@@ -91,13 +82,7 @@ class CardDetailView extends React.Component<CardDetailViewProps,CardDetailViewS
 	render(){
 		var dateField;
 		var date_;
-		if(this.state.cardData.cardDate!=null){
-			date_=new Date(this.state.cardData.cardDate);
-		}else{
-			date_=new Date();
-		}
 	
-		console.log("input date:" + this.state.cardData.cardDate);
 		if(this.props.cardData.cardDate!=null){
 
 			dateField=<KeyboardDatePicker
@@ -192,7 +177,6 @@ function mapDispatchToProps(dispatch:any) {
     return {
         deleteCardEvent: (listid:number,cardid:number) => {
 
-			console.log("listid:" + listid + " deleteCardEvent:" + cardid)
             dispatch(deleteCard({listId:listid,cardId:cardid})
 			)
 		},

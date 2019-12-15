@@ -4,8 +4,8 @@ import CardDateLayer from './CardDateLayer';
 import CardColorLabels from './CardColorLabels';
 import TextField from '@material-ui/core/TextField';
 import {TVisibility, Nullable, LabelItemRows, MenuPosType,CardData} from '../model/ListModel';
-import ListReducer from '../reducers/ListReducer';
-
+import {connect} from 'react-redux';
+import { throwStatement } from '@babel/types';
 
 type CardComponentProps = {
     menuEvent: (m : MenuPosType, t : any) => void;
@@ -82,29 +82,27 @@ CardComponentState > {
 
     render() {
         var componentId = this.props.cardData.id;
-        
-
         var cardDate = this.props.cardData.cardDate?this.props.cardData.cardDate:"";
 
         console.log("Card Component render " + componentId+ " " +this.props.cardData.title+ " date:" + cardDate);
+
         var textFieldId : string = "textField" + this.props.cardData.id;
         var divId="CardComponentId"+componentId;
         var listCount=this.props.cardData.listItems?this.props.cardData.listItems.length:0;
         return (
-
-            <div id={divId}
-                className="card"
-                style={{
-                position: "relative",
-                width: this.props.width
-            }}
+                <div id={divId}
+                        className="card"
+                        style={{
+                    position: "relative",
+                    width: this.props.width
+                }}
                 onMouseOver={this.onMouseOver}
                 onMouseOut={this.onMouseOut}>
                 <button
                     className="flat_button_z"
                     style={{
-                    visibility: this.state.editButtonVisible
-                }}
+                        visibility: this.state.editButtonVisible
+                    }}
                     onClick={this.onButtonClick}>...</button>
                 <CardColorLabels key={componentId}
                     rowCount={this.props.rowCount}
@@ -114,18 +112,24 @@ CardComponentState > {
                      multiline
                     value={this.state.name}
                     defaultValue={this.props.cardData.title} 
-                    onChange={this.handleChange} InputProps={{
-                    disableUnderline: true
-                }}/>
+                    onChange={this.handleChange} 
+                    InputProps={{
+                        disableUnderline: true
+                    }}
+                />
                 <CardDateLayer
-                    dateValue={cardDate}
+                    key={"CardDateLayer" + this.props.cardData.id}
+                    cardData={this.props.cardData}
                     listTotalCount={listCount}
                     listCompletedCount={0}
-                    visible={this.props.cardIsVisible}/>
+                    visible={this.props.cardIsVisible}
+                />
                 <div className="bottom-card-section"></div>
             </div>
         );
     }
 }
 
+
 export default CardComponent;
+
