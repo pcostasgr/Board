@@ -30,13 +30,18 @@ type CardDetailViewProps={
 
 class CardDetailView extends React.Component<CardDetailViewProps>{
 	listValue:string;
+	cardTitle:string;
+
 	constructor(props:CardDetailViewProps){
 		super(props);
 		this.onClickEvent=this.onClickEvent.bind(this);
+		this.saveCardEvent=this.saveCardEvent.bind(this);
+		this.handleTextFieldChange=this.handleTextFieldChange.bind(this);
+		this.handleDateChange=this.handleDateChange.bind(this);
 		this.listValue="";
+		this.cardTitle=this.props.cardData.title;
 		this.deleteCardEvent=this.deleteCardEvent.bind(this);
 		this.closeControl=this.closeControl.bind(this);
-
 		this.state={cardData:this.props.cardData};
 	}
         
@@ -46,17 +51,13 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
     	    	this.props.callf(this.listValue) ;
 	}
 	
-	componentDidMount(){
-		//var ul:any=ReactDOM.findDOMNode(this);
-		//ul.onclick = this.onClickEvent;
-	}
-
 	
 	closeControl(){
 		var target = getEventTarget(window.event);
     		this.listValue=target.innerHTML;
     	    	this.props.callf(this.listValue) ;
 	}
+
 	deleteCardEvent(){
 			this.props
             .deleteCardEvent(
@@ -65,24 +66,30 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
             this.closeControl();
 	}
 
+	saveCardEvent(){
+		//console.log("New card title:" + this.cardTitle);
+		this.props.updateCardEvent({...this.props.cardData,title:this.cardTitle});
+		this.closeControl();
+	}
+
 	handleDateChange=(date:any)=> {
 		var month=date.getMonth();
 		month+=1;
 		var formatedDate=date.getFullYear() + "-" + month + "-" + date.getDate();
 		//this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
-		
-		console.log("handle:" +formatedDate) ;
 		this.props.updateCardEvent({...this.props.cardData,cardDate:formatedDate});
 	};
 	
 	handleTextFieldChange(e:any){
-        //this.setState({cardData:{...this.state.cardData,title:e.target.value}});
+		console.log(e.target.value);
+		this.cardTitle=e.target.value;
 	}
 
 	render(){
 		var dateField;
 		var date_;
-	
+		
+		console.log("Main Title:");
 		if(this.props.cardData.cardDate!=null){
 
 			dateField=<KeyboardDatePicker
@@ -107,7 +114,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		}
 
 		return(
-			<div id="cardlist" className="card-menu-list" 
+			<div id={"cardlist"+this.props.cardData.id} className="card-menu-list" 
 			style={{ top:this.props.topValue,left:this.props.leftValue,
 				visibility:this.props.visibility}}>
 				<table>
@@ -115,11 +122,12 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 					<tr id="DetailTitleText" >
 						<td>
 							<TextField
+								key={"TextFiledView"+this.props.cardData.id}
 								id="popUpDimId"
 								name="description_field"
 								multiline rowsMax="10"
 								defaultValue={this.props.cardData.title}
-								//onChange={this.handleTextFieldChange}
+								onChange={this.handleTextFieldChange}
 								fullWidth={true}
 							/>
 						</td>
@@ -150,6 +158,9 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 						</td>
 						<td id="MainRightPanel" >
 							<List component="nav" aria-label="Stack actions">
+								<ListItem button>
+								<ListItemText primary="Save card" onClick={this.saveCardEvent} />
+								</ListItem>
 								<ListItem button>
 								<ListItemText primary="Delete card" onClick={this.deleteCardEvent} />
 								</ListItem>

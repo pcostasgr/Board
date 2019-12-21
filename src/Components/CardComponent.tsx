@@ -5,7 +5,7 @@ import CardColorLabels from './CardColorLabels';
 import TextField from '@material-ui/core/TextField';
 import {TVisibility, Nullable, LabelItemRows, MenuPosType,CardData} from '../model/ListModel';
 import {connect} from 'react-redux';
-import { throwStatement } from '@babel/types';
+import {updateCard} from '../reducers/ListReducer';
 
 type CardComponentProps = {
     menuEvent: (m : MenuPosType, t : any) => void;
@@ -14,6 +14,7 @@ type CardComponentProps = {
     rowCount: number;
     cardIsVisible: string;
     cardData:CardData;
+	updateCardEvent:(card:CardData)=>void;
 }
 
 type CardComponentState = {
@@ -38,6 +39,9 @@ CardComponentState > {
             .bind(this);
         this.onButtonClick = this
             .onButtonClick
+            .bind(this);
+        this.handleTitleChange=this
+            .handleTitleChange
             .bind(this);
         this.state = {
             editButtonVisible: "hidden",
@@ -74,9 +78,8 @@ CardComponentState > {
         this.setState({editButtonVisible: "hidden"});
     }
 
-    handleChange = (e: any)=> {
-        console.log("name:" + e.target.value);
-         this.setState({ name: e.target.value });
+    handleTitleChange = (e: any)=> {
+		this.props.updateCardEvent({...this.props.cardData,title:e.target.value});
     }
 
 
@@ -110,9 +113,9 @@ CardComponentState > {
                 <TextField key={textFieldId}
                     margin="normal"
                      multiline
-                    value={this.state.name}
+                    value={this.props.cardData.title}
                     defaultValue={this.props.cardData.title} 
-                    onChange={this.handleChange} 
+                    onChange={this.handleTitleChange} 
                     InputProps={{
                         disableUnderline: true
                     }}
@@ -130,6 +133,16 @@ CardComponentState > {
     }
 }
 
+function mapDispatchToProps(dispatch:any) {
+    
+    return {
+		updateCardEvent:(card:CardData)=>{
+			dispatch(updateCard(card))
+		},
+	}
+};
 
-export default CardComponent;
+
+export default connect(null,mapDispatchToProps)(CardComponent);
+//export default CardComponent;
 

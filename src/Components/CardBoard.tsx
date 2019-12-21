@@ -162,6 +162,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
 
 
                 <CardDetailView
+                    key={"CardDetailView"+this.selectedCardId}
                     selectedListId={this.selectedListId}
                     selectedCardId={this.selectedCardId}
                     visibility={this.state.cardMenuVisibility}
