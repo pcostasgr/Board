@@ -1,4 +1,5 @@
 import ApiBase from './ApiBase';
+import {setUser} from './../reducers/LoginReducer'
 
 type LoginUserType={
     username:string,
@@ -16,6 +17,7 @@ export const loginUser=({username,password}:LoginUserType)=>{
         .then(response=>{
             console.log('Api loginUser post :');
             console.log(response.data);
+            dispatch(setUser(response.data));
         })
         .catch(error => {
             
