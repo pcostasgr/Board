@@ -15,5 +15,11 @@ export const TestCreateCard=(store:any)=>(next:any)=>(action:any)=>{
     }
     console.log("Add Card dispatched",action);
     let result=next(action);
-    return result
+    return result;
+}
+
+
+export const LoginMid=(store:any)=>(next:any)=>(action:any)=>{
+    let result=next(action);
+    return result;
 }

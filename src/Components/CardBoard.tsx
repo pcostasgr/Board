@@ -9,6 +9,7 @@ import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../model/ListModel';
 import CardDateLayer from './CardDateLayer';
 import {CardData} from '../model/ListModel';
+import {loginUser} from '../Api/LoginApi';
 
 type CardBoardProps={
     boardList:ListData[];
@@ -17,6 +18,7 @@ type CardBoardProps={
     createNewListEvent:()=>void;
     setPopUpTextTitleEvent:(value:string)=>void;
     showCardDetail:(cardId:number,listId:number)=>void;
+    loginUserEvent:(username:string,password:string)=>void;
 }
 
 type CardBoardState={
@@ -155,10 +157,8 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                 <button
                     id="newListButton2"
                     onClick={() => {
-                    this
-                        .props
-                        .setPopUpTextTitleEvent("List Title")
-                }}>Add new list</button>
+                        this.props.loginUserEvent("test","test");
+                }}>Post Login</button>
 
 
                 <CardDetailView
@@ -220,7 +220,12 @@ function mapDispatchToProps(dispatch:any) {
 
         showCardDetail:(cardId:number,listId:number) =>{
             dispatch(selectCard({cardId:cardId,listId:listId}))
-        }
+        },
+
+        loginUserEvent:(username:string,password:string) =>{
+            dispatch(loginUser({username,password}));
+        },
+
     };
 };
 
