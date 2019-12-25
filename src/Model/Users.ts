@@ -46,6 +46,8 @@ export const authenticationService = {
          console.log(userValue)
          console.log("user from object");
          console.log(user);
+        console.log("user from observable");
+         console.log(currentUserSubject.value);
          console.log("-----------------------------------------");
     },
     logOut:()=>{

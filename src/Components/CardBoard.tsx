@@ -9,7 +9,7 @@ import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListModel';
 import CardDateLayer from './CardDateLayer';
 import {CardData} from '../Model/ListModel';
-import {loginUser} from '../Api/LoginApi';
+import {loginUser,loginGetUsers} from '../Api/LoginApi';
 
 type CardBoardProps={
     boardList:ListData[];
@@ -19,6 +19,7 @@ type CardBoardProps={
     setPopUpTextTitleEvent:(value:string)=>void;
     showCardDetail:(cardId:number,listId:number)=>void;
     loginUserEvent:(username:string,password:string)=>void;
+    getUsersEvent:()=>void;
 }
 
 type CardBoardState={
@@ -159,6 +160,11 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     onClick={() => {
                         this.props.loginUserEvent("test","test");
                 }}>Post Login</button>
+                <button
+                    id="newListButton3"
+                    onClick={() => {
+                        this.props.getUsersEvent();
+                }}>Post Login</button>
 
 
                 {<CardDetailView
@@ -228,6 +234,9 @@ function mapDispatchToProps(dispatch:any) {
             dispatch(loginUser({username,password}));
         },
 
+        getUsersEvent:()=>{
+            dispatch(loginGetUsers());
+        }
     };
 };
 

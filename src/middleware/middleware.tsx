@@ -25,7 +25,7 @@ export const LoginMid=(store:any)=>(next:any)=>(action:any)=>{
     let result=next(action);
     
     if(action.type==='Login/setUser'){
-        authenticationService.logIn(result);
+        authenticationService.logIn(result.payload);
     }
    
     return result;
