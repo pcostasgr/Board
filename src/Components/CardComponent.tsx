@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import CardDateLayer from './CardDateLayer';
 import CardColorLabels from './CardColorLabels';
 import TextField from '@material-ui/core/TextField';
-import {TVisibility, Nullable, LabelItemRows, MenuPosType,CardData} from '../model/ListModel';
+import {TVisibility, Nullable, LabelItemRows, MenuPosType,CardData} from '../Model/ListModel';
 import {connect} from 'react-redux';
 import {updateCard} from '../reducers/ListReducer';
 

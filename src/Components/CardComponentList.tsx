@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CardComponent from './CardComponent';
-import {MenuPosType,CardData,ListData,Nullable} from '../model/ListModel';
+import {MenuPosType,CardData,ListData,Nullable} from '../Model/ListModel';
 import TextField from '@material-ui/core/TextField';
 
 type CardComponentListProps={

@@ -1,5 +1,5 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
-import {User} from '../model/Users';
+import {User} from '../Model/Users';
 
 const LoginSlice=createSlice(
 {

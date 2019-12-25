@@ -1,3 +1,4 @@
+import { authenticationService } from "../Model/Users";
 
 export const Logger=(store:any)=>(next:any)=>(action:string)=>{
     console.log("dispatching",action);
@@ -27,6 +28,6 @@ export const LoginMid=(store:any)=>(next:any)=>(action:any)=>{
 
     let result=next(action);
     
-    localStorage.setItem('currentUser', JSON.stringify(result));
+    authenticationService.logIn(result);
     return result;
 }

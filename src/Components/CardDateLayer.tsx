@@ -1,7 +1,7 @@
 import React from 'react';
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import {connect} from 'react-redux';
-import {CardData} from '../model/ListModel';
+import {CardData} from '../Model/ListModel';
 import {updateCard} from '../reducers/ListReducer';
 
 type CardDateLayerProps={

@@ -6,9 +6,9 @@ import CardDetailView from './CardDetailView';
 import CardComponentList from './CardComponentList';
 import {addList,selectCard} from '../reducers/ListReducer';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
-import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../model/ListModel';
+import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListModel';
 import CardDateLayer from './CardDateLayer';
-import {CardData} from '../model/ListModel';
+import {CardData} from '../Model/ListModel';
 import {loginUser} from '../Api/LoginApi';
 
 type CardBoardProps={
@@ -161,7 +161,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                 }}>Post Login</button>
 
 
-                <CardDetailView
+                {<CardDetailView
                     key={"CardDetailView"+this.selectedCardId}
                     selectedListId={this.selectedListId}
                     selectedCardId={this.selectedCardId}
@@ -169,8 +169,9 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     callf={this.enableContainer}
                     topValue={this.state.menuTopValue}
                     leftValue={this.state.menuLeftValue}
-                />
+                />}
 
+                {
                 <PopUpDim
                     selectedListId={this.selectedListId}
                     callf={this.enableContainer}
@@ -178,6 +179,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     topValue={this.state.menuTopValue}
                     leftValue={this.state.menuLeftValue}
                 />
+                }
 
                 <div className="board-header-div-table">
                     <table
@@ -189,7 +191,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                         <col width="250"></col>
                         <tbody>
                             <tr>
-                                {listData}
+                                {listData} 
                             </tr>
                         </tbody>
                     </table>

@@ -1,10 +1,8 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {getComponentDb} from './../store/mockdb'
 
-import * as lm from '../model/ListModel'
-import {AddCardPayload,SelCardPayload} from './../model/PayLoads'
-import { ActionNoteAdd } from 'material-ui/svg-icons';
-import { ListSubheader } from '@material-ui/core';
+import * as lm from '../Model/ListModel'
+import {AddCardPayload,SelCardPayload} from '../Model/PayLoads'
 
 let initialState:lm.ListDataArray=getComponentDb();
 

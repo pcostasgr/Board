@@ -7,7 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import {KeyboardDatePicker} from '@material-ui/pickers';
-import {CardData} from '../model/ListModel';
+import {CardData} from '../Model/ListModel';
 import { throwStatement } from '@babel/types';
 
 function getEventTarget(e:any) {
@@ -90,6 +90,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		var date_;
 		
 		console.log("Main Title:");
+		{/*
 		if(this.props.cardData.cardDate!=null){
 
 			dateField=<KeyboardDatePicker
@@ -112,6 +113,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		}else{
 			dateField=null;
 		}
+	*/}
 
 		return(
 			<div id={"cardlist"+this.props.cardData.id} className="card-menu-list" 

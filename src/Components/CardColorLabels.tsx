@@ -1,6 +1,6 @@
 import React from 'react';
 import CardColorLabelRows from './CardColorLabelRows';
-import * as m from '../model/ListModel';
+import * as m from '../Model/ListModel';
 
 
 type CardColorLabelProps={

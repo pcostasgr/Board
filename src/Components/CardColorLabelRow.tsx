@@ -1,5 +1,5 @@
 import React from 'react';
-import * as m from '../model/ListModel'
+import * as m from '../Model/ListModel'
 
 type CardColorLabelRowProps={
     data:m.Nullable<m.LabelItemRows>;
