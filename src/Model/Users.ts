@@ -27,7 +27,7 @@ const getUserFromStorage=():User => {
     if(ls ==='undefined'){
         return getEmptyUser(); 
     }else{
-        return JSON.parse(ls?ls:"");
+        return JSON.parse(ls?ls:"{}");
     } 
 };
 
@@ -46,7 +46,7 @@ export const authenticationService = {
          console.log(userValue)
          console.log("user from object");
          console.log(user);
-        console.log("user from observable");
+         console.log("user from observable");
          console.log(currentUserSubject.value);
          console.log("-----------------------------------------");
     },

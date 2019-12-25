@@ -10,7 +10,7 @@ import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListM
 import CardDateLayer from './CardDateLayer';
 import {CardData} from '../Model/ListModel';
 import {loginUser,loginGetUsers} from '../Api/LoginApi';
-
+import {authenticationService} from '../Model/Users'
 type CardBoardProps={
     boardList:ListData[];
     cardDetail:CardData;
@@ -164,8 +164,12 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     id="newListButton3"
                     onClick={() => {
                         this.props.getUsersEvent();
-                }}>Post Login</button>
-
+                }}>Get All Users</button>
+                <button
+                    id="newListButton4"
+                    onClick={() => {
+                        authenticationService.logOut();
+                }}>Logout</button>
 
                 {<CardDetailView
                     key={"CardDetailView"+this.selectedCardId}
@@ -236,6 +240,10 @@ function mapDispatchToProps(dispatch:any) {
 
         getUsersEvent:()=>{
             dispatch(loginGetUsers());
+        }
+        ,
+        logOutUser:()=>{
+            dispatch();
         }
     };
 };
