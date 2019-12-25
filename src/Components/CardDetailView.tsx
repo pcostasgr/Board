@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import {CardData} from '../Model/ListModel';
 import { throwStatement } from '@babel/types';
+import { isThisISOWeek } from 'date-fns';
 
 function getEventTarget(e:any) {
     e = e || window.event;
@@ -42,7 +43,6 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		this.cardTitle=this.props.cardData.title;
 		this.deleteCardEvent=this.deleteCardEvent.bind(this);
 		this.closeControl=this.closeControl.bind(this);
-		this.state={cardData:this.props.cardData};
 	}
         
 	onClickEvent(e:any){
@@ -67,33 +67,32 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 	}
 
 	saveCardEvent(){
-		//console.log("New card title:" + this.cardTitle);
 		this.props.updateCardEvent({...this.props.cardData,title:this.cardTitle});
 		this.closeControl();
 	}
 
 	handleDateChange=(date:any)=> {
+		
 		var month=date.getMonth();
 		month+=1;
 		var formatedDate=date.getFullYear() + "-" + month + "-" + date.getDate();
-		//this.setState({cardData:{...this.state.cardData,cardDate:formatedDate}});
+		if(this.props.cardData.cardDate==formatedDate) return;
+
 		this.props.updateCardEvent({...this.props.cardData,cardDate:formatedDate});
 	};
 	
 	handleTextFieldChange(e:any){
-		console.log(e.target.value);
+		console.log("handle:" + e.target.value);
 		this.cardTitle=e.target.value;
 	}
 
 	render(){
 		var dateField;
 		var date_;
-		
-		console.log("Main Title:");
-		{/*
-		if(this.props.cardData.cardDate!=null){
 
-			dateField=<KeyboardDatePicker
+		if(this.props.cardData.cardDate!=null ){
+
+			{/*dateField=<KeyboardDatePicker
 				disableToolbar
 				variant="inline"
 				margin="normal"
@@ -109,13 +108,17 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				InputProps={{
 					disableUnderline: true,
 				}}
-			/>    
+			/>*/}  
+			dateField=null;
 		}else{
 			dateField=null;
 		}
-	*/}
+	
+
+		console.log("card title :" +this.props.cardData.title);
 
 		return(
+
 			<div id={"cardlist"+this.props.cardData.id} className="card-menu-list" 
 			style={{ top:this.props.topValue,left:this.props.leftValue,
 				visibility:this.props.visibility}}>
@@ -175,7 +178,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 					</table>
 
 			</div>
-		);
+		);	
 	}
 }
 

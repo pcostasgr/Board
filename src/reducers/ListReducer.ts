@@ -100,10 +100,18 @@ const listDisplaySlice=createSlice(
             selectCard(state:lm.ListDataArray,action:PayloadAction<SelCardPayload>){
                 
                 const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.cardId,state.lists);
+
+                console.log("index:"+cardIndex);
+
                 if(cardIndex==-1) { return state; }
                 
                 var cardData=state.lists[listIndex].cardData;
+
+                console.log("select Card");
+                
+
                 if(cardData){
+                console.log(cardData[cardIndex]);
                     return {...state,cardData:cardData[cardIndex]};
                 }else{
                     return state;
