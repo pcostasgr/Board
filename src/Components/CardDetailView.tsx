@@ -72,12 +72,10 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 	}
 
 	handleDateChange=(date:any)=> {
-		
 		var month=date.getMonth();
 		month+=1;
 		var formatedDate=date.getFullYear() + "-" + month + "-" + date.getDate();
-		if(this.props.cardData.cardDate==formatedDate) return;
-
+		if(this.props.cardData.cardDate===formatedDate) return;
 		this.props.updateCardEvent({...this.props.cardData,cardDate:formatedDate});
 	};
 	
@@ -90,9 +88,10 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		var dateField;
 		var date_;
 
-		if(this.props.cardData.cardDate!=null ){
+		if(this.props.cardData.cardDate!=null && this.props.visibility=='visible' ){
 
-			{/*dateField=<KeyboardDatePicker
+			dateField=<KeyboardDatePicker
+				key={"datePickerPreviewCard"+this.props.cardData.id}
 				disableToolbar
 				variant="inline"
 				margin="normal"
@@ -100,7 +99,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				format="dd/MM/yyyy"
 				onChange={this.handleDateChange}
 				autoOk={true}
-				value={this.props.cardData.cardDate}
+				value={new Date(this.props.cardData.cardDate)}
 				defaultValue={new Date(this.props.cardData.cardDate)}
 				KeyboardButtonProps={{
 					'aria-label': 'change date',
@@ -108,8 +107,8 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				InputProps={{
 					disableUnderline: true,
 				}}
-			/>*/}  
-			dateField=null;
+			/>;  
+			//dateField=null;
 		}else{
 			dateField=null;
 		}
@@ -133,7 +132,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 								multiline rowsMax="10"
 								defaultValue={this.props.cardData.title}
 								onChange={this.handleTextFieldChange}
-								fullWidth={true}
+								//fullWidth={true}
 							/>
 						</td>
 					</tr>
@@ -152,12 +151,12 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 							</tr>
 							<tr>
 								<td>
-									<TextField
+									{/*<TextField
 									id="ListNameTextId"
 									label="Value"
 									multiline rowsMax="1"
 									defaultValue="New TextField"
-									/>
+									/>*/}
 								</td>
 							</tr>
 						</td>
