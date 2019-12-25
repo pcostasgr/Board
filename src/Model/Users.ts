@@ -23,8 +23,12 @@ const getEmptyUser=():User => {
 
 
 const getUserFromStorage=():User => {
-    var ls=localStorage.getItem("currentUser");    
-    return JSON.parse(ls?ls:"");
+    var ls=localStorage.getItem("currentUser");   
+    if(ls ==='undefined'){
+        return getEmptyUser(); 
+    }else{
+        return JSON.parse(ls?ls:"");
+    } 
 };
 
 const currentUserSubject = new BehaviorSubject<User>(getUserFromStorage());

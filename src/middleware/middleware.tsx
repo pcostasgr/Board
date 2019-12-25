@@ -22,12 +22,10 @@ export const TestCreateCard=(store:any)=>(next:any)=>(action:any)=>{
 
 export const LoginMid=(store:any)=>(next:any)=>(action:any)=>{
 
-    
-
     let result=next(action);
     
-    if(action.type=='Login/setUser'){
-        authenticationService.logIn(store.payload);
+    if(action.type==='Login/setUser'){
+        authenticationService.logIn(result);
     }
    
     return result;
