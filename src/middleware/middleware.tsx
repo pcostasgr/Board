@@ -28,6 +28,6 @@ export const LoginMid=(store:any)=>(next:any)=>(action:any)=>{
 
     let result=next(action);
     
-    authenticationService.logIn(result);
+    authenticationService.logIn(result.payload);
     return result;
 }
