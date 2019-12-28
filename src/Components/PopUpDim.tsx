@@ -140,8 +140,7 @@ class PopUpDim extends React.Component<PopUpDimProps>{
       						</List>
 						</td>
 					</tr>
-									</table>
-
+				</table>
 			</div>
 		);
 	}
@@ -152,6 +151,7 @@ function mapDispatchToProps(dispatch:any) {
         createNewCardEvent: (listId:number,cardTitle:string) => {
             dispatch(addCard({
 				listId:listId
+				,cardid:-1
 				,cardTitle:cardTitle
 			})
 			)

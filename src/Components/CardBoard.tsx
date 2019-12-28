@@ -10,7 +10,10 @@ import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListM
 import CardDateLayer from './CardDateLayer';
 import {CardData} from '../Model/ListModel';
 import {loginUser,loginGetUsers} from '../Api/LoginApi';
+import {addListApi} from '../Api/ListsApi';
 import {authenticationService} from '../Model/Users'
+import store from '../store/indexStore';
+
 type CardBoardProps={
     boardList:ListData[];
     cardDetail:CardData;
@@ -123,9 +126,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var menuEvent=this.disableContainer_;
         var listData = cardList.map(function (e) {
             return <td id={"tdlist" + e.listid} className="board-table-cell">
-
-                <div className="card-list-head">
-                   
                         <CardComponentList
                             key={"CardComponentList"+e.listid}
                             listId={e.listid}
@@ -133,9 +133,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                             menuEvent={menuEvent}
                             data={e}
                             />
-                 
-                </div>
-
             </td>
 
         }, this);
@@ -170,6 +167,13 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     onClick={() => {
                         authenticationService.logOut();
                 }}>Logout</button>
+                <button
+                    id="Test Api"
+                    onClick={() => {
+                        console.log("Test Api call");
+                        store.dispatch(addListApi(-1000,"Costas Rules",20));
+                }}>Test Api</button>
+
 
                 {<CardDetailView
                     key={"CardDetailView"+this.selectedCardId}
@@ -190,24 +194,13 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     leftValue={this.state.menuLeftValue}
                 />
                 }
-
-                <div className="board-header-div-table">
-                    <table
-                        className="board-header-table"
-                        style={{
+                <div 
+                    style={{
                         pointerEvents:this.state.divPointerEvent,
-                        opacity: this.state.opacity,
+                        opacity:this.state.opacity,
                     }}>
-                        <col width="250"></col>
-                        <tbody>
-                            <tr>
-                                {listData} 
-                            </tr>
-                        </tbody>
-                    </table>
-
+                      {listData}  
                 </div>
-
             </div>
         );
     }
@@ -223,7 +216,7 @@ const mapStateToProps = (state:any) => {
 function mapDispatchToProps(dispatch:any) {
     return {
         createNewListEvent: () => {
-            dispatch(addList("Brand New List"))
+            dispatch(addList({listid:-1,listTitle:"Brand New List"}))
         },
 
         setPopUpTextTitleEvent:(value:string) =>{
@@ -240,8 +233,8 @@ function mapDispatchToProps(dispatch:any) {
 
         getUsersEvent:()=>{
             dispatch(loginGetUsers());
-        }
-        ,
+        },
+
         logOutUser:()=>{
             dispatch();
         }

@@ -7,15 +7,18 @@ export const Logger=(store:any)=>(next:any)=>(action:string)=>{
     return result;
 }
 
-export const TestCreateCard=(store:any)=>(next:any)=>(action:any)=>{
+export const ListReducerMid=(store:any)=>(next:any)=>(action:any)=>{
 
     console.log("Add Card before dispatching",action.type,action);
 
-    if(action.type!="listDisplay/addCard"){
-        return store; 
-    }
-    console.log("Add Card dispatched",action);
-    let result=next(action);
+    var action_={...action};
+
+    /*if(action.type=='listDisplay/addList'){
+        action_.payload.listTitle="NEW SUPER LIST";
+    }*/
+
+    console.log("Add Card dispatched",action_);
+    let result=next(action_);
     return result;
 }
 

@@ -1,11 +1,11 @@
 .list-header {
-    border-radius: 10px;
+    background-color: #4286f4;
 }
 
 .card-list-head {
-    padding-right: 5px;
-    padding-top: 2px;
-    padding-left: 5px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
     width: 320px;
     background-color: #e1e4ea;
 }
@@ -32,7 +32,7 @@
 }
 
 .simple-header {
-    background-color: #e1e4ea;
+   background-color: #e1e4ea;
 }
 
 .flat_button {
@@ -44,7 +44,7 @@
     border: none;
 }
 .flat_button:hover {
-    background-color: #b4b8c1;
+    background-color: #bac1b4;
     text-shadow: -1px 1px #ccffff;
 }
 .section.flat_button:active {
@@ -79,7 +79,8 @@
 }
 
 .board-header-table-div{
-    width:600
+    width:600;
+    background-color: #4286f4;
 }
 
 .board-header-table {
@@ -89,6 +90,7 @@
     overflow-y: scroll;
     table-layout:auto;
     border:none;
+    background-color:#4CAF50;
 }
 
 .board-table-row {
@@ -156,5 +158,5 @@
   max-width: 400px;
   margin: 0 auto;
   background: #f1f1f1;
-  padding: 10px 0;
+  padding: 0 0;
 }

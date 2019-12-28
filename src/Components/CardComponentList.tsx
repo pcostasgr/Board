@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import CardComponent from './CardComponent';
 import {MenuPosType,CardData,ListData,Nullable} from '../Model/ListModel';
 import TextField from '@material-ui/core/TextField';
+import { rgbToHex } from '@material-ui/core/styles';
 
 type CardComponentListProps={
     listId:number;
@@ -80,19 +81,21 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
 
         return (
             <div
-                className="simple-header"
                 style={{
                     width:350,
-                    border:0
+                    height:"100%",
+                    background:"#FFFFFF"
                 }}>
                 <table style={{
                     width: "100%", border:0
                 }}>
-                    <tbody>
-                        <tr >
-                                <td>
-                                    <div className="list-header-div-content" id={"ListHeaderFieldIdv"+listid}>
-                                        <span> 
+                   <tbody>
+                        <tr  >
+                                 <td>
+                                    <div className="list-header-div-content" 
+                                    id={"ListHeaderFieldIdv"+listid}
+                                    >
+                                       <span> 
                                             <TextField
                                                 key={listHeaderTextId}
                                                 value={this.state.listTitle}
@@ -104,18 +107,22 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
 
                                                 style={{ width:300}}
                                             />
-                                        </span>
+                                            </span>
                                         <span><button className="flat_button" onClick={this.flatButtonClick}>...</button></span>
+                                            
                                     </div>
+                                            
                                 </td>
                         </tr>
                         <tr>
                             <td>
-                                <div className="card-container">
-                                    {cardData}
-                                            </div>
+                                <div className="card-container"
+                                >
+                                     {cardData}
+                                </div>
                             </td>
                         </tr>
+                        
                     </tbody>
                 </table>
             </div>

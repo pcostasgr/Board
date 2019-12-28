@@ -2,7 +2,7 @@ import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {getComponentDb} from './../store/mockdb'
 
 import * as lm from '../Model/ListModel'
-import {AddCardPayload,SelCardPayload} from '../Model/PayLoads'
+import {AddListPayload,AddCardPayload,SelCardPayload} from '../Model/PayLoads'
 
 let initialState:lm.ListDataArray=getComponentDb();
 
@@ -11,19 +11,26 @@ const listDisplaySlice=createSlice(
         name:"listDisplay",
         initialState,
         reducers:{
-            addList(state:lm.ListDataArray,action:PayloadAction<string>){
+            addList(state:lm.ListDataArray,action:PayloadAction<AddListPayload>){
                var maxListId=0;
-                if(state.lists.length>0){
-                        var maxListId:number=Math.max.apply(Math,state.lists.map((elem)=>{
-        
-                        return elem.listid
-                    }));
+               var newKey=0;
+
+               if(action.payload.listid<=0) {
+
+                    if(state.lists.length>0){
+                            var maxListId:number=Math.max.apply(Math,state.lists.map((elem)=>{
+                            return elem.listid
+                        }));
+                    }
+                    
+                    newKey=maxListId+1;
+                }else{
+                    newKey=action.payload.listid;
                 }
-                
-                var newKey=maxListId+1;
+
                 state.lists.push({
                     listid:newKey,
-                    listTitle:action.payload+ newKey,
+                    listTitle:action.payload.listTitle+ newKey,
                     cardData:[]
                 });
                 
@@ -61,18 +68,23 @@ const listDisplaySlice=createSlice(
                     cardData=[];
                 }
                 
-                var maxCardId:number=Math.max.apply(Math,state.lists.map((elem)=>{
-    
-                    var cards:lm.Nullable<lm.CardData[]>=elem.cardData;
-                    if(!cards) return 0;
+                var cardid=-action.payload.cardid;
 
-                     return Math.max.apply(Math,cards.map(
-                        (cardElem:lm.CardData)=>{return cardElem.id;}
-                        ));
+                if (cardid<=0) {
                     
-                }));
+                        var maxCardId:number=Math.max.apply(Math,state.lists.map((elem)=>{
+        
+                        var cards:lm.Nullable<lm.CardData[]>=elem.cardData;
+                        if(!cards) return 0;
+
+                        return Math.max.apply(Math,cards.map(
+                            (cardElem:lm.CardData)=>{return cardElem.id;}
+                            ));
+                        
+                    }));
+                    cardid=maxCardId+1;
+                }                
                 
-                var cardid=maxCardId+1;
                 var title=action.payload.cardTitle+ " " + cardid;
 
                 cardData.push({
