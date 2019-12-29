@@ -8,11 +8,12 @@ import {addList,selectCard} from '../reducers/ListReducer';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListModel';
 import CardDateLayer from './CardDateLayer';
-import {CardData} from '../Model/ListModel';
+import {CardData,CardCheckList} from '../Model/ListModel';
 import {loginUser,loginGetUsers} from '../Api/LoginApi';
 import {addListApi} from '../Api/ListsApi';
 import {authenticationService} from '../Model/Users'
 import store from '../store/indexStore';
+import CardCheckListComp from './CardCheckListComp';
 
 type CardBoardProps={
     boardList:ListData[];
@@ -141,7 +142,33 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var topValue = 100;
         var leftValue = 50;
         
+        var checkList:CardCheckList={
+            checkListId:1000,
+            checkListTitle:"List Title",
+            cardId:1,
+            items:[
+                {
+                    itemListId:1
+                    ,itemTitle:"Title 1"
+                    ,ischecked:false
+                    ,checkListId:1000
+                },
+                {
+                    itemListId:2
+                    ,itemTitle:"Title 2"
+                    ,ischecked:true
+                    ,checkListId:1000
+                },
+                {
+                    itemListId:3
+                    ,itemTitle:"Title 3"
+                    ,ischecked:false
+                    ,checkListId:1000
+                }
+            ]
+        };
 
+        
         return (
             <div className="list-header">
                 <button
@@ -174,6 +201,11 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                         store.dispatch(addListApi(-1000,"Costas Rules",20));
                 }}>Test Api</button>
 
+                <CardCheckListComp
+                    key="ListComp"
+                    cardid={1}
+                    list={checkList}
+                />
 
                 {<CardDetailView
                     key={"CardDetailView"+this.selectedCardId}

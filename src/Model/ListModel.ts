@@ -10,6 +10,21 @@ export type ListItem={
     done:number
 }
 
+export type CardCheckListItem={
+    itemListId:number,
+    itemTitle:string,
+    ischecked:boolean,
+    checkListId:number,
+}
+
+export type CardCheckList={
+    checkListId:number,
+    checkListTitle:string,
+    cardId:number,
+    items:CardCheckListItem[]
+}
+
+
 export type LabelItem={
     color:string
     width:number
