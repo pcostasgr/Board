@@ -54,6 +54,7 @@ const listDisplaySlice=createSlice(
                 return state;
             },
             addCard(state:lm.ListDataArray,action:PayloadAction<AddCardPayload>){
+
                 var listIndex= state.lists.findIndex( (elem) => {
                     return elem.listid===action.payload.listId
                 } );
@@ -68,7 +69,7 @@ const listDisplaySlice=createSlice(
                     cardData=[];
                 }
                 
-                var cardid=-action.payload.cardid;
+                var cardid=action.payload.cardid;
 
                 if (cardid<=0) {
                     

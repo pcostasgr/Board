@@ -17,8 +17,8 @@ export const ListReducerMid=(store:any)=>(next:any)=>(action:any)=>{
         action_.payload.listTitle="NEW SUPER LIST";
     }*/
 
-    console.log("Add Card dispatched",action_);
     let result=next(action_);
+
     return result;
 }
 
