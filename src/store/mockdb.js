@@ -223,6 +223,34 @@ export function getComponentDb() {
     };
 }
 
+export function getCheckListsDb(cardid){
+    return [{
+            checkListId:1000,
+            checkListTitle:"List Title",
+            cardId:cardid,
+            items:[
+                {
+                    itemListId:1
+                    ,itemTitle:"Title 1"
+                    ,ischecked:false
+                    ,checkListId:1000
+                },
+                {
+                    itemListId:2
+                    ,itemTitle:"Title 2"
+                    ,ischecked:true
+                    ,checkListId:1000
+                },
+                {
+                    itemListId:3
+                    ,itemTitle:"Title 3"
+                    ,ischecked:false
+                    ,checkListId:1000
+                }
+            ]
+        }];
+}
+
 export function getComponentDb2() {
     return {
         listHeaders: [

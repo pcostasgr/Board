@@ -10,6 +10,7 @@ import {KeyboardDatePicker} from '@material-ui/pickers';
 import {CardData} from '../Model/ListModel';
 import { throwStatement } from '@babel/types';
 import { isThisISOWeek } from 'date-fns';
+import CardCheckListComp from './CardCheckListComp';
 
 function getEventTarget(e:any) {
     e = e || window.event;
@@ -115,12 +116,14 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 	
 
 		console.log("card title :" +this.props.cardData.title);
-
+	
 		return(
 
 			<div id={"cardlist"+this.props.cardData.id} className="card-menu-list" 
 			style={{ top:this.props.topValue,left:this.props.leftValue,
-				visibility:this.props.visibility}}>
+				visibility:this.props.visibility,
+				width:800
+				}}>
 				<table>
 					<col width="100%"></col>
 					<tr id="DetailTitleText" >
@@ -139,8 +142,8 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				</table>
 
 				<table>
-				    <col width="70%"></col>
-					<col width="30%"></col>
+				    <col width="80%"></col>
+					<col width="20%"></col>
 					<tr id="DetailsMainRow">
 						<td id="MainLeftPanel" >
 							<tr>
@@ -157,6 +160,11 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 									multiline rowsMax="1"
 									defaultValue="New TextField"
 									/>*/}
+
+								<CardCheckListComp
+				                    key={"ListComp1"}
+				                    cardid={this.props.cardData.id}
+								/>
 								</td>
 							</tr>
 						</td>

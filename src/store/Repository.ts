@@ -1,8 +1,9 @@
-import {getComponentDb} from './mockdb';
+import {getComponentDb,getCheckListsDb} from './mockdb';
 import * as lm from '../Model/ListModel';
 
 interface IRepository {
     GetData():lm.ListDataArray;
+    GetCheckListData(cardId:number):lm.CardCheckList[];
     AddList(list:lm.ListData):{status:number,errmsg:string};
     AddCard(card:lm.CardData):{status:number,errmsg:string };
     UpdateCard(card:lm.CardData):{status:number,errmsg:string};
@@ -15,8 +16,13 @@ class MockRepository
     implements IRepository {
 
     constructor(){}
+
     GetData(){
         return getComponentDb();
+    }
+
+    GetCheckListData(cardId:number){
+        return getCheckListsDb();
     }
 
     AddList(list:lm.ListData){
@@ -61,6 +67,10 @@ export class StoreFront {
     GetData(){
         return this.repo.GetData();    
     }
+
+    GetDataCheckList(cardId:number){
+        return this.repo.GetCheckListData(cardId);
+    }
 }
 
-export const  boardSore=new StoreFront(new MockRepository());
+export const  boardRepo=new StoreFront(new MockRepository());

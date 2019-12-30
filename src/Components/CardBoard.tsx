@@ -142,7 +142,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var topValue = 100;
         var leftValue = 50;
         
-        var checkList:CardCheckList={
+        var checkListArr:CardCheckList[]=[{
             checkListId:1000,
             checkListTitle:"List Title",
             cardId:1,
@@ -166,9 +166,14 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     ,checkListId:1000
                 }
             ]
-        };
+        }];
 
-        
+        /*var cardCheckLists=
+            <CardCheckListComp
+                    key={"ListComp1"}
+                    cardid={1}
+                />;*/
+
         return (
             <div className="list-header">
                 <button
@@ -201,11 +206,8 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                         store.dispatch(addListApi(-1000,"Costas Rules",20));
                 }}>Test Api</button>
 
-                <CardCheckListComp
-                    key="ListComp"
-                    cardid={1}
-                    list={checkList}
-                />
+                
+                {/*{cardCheckLists}*/}
 
                 {<CardDetailView
                     key={"CardDetailView"+this.selectedCardId}
