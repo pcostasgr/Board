@@ -72,7 +72,10 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 			<div id="PopUpDimCard" className="popup-div" style={{ top:this.props.topValue,
 			left:this.props.leftValue,visibility:this.props.visibility}}>
 				<table>
+					<colgroup>
 					<col width="100%"></col>
+					</colgroup>
+					<tbody>
 					<tr id="DetailTitleText" >
 						<td>
 							<TextField
@@ -81,19 +84,24 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 								name="description_field"
 								multiline rowsMax="10"
 								value={this.props.initTextValue}
-								defaultValue={this.props.initTextValue}
+								//defaultValue={this.props.initTextValue}
 								onChange={this.handleTextFieldChange}
 								fullWidth={true}
 							/>
 						</td>
 					</tr>
+					</tbody>
 				</table>
 
 				<table>
+					<colgroup>
 				    <col width="70%"></col>
 					<col width="30%"></col>
+					</colgroup>
+					<tbody>
 					<tr id="DetailsMainRow">
 						<td id="MainLeftPanel" >
+							<table><tbody>
 							<tr>
 								<td>Labels</td>
 								<td>
@@ -115,6 +123,7 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 									/>    
 								</td>
 							</tr>
+							
 							<tr>
 								<td>
 									<TextField
@@ -125,6 +134,7 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 									/>
 								</td>
 							</tr>
+                        </tbody></table>
 						</td>
 						<td id="MainRightPanel" >
 							<List component="nav" aria-label="Stack actions">
@@ -140,6 +150,7 @@ class PopUpDim extends React.Component<PopUpDimProps>{
       						</List>
 						</td>
 					</tr>
+				</tbody>
 				</table>
 			</div>
 		);

@@ -114,7 +114,7 @@ CardComponentState > {
                     margin="normal"
                      multiline
                     value={this.props.cardData.title}
-                    defaultValue={this.props.cardData.title} 
+                    //defaultValue={this.props.cardData.title} 
                     onChange={this.handleTitleChange} 
                     InputProps={{
                         disableUnderline: true

@@ -36,10 +36,23 @@ const listDisplaySlice=createSlice(
                 
                 return state;
             },
+            updateListTitle(state:lm.ListDataArray,action:PayloadAction<{listid:number,listTitle:string}>){
+                var listIndex:number=state.lists.findIndex(
+                    (elem)=>{
+                        return elem.listid===action.payload.listid;
+                    }
+                );
 
+                if(listIndex<0) return state;
+                
+                var list=state.lists[listIndex];
+                
+                list.listTitle=action.payload.listTitle;
+
+                return state;
+            },
             deleteList(state:lm.ListDataArray,action:PayloadAction<number>){
                 
-                console.log("selIndex",action.payload);
                 var listIndex=state.lists.findIndex(
                     (elem)=>{
                         return elem.listid===action.payload;
@@ -176,6 +189,7 @@ const listDisplaySlice=createSlice(
 
 export const {
     addList,
+    updateListTitle,
     deleteList,
     addCard,
     deleteCard,

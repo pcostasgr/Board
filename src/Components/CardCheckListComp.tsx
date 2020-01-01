@@ -33,9 +33,11 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
 
         const itemRows=listElem.items.map((elem:CardCheckListItem)=>{
             
-            return <tr>
+            return  <React.Fragment key={"ReactFrag"+key_+elem.itemListId}> 
+                    <tr id={"tr_" + key_+elem.itemListId} >
                     <td>
-                        <input type="checkbox" 
+                        <div id={"divItem"+key_+elem.itemListId}>
+                        <input type="checkbox"
                         id={"item"+key_+elem.itemListId} 
                         onChange={(event:any)=>{
                             var elem_={...elem,ischecked:event.target.checked};
@@ -48,7 +50,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                         <textarea id={"textArea"+key_+elem.itemListId} 
                         rows={1} cols={30} 
                         defaultValue={elem.itemTitle}
-                        value={elem.itemTitle}
+                        //value={elem.itemTitle}
                         onChange={(event:any)=>{
                             var elem_={...elem,itemTitle:event.target.value};
                              updateItemEvent(elem_);
@@ -66,17 +68,21 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                         >
                             Delete
                         </button> 
-                </td></tr>;
+                    </div>
+                </td></tr>
+                </React.Fragment> 
         });
 
-        return <div id={"ChackListDiv"+key_}> 
+        return <React.Fragment key={"ReactFragTable"+key_}>  
+            <div id={"ChackListDiv"+key_}> 
             <table id={"table"+key_}>
+            <tbody>
             <tr>
                 <td>
                      <textarea id={"ListtextArea"+key_} 
                         rows={1} cols={50} 
                         defaultValue={listElem.checkListTitle}
-                        value={listElem.checkListTitle}
+                        //value={listElem.checkListTitle}
                         onChange={(event:any)=>{
                             var elem_={...listElem,checkListTitle:event.target.value};
                              updateListEvent(elem_);
@@ -85,7 +91,6 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                         </textarea>
                     <button
                     onClick={() => {
-                        console.log("Add checklist item");
                         insertItemEvent(
                             {
                                 itemListId:-1,
@@ -102,8 +107,10 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                 </td>
             </tr>
             {itemRows}
+            </tbody>
             </table>
-            </div>;
+            </div>
+            </React.Fragment> 
     });
 
     

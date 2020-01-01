@@ -125,7 +125,10 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				width:800
 				}}>
 				<table>
+					<colgroup>
 					<col width="100%"></col>
+					</colgroup>
+					<tbody>
 					<tr id="DetailTitleText" >
 						<td>
 							<TextField
@@ -139,13 +142,19 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 							/>
 						</td>
 					</tr>
+					</tbody>
 				</table>
 
 				<table>
+					<colgroup>
 				    <col width="80%"></col>
 					<col width="20%"></col>
+					</colgroup>
+					<tbody>
 					<tr id="DetailsMainRow">
 						<td id="MainLeftPanel" >
+							<table>
+				            <tbody>
 							<tr>
 								<td>Labels</td>
 								<td>
@@ -167,6 +176,8 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 								/>
 								</td>
 							</tr>
+				        </tbody>
+                        </table>
 						</td>
 						<td id="MainRightPanel" >
 							<List component="nav" aria-label="Stack actions">
@@ -182,6 +193,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
       						</List>
 						</td>
 					</tr>
+					</tbody>
 					</table>
 
 			</div>

@@ -64,45 +64,32 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
             dateValue_=new Date(dateValue);
 
             list.push(
+                 <React.Fragment key={"tDate"+ this.props.cardData.id}> 
                 <td style={{
                     textAlign: "left"
                 }}>
-                   {/*} <KeyboardDatePicker
-                            key={"CardLayerDatePicker"+this.props.cardData.id}
-                            disableToolbar
-                            variant="inline"
-                            margin="normal"
-                            id="date-picker-inline"
-                            value={dateValue_}
-                            defaultValue={dateValue_}
-                            format="dd/MM/yyyy"
-                            onChange={this.handleDateChange}
-                            autoOk={true}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            InputProps={{
-                                 disableUnderline: true,
-                            }}
-                        />*/}
-
                     {dateValue} 
-                                    </td>
+                </td>
+                </React.Fragment>
             );
         }
 
         if (listTotalCount > 0) {
+            
             list.push(
-                <td style={{
+             <React.Fragment key={"tListCount"+ this.props.cardData.id}> 
+                <td  style={{
                     textAlign: "right"
                 }}>
                     <b>
                         {listCompleteCount}/{listTotalCount}</b>
                 </td>
+                </React.Fragment>
             );
         }
 
         return (
+            <React.Fragment key={"tdDate"+ this.props.cardData.id}> 
             <div>
                 <table style={{
                     width: "100%"
@@ -114,6 +101,7 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
                     </tbody>
                 </table>
             </div>
+            </React.Fragment>
         );
     }
 };

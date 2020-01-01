@@ -126,7 +126,8 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var popup_=this.popup;
         var menuEvent=this.disableContainer_;
         var listData = cardList.map(function (e) {
-            return <td id={"tdlist" + e.listid} className="board-table-cell">
+            return  <React.Fragment key={"fraglist"+e.listid}>
+                    <td id={"tdlist" + e.listid} className="board-table-cell">
                         <CardComponentList
                             key={"CardComponentList"+e.listid}
                             listId={e.listid}
@@ -134,7 +135,8 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                             menuEvent={menuEvent}
                             data={e}
                             />
-            </td>
+                    </td>
+                    </React.Fragment>
 
         }, this);
 
@@ -233,7 +235,13 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                         pointerEvents:this.state.divPointerEvent,
                         opacity:this.state.opacity,
                     }}>
-                      {listData}  
+                    <table>
+                    <tbody>
+                      <tr>
+                      {listData}
+                    </tr>
+                    </tbody>
+                    </table>
                 </div>
             </div>
         );

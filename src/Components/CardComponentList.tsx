@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
 import CardComponent from './CardComponent';
 import {MenuPosType,CardData,ListData,Nullable} from '../Model/ListModel';
 import TextField from '@material-ui/core/TextField';
-import { rgbToHex } from '@material-ui/core/styles';
+import {updateListTitle} from '../reducers/ListReducer'
 
 type CardComponentListProps={
     listId:number;
     listTitle:string;
     menuEvent:(m:MenuPosType,t:any)=>void;
     data:Nullable<ListData>;
+    updateListTitleEvent:(listId:number,listTitle:string)=>void;
 }
 
 type CardComponentListState={
@@ -30,6 +32,7 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         this.state = {
             listTitle: this.props.listTitle
         };
+        this.onHandleTitleChange=this.onHandleTitleChange.bind(this);
         this.name = "CardListContainer";
     }
 
@@ -37,6 +40,11 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
 
     onListTitleChange(title:string) {
         this.setState({listTitle: title});
+    }
+
+    onHandleTitleChange(event:any){
+        this.setState({listTitle:event.target.value});
+        this.props.updateListTitleEvent(this.props.listId,event.target.value);
     }
 
     flatButtonClick() {
@@ -99,8 +107,8 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
                                             <TextField
                                                 key={listHeaderTextId}
                                                 value={this.state.listTitle}
-                                                defaultValue={this.state.listTitle}
-                                                //onChange={this.handleChange}
+                                                //defaultValue={this.state.listTitle}
+                                                onChange={this.onHandleTitleChange}
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
@@ -131,5 +139,13 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
     }
 }
 
+function mapDispatchToProps(dispatch:any) {
+    return {
+		updateListTitleEvent:(listId:number,listTitle:string)=>{
+			dispatch(updateListTitle({listid:listId,listTitle:listTitle}));
+		},
+	}
+};
 
-export default CardComponentList;
+export default connect(null, mapDispatchToProps)(CardComponentList);
+//export default CardComponentList;
