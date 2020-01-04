@@ -25,6 +25,8 @@ const getListDetailItemSelector=(list:CardCheckList,itemId:number):number=>{
 
 const getMaxListSelector=(state:CardCheckList[]):number=>{
 
+    if(state.length==0) return 1;
+
     var maxItemId:number=Math.max.apply(Math,state.map((elem)=>{
         return elem.checkListId;
     }));
@@ -69,9 +71,13 @@ const cardListItemSlice=createSlice(
         },
         insertCheckList(state:CardCheckList[],action:PayloadAction<CardCheckList>){
 
+            console.log("Action Check Id:" + action.payload.checkListId);
+
             var maxCheckListId=action.payload.checkListId<0?
             getMaxListSelector(state)
             :action.payload.checkListId;
+
+            console.log("Max Check Id:" + maxCheckListId);
 
             state.push(
                     {
