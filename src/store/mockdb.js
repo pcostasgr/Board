@@ -4,6 +4,7 @@ export function getComponentDb() {
             {
                 listid: 1,
                 listTitle: "List 1",
+                userid:1,
                 cardData: [
                     {
                         id: 1,
@@ -178,6 +179,7 @@ export function getComponentDb() {
             }, {
                 listid: 2,
                 listTitle: "List 2",
+                userid:1,
                 cardData: [
                     {
                         id: 4,

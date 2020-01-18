@@ -10,10 +10,12 @@ import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListM
 import CardDateLayer from './CardDateLayer';
 import {CardData,CardCheckList} from '../Model/ListModel';
 import {loginUser,loginGetUsers} from '../Api/LoginApi';
-import {addListApi} from '../Api/ListsApi';
+import {addListApi,getListByUserApi} from '../Api/ListsApi';
 import {authenticationService} from '../Model/Users'
 import store from '../store/indexStore';
 import CardCheckListComp from './CardCheckListComp';
+import {boardRepo} from './../store/Repository';
+
 
 type CardBoardProps={
     boardList:ListData[];
@@ -125,6 +127,12 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var cardList = this.props.boardList;
         var popup_=this.popup;
         var menuEvent=this.disableContainer_;
+
+        console.log("List Data");
+        console.log("---------------------------------------------");
+        console.log(cardList)
+        console.log("---------------------------------------------");
+
         var listData = cardList.map(function (e) {
             return  <React.Fragment key={"fraglist"+e.listid}>
                     <td id={"tdlist" + e.listid} className="board-table-cell">
@@ -205,7 +213,11 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     id="Test Api"
                     onClick={() => {
                         console.log("Test Api call");
-                        store.dispatch(addListApi(-1000,"Costas Rules",20));
+                        //store.dispatch(addListApi(-1000,"Costas Rules",20));
+                        const value=1;
+                        const str=`this is some ${value}`;
+                        console.log('str:'+str);
+                        store.dispatch(getListByUserApi(1));
                 }}>Test Api</button>
 
                 

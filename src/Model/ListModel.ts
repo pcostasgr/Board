@@ -49,12 +49,13 @@ export type CardData={
 export type ListData={
     listid:number
     listTitle:string
+    userid:number
     cardData:Nullable<CardData[]>
 }
 
 export type ListDataArray={
     lists: ListData[]
-    cardData: CardData
+    cardData:CardData
 }
 
 export type MenuPosType={

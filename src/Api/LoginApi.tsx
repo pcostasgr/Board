@@ -22,7 +22,7 @@ export const loginUser=({username,password}:LoginUserType)=>{
 
 export const loginGetUsers=()=>{
     return(dispatch:any)=>{
-        console.log("TOKEN:",authHeader());
+        //console.log("TOKEN:",authHeader());
         return ApiBase.get('/users',{headers:authHeader()})
         .then(response => {
             console.log(response);

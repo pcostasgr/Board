@@ -1,8 +1,9 @@
 import {getComponentDb,getCheckListsDb,getLabelItemsDb} from './mockdb';
 import * as lm from '../Model/ListModel';
+import {getListByUserApiInit}  from '../Api/ListsApi';
 
 interface IRepository {
-    GetData():lm.ListDataArray;
+    GetData(userId:number):lm.ListDataArray;
     GetCheckListData(cardId:number):lm.CardCheckList[];
     AddList(list:lm.ListData):{status:number,errmsg:string};
     AddCard(card:lm.CardData):{status:number,errmsg:string };
@@ -18,7 +19,7 @@ class MockRepository
 
     constructor(){}
 
-    GetData(){
+    GetData(userId:number=0){
         return getComponentDb();
     }
 
@@ -61,6 +62,54 @@ class MockRepository
     }
 }
 
+class NetCoreRepository 
+    implements IRepository {
+
+    constructor(){}
+
+    GetData(userId:number=0){
+        var response=getListByUserApiInit(userId);
+        return response;
+    }
+
+    GetCheckListData(cardId:number){
+        return getCheckListsDb();
+    }
+
+    AddList(list:lm.ListData){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
+    
+    AddCard(card:lm.CardData){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
+
+    UpdateCard(card:lm.CardData){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
+
+    DeleteCard(cardId:number){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
+
+    DeleteList(listId:number){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
+
+    GetLabelItemsData(cardId:number=0){
+        return getLabelItemsDb(cardId);
+    }
+}
 
 export class StoreFront {
     repo:IRepository;
@@ -68,8 +117,8 @@ export class StoreFront {
         this.repo=repository;
     }
 
-    GetData(){
-        return this.repo.GetData();    
+    GetData(userId:number=0){
+        return this.repo.GetData(userId);    
     }
 
     GetDataCheckList(cardId:number){

@@ -1,16 +1,18 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
-import {getComponentDb} from './../store/mockdb'
-
+import {boardRepo} from './../store/Repository'
 import * as lm from '../Model/ListModel'
 import {AddListPayload,AddCardPayload,SelCardPayload} from '../Model/PayLoads'
 
-let initialState:lm.ListDataArray=getComponentDb();
+let initialState:lm.ListDataArray=boardRepo.GetData();
 
 const listDisplaySlice=createSlice(
     {
         name:"listDisplay",
         initialState,
         reducers:{
+            getList(state:lm.ListDataArray,action:PayloadAction<lm.ListData[]>){
+                return {lists:action.payload,cardData:state.cardData};
+            },
             addList(state:lm.ListDataArray,action:PayloadAction<AddListPayload>){
                var maxListId=0;
                var newKey=0;
@@ -30,8 +32,9 @@ const listDisplaySlice=createSlice(
 
                 state.lists.push({
                     listid:newKey,
-                    listTitle:action.payload.listTitle+ newKey,
-                    cardData:[]
+                    listTitle:action.payload.listTitle+ newKey
+                    ,userid:1
+                    ,cardData:[]
                 });
                 
                 return state;
@@ -188,6 +191,7 @@ const listDisplaySlice=createSlice(
 )
 
 export const {
+    getList,
     addList,
     updateListTitle,
     deleteList,

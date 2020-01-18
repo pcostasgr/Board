@@ -41,7 +41,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		this.handleTextFieldChange=this.handleTextFieldChange.bind(this);
 		this.handleDateChange=this.handleDateChange.bind(this);
 		this.listValue="";
-		this.cardTitle=this.props.cardData.title;
+		this.cardTitle=this.props.cardData?this.props.cardData.title:" ";
 		this.deleteCardEvent=this.deleteCardEvent.bind(this);
 		this.closeControl=this.closeControl.bind(this);
 	}
@@ -89,31 +89,34 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		var dateField;
 		var date_;
 
-		if(this.props.cardData.cardDate!=null && this.props.visibility=='visible' ){
+		if(this.props.cardData){
+			if(this.props.cardData.cardDate!=null && this.props.visibility=='visible' ){
 
-			dateField=<KeyboardDatePicker
-				key={"datePickerPreviewCard"+this.props.cardData.id}
-				disableToolbar
-				variant="inline"
-				margin="normal"
-				id="date-picker-inline"
-				format="dd/MM/yyyy"
-				onChange={this.handleDateChange}
-				autoOk={true}
-				value={new Date(this.props.cardData.cardDate)}
-				defaultValue={new Date(this.props.cardData.cardDate)}
-				KeyboardButtonProps={{
-					'aria-label': 'change date',
-				}}
-				InputProps={{
-					disableUnderline: true,
-				}}
-			/>;  
-			//dateField=null;
+				dateField=<KeyboardDatePicker
+					key={"datePickerPreviewCard"+this.props.cardData.id}
+					disableToolbar
+					variant="inline"
+					margin="normal"
+					id="date-picker-inline"
+					format="dd/MM/yyyy"
+					onChange={this.handleDateChange}
+					autoOk={true}
+					value={new Date(this.props.cardData.cardDate)}
+					defaultValue={new Date(this.props.cardData.cardDate)}
+					KeyboardButtonProps={{
+						'aria-label': 'change date',
+					}}
+					InputProps={{
+						disableUnderline: true,
+					}}
+				/>;  
+				//dateField=null;
+			}else{
+				dateField=null;
+			}
 		}else{
-			dateField=null;
+			return null;
 		}
-	
 
 		console.log("card title :" +this.props.cardData.title);
 	
