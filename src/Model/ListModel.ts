@@ -26,9 +26,11 @@ export type CardCheckList={
 
 
 export type LabelItem={
+    labelitemid:number
     color:string
     width:number
     height:number
+    cardid:number
 }
 
 export type LabelItemRows={

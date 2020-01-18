@@ -44,49 +44,67 @@ export function getComponentDb() {
                             {
                                 rows: [
                                     {
+                                        labelitemid:1,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:2,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2,
                                     }, {
+                                        labelitemid:3,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:4,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }
                                 ]
                             }, {
                                 rows: [
                                     {
+                                        labelitemid:5,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:6,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:7,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:8,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }
                                 ]
                             }, {
                                 rows: [
                                     {
+                                        labelitemid:9,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }
                                 ]
                             }
@@ -100,41 +118,57 @@ export function getComponentDb() {
                             {
                                 rows: [
                                     {
+                                        labelitemid:10,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:11,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:12,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:13,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }
                                 ]
                             }, {
                                 rows: [
                                     {
+                                        labelitemid:14,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:15,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:16,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:17,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }
                                 ]
                             }
@@ -186,21 +220,29 @@ export function getComponentDb() {
                             {
                                 rows: [
                                     {
+                                        labelitemid:18,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:19,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:20,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }, {
+                                        labelitemid:21,
                                         color: "#9c0000",
                                         width: 50,
-                                        height: 10
+                                        height: 10,
+                                        cardid:2
                                     }
                                 ]
                             }
@@ -249,6 +291,46 @@ export function getCheckListsDb(cardid){
                 }
             ]
         }];
+}
+
+export function getLabelItemsDb(cardId){
+    return  [{
+        labelitemid: 1,
+        color: "#9c0000",
+        width: 50,
+        height: 10,
+        cardid:2,
+    }, {
+        labelitemid: 2,
+        color: "#9c0000",
+        width: 50,
+        height: 10,
+        cardid:2,
+    }, {
+        labelitemid: 3,
+        color: "#9c0000",
+        width: 50,
+        height: 10,
+        cardid:2,
+    }, {
+        labelitemid: 4,
+        color: "#9c0000",
+        width: 50,
+        height: 10,
+        cardid:2,
+    }, {
+        labelitemid: 5,
+        color: "#9c0000",
+        width: 50,
+        height: 10,
+        cardid:2,
+    }, {
+        labelitemid: 6,
+        color: "#9c0000",
+        width: 50,
+        height: 10,
+        cardid:2
+    }];
 }
 
 export function getComponentDb2() {

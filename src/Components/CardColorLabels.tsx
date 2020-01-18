@@ -4,8 +4,9 @@ import * as m from '../Model/ListModel';
 
 
 type CardColorLabelProps={
+	cardId:number;
 	labelItems:m.Nullable<m.LabelItemRows[]>;
-	rowCount:number
+	rowCount:number;
 }
 
 type CardColorLabelState={
@@ -50,7 +51,11 @@ class CardColorLabels extends React.Component<CardColorLabelProps,CardColorLabel
 					<tr>
 						<th>
 							< table style={{width:"inherit"}} onMouseOver={this.onMouseOver} >
-							< CardColorLabelRows labelItems={labelItems} />
+							< CardColorLabelRows 
+								cardId={this.props.cardId} 
+								//labelItems={labelItems} 
+								listData={[]}
+								/>
 							</table>
 						</th>
 					</tr>

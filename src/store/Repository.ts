@@ -1,4 +1,4 @@
-import {getComponentDb,getCheckListsDb} from './mockdb';
+import {getComponentDb,getCheckListsDb,getLabelItemsDb} from './mockdb';
 import * as lm from '../Model/ListModel';
 
 interface IRepository {
@@ -9,6 +9,7 @@ interface IRepository {
     UpdateCard(card:lm.CardData):{status:number,errmsg:string};
     DeleteCard(cardId:number):{status:number,errmsg:string};
     DeleteList(listId:number):{status:number,errmsg:string};
+    GetLabelItemsData(cardId:number):lm.LabelItem[];
 };
 
 
@@ -55,6 +56,9 @@ class MockRepository
         return {status,errmsg};
     }
 
+    GetLabelItemsData(cardId:number=0){
+        return getLabelItemsDb(cardId);
+    }
 }
 
 
@@ -70,6 +74,10 @@ export class StoreFront {
 
     GetDataCheckList(cardId:number){
         return this.repo.GetCheckListData(cardId);
+    }
+
+    getLabelItems(cardId:number=0){
+        return this.repo.GetLabelItemsData(cardId);
     }
 }
 

@@ -108,6 +108,7 @@ CardComponentState > {
                     }}
                     onClick={this.onButtonClick}>...</button>
                 <CardColorLabels key={componentId}
+                    cardId={this.props.cardData.id}
                     rowCount={this.props.rowCount}
                     labelItems={this.props.cardData.labelItems}/>
                 <TextField key={textFieldId}
