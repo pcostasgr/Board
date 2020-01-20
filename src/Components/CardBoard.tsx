@@ -270,7 +270,7 @@ const mapStateToProps = (state:any) => {
 function mapDispatchToProps(dispatch:any) {
     return {
         createNewListEvent: () => {
-            dispatch(addList({listid:-1,listTitle:"Brand New List"}))
+            dispatch(addList({listid:-1,listTitle:"Brand New List",userid:-1,cardData:null}))
         },
 
         setPopUpTextTitleEvent:(value:string) =>{

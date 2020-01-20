@@ -1,7 +1,7 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {boardRepo} from './../store/Repository'
 import * as lm from '../Model/ListModel'
-import {AddListPayload,AddCardPayload,SelCardPayload} from '../Model/PayLoads'
+import {AddCardPayload,SelCardPayload} from '../Model/PayLoads'
 
 let initialState:lm.ListDataArray=boardRepo.GetData();
 
@@ -13,7 +13,7 @@ const listDisplaySlice=createSlice(
             getList(state:lm.ListDataArray,action:PayloadAction<lm.ListData[]>){
                 return {lists:action.payload,cardData:state.cardData};
             },
-            addList(state:lm.ListDataArray,action:PayloadAction<AddListPayload>){
+            addList(state:lm.ListDataArray,action:PayloadAction<lm.ListData>){
                var maxListId=0;
                var newKey=0;
 

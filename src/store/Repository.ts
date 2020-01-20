@@ -5,11 +5,12 @@ import {getListByUserApiInit}  from '../Api/ListsApi';
 interface IRepository {
     GetData(userId:number):lm.ListDataArray;
     GetCheckListData(cardId:number):lm.CardCheckList[];
-    AddList(list:lm.ListData):{status:number,errmsg:string};
+    AddList(list:lm.ListData):void;
+    UpdateList(list:lm.ListData):void;
+    DeleteList(listId:number):void;
     AddCard(card:lm.CardData):{status:number,errmsg:string };
     UpdateCard(card:lm.CardData):{status:number,errmsg:string};
     DeleteCard(cardId:number):{status:number,errmsg:string};
-    DeleteList(listId:number):{status:number,errmsg:string};
     GetLabelItemsData(cardId:number):lm.LabelItem[];
 };
 
@@ -32,7 +33,13 @@ class MockRepository
         var status:number=0;
         return {status,errmsg};
     }
-    
+
+    UpdateList(list:lm.ListData){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
+
     AddCard(card:lm.CardData){
         var errmsg:string="OK";
         var status:number=0;
@@ -81,7 +88,12 @@ class NetCoreRepository
         var status:number=0;
         return {status,errmsg};
     }
-    
+
+    UpdateList(list:lm.ListData){
+        var errmsg:string="OK";
+        var status:number=0;
+        return {status,errmsg};
+    }
     AddCard(card:lm.CardData){
         var errmsg:string="OK";
         var status:number=0;
