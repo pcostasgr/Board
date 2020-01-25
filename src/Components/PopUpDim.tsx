@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useImperativeHandle } from 'react';
 import {connect} from 'react-redux';
-import {addCard,deleteList} from './../reducers/ListReducer';
-
+import {addCard} from './../reducers/ListReducer';
+import {boardFacade} from '../store/Repository'
 import TextField from '@material-ui/core/TextField';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import List from '@material-ui/core/List';
@@ -11,16 +11,16 @@ import {KeyboardDatePicker} from '@material-ui/pickers';
 
 type PopUpDimProps={
 	initTextValue:string;	
-	selectedListId:number;	
+	selectedListId:number;
 	topValue:number;
 	leftValue:number;
 	visibility:"hidden" | "visible";
 	createNewCardEvent:(listId:number,cardTitle:string)=>void;
 	deleteListEvent:(listId:number)=>void;
+	updateListEvent:(listId:number,listTitle:string,userid:number)=>void;
     setPopUpTextTitleEvent:(value:string)=>void;
 	callf:(v:string)=>void;
 }
-
 
 class PopUpDim extends React.Component<PopUpDimProps>{
 
@@ -42,7 +42,8 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 
 
 	buttonClick(){
-		this.props.callf(this.props.initTextValue);
+		this.props.callf(this.props.initTextValue);		
+		this.props.updateListEvent(this.props.selectedListId,this.props.initTextValue,-1);
 	}
 	
 	addNewCard(){
@@ -59,7 +60,6 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 	}
 
 	handleTextFieldChange(e:any){
-		console.log(e.target.value);
 		this.props.setPopUpTextTitleEvent(e.target.value);
 	}
 
@@ -84,7 +84,6 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 								name="description_field"
 								multiline rowsMax="10"
 								value={this.props.initTextValue}
-								//defaultValue={this.props.initTextValue}
 								onChange={this.handleTextFieldChange}
 								fullWidth={true}
 							/>
@@ -170,8 +169,13 @@ function mapDispatchToProps(dispatch:any) {
 		setPopUpTextTitleEvent:(value:string) =>{
             dispatch(setPopUpTextTitle(value))
 		},
+		updateListEvent(listId:number,listTitle:string,userid:number){
+			dispatch(boardFacade.listApi.updateListApi(
+				{listid:listId,listTitle:listTitle,userid:userid,cardData:null})
+			);
+		},
 		deleteListEvent:(listId:number)=>{
-			dispatch(deleteList(listId))
+			dispatch(boardFacade.listApi.deleteListApi(listId))
 		}
 	}
 };

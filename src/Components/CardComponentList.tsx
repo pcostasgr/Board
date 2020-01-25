@@ -69,6 +69,9 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         var me=this.props.menuEvent;
         var listid:number=this.props.listId;
         var listHeaderTextId="listHeaderTextId"+listid
+
+        console.log('Rendering List:' + listid);
+
         var cardData = this
             .props
             .data?
@@ -148,4 +151,3 @@ function mapDispatchToProps(dispatch:any) {
 };
 
 export default connect(null, mapDispatchToProps)(CardComponentList);
-//export default CardComponentList;

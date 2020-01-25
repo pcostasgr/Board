@@ -1,16 +1,11 @@
 import {getComponentDb,getCheckListsDb,getLabelItemsDb} from './mockdb';
 import * as lm from '../Model/ListModel';
-import {getListByUserApiInit}  from '../Api/ListsApi';
+import { IListApi,ListApi,ListApiMock}  from '../Api/ListsApi';
 
 interface IRepository {
+    listApi:IListApi;
     GetData(userId:number):lm.ListDataArray;
     GetCheckListData(cardId:number):lm.CardCheckList[];
-    AddList(list:lm.ListData):void;
-    UpdateList(list:lm.ListData):void;
-    DeleteList(listId:number):void;
-    AddCard(card:lm.CardData):{status:number,errmsg:string };
-    UpdateCard(card:lm.CardData):{status:number,errmsg:string};
-    DeleteCard(cardId:number):{status:number,errmsg:string};
     GetLabelItemsData(cardId:number):lm.LabelItem[];
 };
 
@@ -18,7 +13,15 @@ interface IRepository {
 class MockRepository 
     implements IRepository {
 
-    constructor(){}
+    private _listApi:IListApi;
+
+    constructor(){
+        this._listApi=new ListApiMock();
+    }
+
+    get listApi() {
+        return this._listApi;
+    }
 
     GetData(userId:number=0){
         return getComponentDb();
@@ -28,42 +31,6 @@ class MockRepository
         return getCheckListsDb();
     }
 
-    AddList(list:lm.ListData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    UpdateList(list:lm.ListData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    AddCard(card:lm.CardData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    UpdateCard(card:lm.CardData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    DeleteCard(cardId:number){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    DeleteList(listId:number){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
     GetLabelItemsData(cardId:number=0){
         return getLabelItemsDb(cardId);
     }
@@ -71,11 +38,18 @@ class MockRepository
 
 class NetCoreRepository 
     implements IRepository {
+    
+    private _listApi:IListApi;
+    constructor(){
+        this._listApi=new ListApi();
+    }
 
-    constructor(){}
+    public get listApi() {
+        return this._listApi;
+    }
 
     GetData(userId:number=0){
-        var response=getListByUserApiInit(userId);
+        var response=this.listApi.getListByUserApiInit(userId);
         return response;
     }
 
@@ -83,50 +57,21 @@ class NetCoreRepository
         return getCheckListsDb();
     }
 
-    AddList(list:lm.ListData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    UpdateList(list:lm.ListData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-    AddCard(card:lm.CardData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    UpdateCard(card:lm.CardData){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    DeleteCard(cardId:number){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
-    DeleteList(listId:number){
-        var errmsg:string="OK";
-        var status:number=0;
-        return {status,errmsg};
-    }
-
     GetLabelItemsData(cardId:number=0){
         return getLabelItemsDb(cardId);
     }
 }
 
-export class StoreFront {
-    repo:IRepository;
-    constructor(repository:IRepository){
+export class StoreFacade {
+    private repo:IRepository;
+    
+    constructor(
+        repository:IRepository){
         this.repo=repository;
+    }
+
+    public get listApi() {
+        return this.repo.listApi;
     }
 
     GetData(userId:number=0){
@@ -142,4 +87,4 @@ export class StoreFront {
     }
 }
 
-export const  boardRepo=new StoreFront(new MockRepository());
+export const  boardFacade=new StoreFacade(new MockRepository());

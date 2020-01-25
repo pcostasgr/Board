@@ -1,20 +1,17 @@
 import React from 'react';
-import {connect, useSelector} from 'react-redux';
+import {connect} from 'react-redux';
 import './../board.css';
 import PopUpDim from './PopUpDim';
 import CardDetailView from './CardDetailView';
 import CardComponentList from './CardComponentList';
-import {addList,selectCard} from '../reducers/ListReducer';
+import {selectCard} from '../reducers/ListReducer';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
 import { TVisibility ,MenuPosType, ListData, ListDataArray} from '../Model/ListModel';
-import CardDateLayer from './CardDateLayer';
 import {CardData,CardCheckList} from '../Model/ListModel';
 import {loginUser,loginGetUsers} from '../Api/LoginApi';
-import {addListApi,getListByUserApi} from '../Api/ListsApi';
 import {authenticationService} from '../Model/Users'
 import store from '../store/indexStore';
-import CardCheckListComp from './CardCheckListComp';
-import {boardRepo} from './../store/Repository';
+import {boardFacade} from './../store/Repository';
 
 
 type CardBoardProps={
@@ -128,10 +125,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var popup_=this.popup;
         var menuEvent=this.disableContainer_;
 
-        console.log("List Data");
-        console.log("---------------------------------------------");
-        console.log(cardList)
-        console.log("---------------------------------------------");
+        console.log("Rendering All List");
 
         var listData = cardList.map(function (e) {
             return  <React.Fragment key={"fraglist"+e.listid}>
@@ -217,7 +211,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                         const value=1;
                         const str=`this is some ${value}`;
                         console.log('str:'+str);
-                        store.dispatch(getListByUserApi(1));
+                        store.dispatch(boardFacade.listApi.getListByUserApi(1));
                 }}>Test Api</button>
 
                 
@@ -270,8 +264,11 @@ const mapStateToProps = (state:any) => {
 function mapDispatchToProps(dispatch:any) {
     return {
         createNewListEvent: () => {
-            dispatch(addList({listid:-1,listTitle:"Brand New List",userid:-1,cardData:null}))
+            const user=authenticationService.currentUserValue;
+            dispatch(boardFacade.listApi.insertListApi(-1,"Brand New List",user.userId));
         },
+
+
 
         setPopUpTextTitleEvent:(value:string) =>{
             dispatch(setPopUpTextTitle(value))

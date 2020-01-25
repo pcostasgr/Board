@@ -1,9 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
 
 export type User={
-    id:number,
-    firstname:string,
-    lastname:string,
+    userId:number,
+    firstName:string,
+    lastName:string,
     username:string,
     password:string,
     token:string,
@@ -12,9 +12,9 @@ export type User={
 
 const getEmptyUser=():User => {
     return {
-        id:0,
-        firstname:"",
-        lastname:"",
+        userId:-1,
+        firstName:"",
+        lastName:"",
         username:"",
         password:"",
         token:"",

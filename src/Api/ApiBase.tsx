@@ -19,3 +19,20 @@ export const authHeader=()=> {
     }
 
 };
+
+export const authHeaderStr=()=> {
+    const currentUser = authenticationService.currentUserValue;
+    if (currentUser && currentUser.token) {
+        return  `Bearer ${currentUser.token}` ;
+    } else {
+        return '';
+    }
+
+};
+
+export const fullHeader=()=>{
+    return {
+        'Content-type':'application/json',
+        'Authorization':authHeaderStr()
+    }
+}

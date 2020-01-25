@@ -9,7 +9,6 @@ export const Logger=(store:any)=>(next:any)=>(action:string)=>{
 
 export const ListReducerMid=(store:any)=>(next:any)=>(action:any)=>{
 
-    console.log("Add Card before dispatching",action.type,action);
 
     var action_={...action};
 

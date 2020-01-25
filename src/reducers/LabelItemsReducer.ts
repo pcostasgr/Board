@@ -1,8 +1,8 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {LabelItem} from '../Model/ListModel';
-import {boardRepo} from '../store/Repository';
+import {boardFacade} from '../store/Repository';
 
-const initialState:LabelItem[]=boardRepo.getLabelItems();
+const initialState:LabelItem[]=boardFacade.getLabelItems();
 
 const labelItemsSlice=createSlice(
 {

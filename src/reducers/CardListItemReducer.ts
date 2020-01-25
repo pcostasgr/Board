@@ -1,6 +1,6 @@
 import {createSlice , PayloadAction} from '@reduxjs/toolkit'
 import {CardCheckList,CardCheckListItem} from '../Model/ListModel';
-import {boardRepo} from '../store/Repository';
+import {boardFacade} from '../store/Repository';
 
 
 const getListItemByIdSelector=(state:CardCheckList[],listId:number):number=>{
@@ -64,7 +64,7 @@ const cardListItemSlice=createSlice(
     initialState:initialState,
     reducers:{
         getCheckLists(state:CardCheckList[],action:PayloadAction<number>){
-            var state_=boardRepo.GetDataCheckList(action.payload);
+            var state_=boardFacade.GetDataCheckList(action.payload);
             console.log("cardlistitemdisplay");
             console.log(state_);
             return state_;

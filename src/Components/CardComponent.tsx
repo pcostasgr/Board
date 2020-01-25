@@ -145,5 +145,4 @@ function mapDispatchToProps(dispatch:any) {
 
 
 export default connect(null,mapDispatchToProps)(CardComponent);
-//export default CardComponent;
 
