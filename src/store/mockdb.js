@@ -7,9 +7,11 @@ export function getComponentDb() {
                 userid:1,
                 cardData: [
                     {
-                        id: 1,
-                        title: "title1",
-                        cardDate: "2017-6-15",
+                        cardid: 1,
+                        cardtitle: "title1",
+                        carddate: "2017-6-15",
+                        listid:1,
+                        userid:-1,
                         listItems: [
                             {
                                 item: "1",
@@ -23,9 +25,11 @@ export function getComponentDb() {
                         ],
                         labelItems: []
                     }, {
-                        id: 2,
-                        title: "title2",
-                        cardDate: "2017-5-21",
+                        cardid: 2,
+                        cardtitle: "title2",
+                        carddate: "2017-5-21",
+                        listid:1,
+                        userid:-1,
                         listItems: [
                             {
                                 item: "1",
@@ -111,9 +115,11 @@ export function getComponentDb() {
                             }
                         ]
                     }, {
-                        id: 3,
-                        title: "title3",
-                        cardDate: "2017-8-01",
+                        cardid: 3,
+                        cardtitle: "title3",
+                        carddate: "2017-8-01",
+                        listid:1,
+                        userid:-1,
                         listItems: [],
                         labelItems: [
                             {
@@ -182,15 +188,19 @@ export function getComponentDb() {
                 userid:1,
                 cardData: [
                     {
-                        id: 4,
-                        title: "title4",
-                        cardDate: null,
+                        cardid: 4,
+                        cardtitle: "title4",
+                        carddate: null,
+                        listid:2,
+                        userid:-1,
                         listItems: [],
                         labelItems: []
                     }, {
-                        id: 5,
-                        title: "title5",
-                        cardDate: "2017-5-15",
+                        cardid: 5,
+                        cardtitle: "title5",
+                        carddate: "2017-5-15",
+                        listid:2,
+                        userid:-1,
                         listItems: [
                             {
                                 item: "1",
@@ -208,9 +218,11 @@ export function getComponentDb() {
                         ],
                         labelItems: []
                     }, {
-                        id: 6,
-                        title: "title6",
-                        cardDate: "2017-6-6",
+                        cardid: 6,
+                        cardtitle: "title6",
+                        carddate: "2017-6-6",
+                        listid:1,
+                        userid:-1,
                         listItems: [
                             {
                                 item: "1",
@@ -257,9 +269,11 @@ export function getComponentDb() {
         ]
         ,
         cardData:{
-            id:-1,
-            title:"",
-            cardDate:"",
+            cardid:-1,
+            cardtitle:"",
+            carddate:"",
+            listid:0,
+            userid:-1,
             listItems:[],
             labelItems:[]
         }

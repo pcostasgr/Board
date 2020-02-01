@@ -38,9 +38,11 @@ export type LabelItemRows={
 }
 
 export type CardData={
-    id:number
-    title:string
-    cardDate:Nullable<string>
+    cardid:number
+    cardtitle:string
+    carddate:Nullable<string>
+    userid:number
+    listid:number
     listItems:Nullable<ListItem[]>
     labelItems:Nullable<LabelItemRows[]>
 }
@@ -107,7 +109,7 @@ export function GetCardIndex(cardId:number,listData:ListData[]){
         element=listData[i];
         cardIndex=element.cardData?
         element.cardData.findIndex((elem)=>{
-            return elem.id===cardId;
+            return elem.cardid===cardId;
         })
         :-1;
 

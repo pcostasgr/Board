@@ -95,7 +95,7 @@ const listDisplaySlice=createSlice(
                         if(!cards) return 0;
 
                         return Math.max.apply(Math,cards.map(
-                            (cardElem:lm.CardData)=>{return cardElem.id;}
+                            (cardElem:lm.CardData)=>{return cardElem.cardid;}
                             ));
                         
                     }));
@@ -105,9 +105,11 @@ const listDisplaySlice=createSlice(
                 var title=action.payload.cardTitle+ " " + cardid;
 
                 cardData.push({
-                            id:cardid,
-                            title:title,
-                            cardDate:dateNow.toDateString(),
+                            cardid:cardid,
+                            cardtitle:title,
+                            listid:action.payload.listId,
+                            userid:action.payload.userid,
+                            carddate:dateNow.toDateString(),
                             listItems:[],
                             labelItems:[]
                 });
@@ -148,7 +150,7 @@ const listDisplaySlice=createSlice(
             },
 
            updateCard(state:lm.ListDataArray,action:PayloadAction<lm.CardData>){
-                const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.id,state.lists);
+                const [cardIndex,listIndex]=lm.GetCardIndex(action.payload.cardid,state.lists);
                 if(cardIndex==-1) { return state; }                
 
                 var cardData=state.lists[listIndex].cardData;
@@ -157,7 +159,7 @@ const listDisplaySlice=createSlice(
                     var cardDetail=cardData[cardIndex];
 
                     console.log(
-                        "updateCard cardIndex:" + cardIndex + " date:" +action.payload.cardDate
+                        "updateCard cardIndex:" + cardIndex + " date:" +action.payload.carddate
                     );
 
                    
@@ -167,7 +169,7 @@ const listDisplaySlice=createSlice(
                             elem.cardData?
                             elem.cardData.map((cardElem)=>
                             {   
-                                if(cardElem.id===cardDetail.id){
+                                if(cardElem.cardid===cardDetail.cardid){
                                     return action.payload
                                 }else{
                                     return cardElem

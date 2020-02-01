@@ -45,7 +45,7 @@ CardComponentState > {
             .bind(this);
         this.state = {
             editButtonVisible: "hidden",
-            name: this.props.cardData.title
+            name: this.props.cardData.cardtitle
         };
 
         this.name = "CardComponent";
@@ -58,7 +58,7 @@ CardComponentState > {
         var menuPos:MenuPosType = {
             topValue: rect.top,
             leftValue: rect.left + offsetWidth,
-            cardId:this.props.cardData.id,
+            cardId:this.props.cardData.cardid,
             id:this.props.listId,
             data: ""
         };
@@ -79,17 +79,17 @@ CardComponentState > {
     }
 
     handleTitleChange = (e: any)=> {
-		this.props.updateCardEvent({...this.props.cardData,title:e.target.value});
+		this.props.updateCardEvent({...this.props.cardData,cardtitle:e.target.value});
     }
 
 
     render() {
-        var componentId = this.props.cardData.id;
-        var cardDate = this.props.cardData.cardDate?this.props.cardData.cardDate:"";
+        var componentId = this.props.cardData.cardid;
+        var cardDate = this.props.cardData.carddate?this.props.cardData.carddate:"";
 
-        console.log("Card Component render " + componentId+ " " +this.props.cardData.title+ " date:" + cardDate);
+        console.log("Card Component render " + componentId+ " " +this.props.cardData.cardtitle+ " date:" + cardDate);
 
-        var textFieldId : string = "textField" + this.props.cardData.id;
+        var textFieldId : string = "textField" + this.props.cardData.cardid;
         var divId="CardComponentId"+componentId;
         var listCount=this.props.cardData.listItems?this.props.cardData.listItems.length:0;
         return (
@@ -108,13 +108,13 @@ CardComponentState > {
                     }}
                     onClick={this.onButtonClick}>...</button>
                 <CardColorLabels key={componentId}
-                    cardId={this.props.cardData.id}
+                    cardId={this.props.cardData.cardid}
                     rowCount={this.props.rowCount}
                     labelItems={this.props.cardData.labelItems}/>
                 <TextField key={textFieldId}
                     margin="normal"
                      multiline
-                    value={this.props.cardData.title}
+                    value={this.props.cardData.cardtitle}
                     //defaultValue={this.props.cardData.title} 
                     onChange={this.handleTitleChange} 
                     InputProps={{
@@ -122,7 +122,7 @@ CardComponentState > {
                     }}
                 />
                 <CardDateLayer
-                    key={"CardDateLayer" + this.props.cardData.id}
+                    key={"CardDateLayer" + this.props.cardData.cardid}
                     cardData={this.props.cardData}
                     listTotalCount={listCount}
                     listCompletedCount={0}

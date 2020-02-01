@@ -80,7 +80,7 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
             .map(function (e:CardData) {
 
                 return <CardComponent
-                    key={e.id}
+                    key={e.cardid}
                     cardData={e}
                     listId={listid}
                     width='300'

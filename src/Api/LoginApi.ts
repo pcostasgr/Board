@@ -1,4 +1,4 @@
-import {setUser} from './../reducers/LoginReducer'
+import {setUser} from '../reducers/LoginReducer'
 import ApiBase,{contentTypeHeader,authHeader,fullHeader} from './ApiBase';
 
 type LoginUserType={

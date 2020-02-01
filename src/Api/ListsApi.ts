@@ -6,9 +6,11 @@ import {getComponentDb,getCheckListsDb,getLabelItemsDb} from '../store/mockdb';
 
 
 const initCardData={
-    id:-1,
-    title:"",
-    cardDate:"",
+    cardid:-1,
+    cardtitle:"",
+    carddate:"",
+    listid:0,
+    userid:-1,
     listItems:[],
     labelItems:[]
 };

@@ -8,6 +8,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {KeyboardDatePicker} from '@material-ui/pickers';
+import {authenticationService} from './../Model/Users';
+
 
 type PopUpDimProps={
 	initTextValue:string;	
@@ -15,7 +17,7 @@ type PopUpDimProps={
 	topValue:number;
 	leftValue:number;
 	visibility:"hidden" | "visible";
-	createNewCardEvent:(listId:number,cardTitle:string)=>void;
+	createNewCardEvent:(listId:number,cardTitle:string,userid:number)=>void;
 	deleteListEvent:(listId:number)=>void;
 	updateListEvent:(listId:number,listTitle:string,userid:number)=>void;
     setPopUpTextTitleEvent:(value:string)=>void;
@@ -47,9 +49,11 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 	}
 	
 	addNewCard(){
+		var userid=authenticationService.currentUserValue.userId;
 		this.props.createNewCardEvent(
 			this.props.selectedListId,
-			"New Card"
+			"New Card",
+			userid
 		);
 		this.props.callf(this.props.initTextValue);
 	}
@@ -158,11 +162,12 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 
 function mapDispatchToProps(dispatch:any) {
     return {
-        createNewCardEvent: (listId:number,cardTitle:string) => {
+        createNewCardEvent: (listId:number,cardTitle:string ,userid:number) => {
             dispatch(addCard({
 				listId:listId
 				,cardid:-1
 				,cardTitle:cardTitle
+				,userid:userid
 			})
 			)
 		},

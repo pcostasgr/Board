@@ -29,7 +29,7 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
 		console.log("handle date layer:" +formatedDate) ;
 		this.props.updateCardLayerEvent(
 			{
-					...this.props.cardData,cardDate:formatedDate
+					...this.props.cardData,carddate:formatedDate
 			}
 		);
 
@@ -37,7 +37,7 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
 
     render() {
 
-        var dateValue = this.props.cardData.cardDate;
+        var dateValue = this.props.cardData.carddate;
 
         console.log("card date layer:" + dateValue);
 
@@ -64,7 +64,7 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
             dateValue_=new Date(dateValue);
 
             list.push(
-                 <React.Fragment key={"tDate"+ this.props.cardData.id}> 
+                 <React.Fragment key={"tDate"+ this.props.cardData.cardid}> 
                 <td style={{
                     textAlign: "left"
                 }}>
@@ -77,7 +77,7 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
         if (listTotalCount > 0) {
             
             list.push(
-             <React.Fragment key={"tListCount"+ this.props.cardData.id}> 
+             <React.Fragment key={"tListCount"+ this.props.cardData.cardid}> 
                 <td  style={{
                     textAlign: "right"
                 }}>
@@ -89,7 +89,7 @@ class CardDateLayer extends React.Component<CardDateLayerProps> {
         }
 
         return (
-            <React.Fragment key={"tdDate"+ this.props.cardData.id}> 
+            <React.Fragment key={"tdDate"+ this.props.cardData.cardid}> 
             <div>
                 <table style={{
                     width: "100%"

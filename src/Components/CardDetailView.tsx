@@ -41,7 +41,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		this.handleTextFieldChange=this.handleTextFieldChange.bind(this);
 		this.handleDateChange=this.handleDateChange.bind(this);
 		this.listValue="";
-		this.cardTitle=this.props.cardData?this.props.cardData.title:" ";
+		this.cardTitle=this.props.cardData?this.props.cardData.cardtitle:" ";
 		this.deleteCardEvent=this.deleteCardEvent.bind(this);
 		this.closeControl=this.closeControl.bind(this);
 	}
@@ -68,7 +68,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 	}
 
 	saveCardEvent(){
-		this.props.updateCardEvent({...this.props.cardData,title:this.cardTitle});
+		this.props.updateCardEvent({...this.props.cardData,cardtitle:this.cardTitle});
 		this.closeControl();
 	}
 
@@ -76,8 +76,8 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		var month=date.getMonth();
 		month+=1;
 		var formatedDate=date.getFullYear() + "-" + month + "-" + date.getDate();
-		if(this.props.cardData.cardDate===formatedDate) return;
-		this.props.updateCardEvent({...this.props.cardData,cardDate:formatedDate});
+		if(this.props.cardData.carddate===formatedDate) return;
+		this.props.updateCardEvent({...this.props.cardData,carddate:formatedDate});
 	};
 	
 	handleTextFieldChange(e:any){
@@ -90,10 +90,10 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 		var date_;
 
 		if(this.props.cardData){
-			if(this.props.cardData.cardDate!=null && this.props.visibility=='visible' ){
+			if(this.props.cardData.carddate!=null && this.props.visibility=='visible' ){
 
 				dateField=<KeyboardDatePicker
-					key={"datePickerPreviewCard"+this.props.cardData.id}
+					key={"datePickerPreviewCard"+this.props.cardData.cardid}
 					disableToolbar
 					variant="inline"
 					margin="normal"
@@ -101,8 +101,8 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 					format="dd/MM/yyyy"
 					onChange={this.handleDateChange}
 					autoOk={true}
-					value={new Date(this.props.cardData.cardDate)}
-					defaultValue={new Date(this.props.cardData.cardDate)}
+					value={new Date(this.props.cardData.carddate)}
+					defaultValue={new Date(this.props.cardData.carddate)}
 					KeyboardButtonProps={{
 						'aria-label': 'change date',
 					}}
@@ -118,11 +118,11 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 			return null;
 		}
 
-		console.log("card title :" +this.props.cardData.title);
+		console.log("card title :" +this.props.cardData.cardtitle);
 	
 		return(
 
-			<div id={"cardlist"+this.props.cardData.id} className="card-menu-list" 
+			<div id={"cardlist"+this.props.cardData.cardid} className="card-menu-list" 
 			style={{ top:this.props.topValue,left:this.props.leftValue,
 				visibility:this.props.visibility,
 				width:800
@@ -135,11 +135,11 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 					<tr id="DetailTitleText" >
 						<td>
 							<TextField
-								key={"TextFiledView"+this.props.cardData.id}
+								key={"TextFiledView"+this.props.cardData.cardid}
 								id="popUpDimId"
 								name="description_field"
 								multiline rowsMax="10"
-								defaultValue={this.props.cardData.title}
+								defaultValue={this.props.cardData.cardtitle}
 								onChange={this.handleTextFieldChange}
 								//fullWidth={true}
 							/>
@@ -175,7 +175,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 
 								<CardCheckListComp
 				                    key={"ListComp1"}
-				                    cardid={this.props.cardData.id}
+				                    cardid={this.props.cardData.cardid}
 								/>
 								</td>
 							</tr>
