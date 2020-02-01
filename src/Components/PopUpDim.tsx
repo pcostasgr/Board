@@ -1,6 +1,5 @@
 import React, { useImperativeHandle } from 'react';
 import {connect} from 'react-redux';
-import {addCard} from './../reducers/ListReducer';
 import {boardFacade} from '../store/Repository'
 import TextField from '@material-ui/core/TextField';
 import {setPopUpTextTitle} from '../reducers/PopUpReducer';
@@ -163,13 +162,16 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 function mapDispatchToProps(dispatch:any) {
     return {
         createNewCardEvent: (listId:number,cardTitle:string ,userid:number) => {
-            dispatch(addCard({
-				listId:listId
-				,cardid:-1
-				,cardTitle:cardTitle
-				,userid:userid
-			})
-			)
+
+			dispatch(boardFacade.cardApi.insertCardApi({
+				cardid:-1,
+				cardtitle:cardTitle,
+				listid:listId,
+				userid:userid,
+				carddate:"",
+				listItems:[],
+				labelItems:[]
+			}));
 		},
 		setPopUpTextTitleEvent:(value:string) =>{
             dispatch(setPopUpTextTitle(value))

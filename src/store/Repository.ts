@@ -89,6 +89,10 @@ export class StoreFacade {
         return this.repo.listApi;
     }
 
+    public get cardApi(){
+        return this.repo.cardApi;
+    }
+
     GetData(userId:number=0){
         return this.repo.GetData(userId);    
     }

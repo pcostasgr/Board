@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {deleteCard,selectCard,updateCard} from '../reducers/ListReducer';
+import {selectCard} from '../reducers/ListReducer';
 import {connect} from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +11,7 @@ import {CardData} from '../Model/ListModel';
 import { throwStatement } from '@babel/types';
 import { isThisISOWeek } from 'date-fns';
 import CardCheckListComp from './CardCheckListComp';
+import {boardFacade} from '../store/Repository'
 
 function getEventTarget(e:any) {
     e = e || window.event;
@@ -215,11 +216,10 @@ function mapDispatchToProps(dispatch:any) {
     return {
         deleteCardEvent: (listid:number,cardid:number) => {
 
-            dispatch(deleteCard({listId:listid,cardId:cardid})
-			)
+			dispatch(boardFacade.cardApi.deleteCardApi(listid,cardid))
 		},
 		updateCardEvent:(card:CardData)=>{
-			dispatch(updateCard(card))
+			dispatch(boardFacade.cardApi.updateCardApi(card))
 		},
 	}
 };
