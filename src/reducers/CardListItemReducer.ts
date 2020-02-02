@@ -62,6 +62,13 @@ const cardListItemSlice=createSlice(
     name:"cardlistItemDisplay",
     initialState:initialState,
     reducers:{
+        setCheckLists(state:CardCheckList[],action:PayloadAction<CardCheckList[]>){
+            var state=action.payload;
+            console.log('setCheckLists ------------------------------------------------');
+            console.log(state)
+            console.log('--------------------------------------------------------------');
+            return state;
+        },
         getCheckLists(state:CardCheckList[],action:PayloadAction<number>){
             var state_=boardFacade.GetDataCheckList(action.payload);
             console.log("cardlistitemdisplay");
@@ -151,6 +158,7 @@ const cardListItemSlice=createSlice(
 
 
   export const {
+      setCheckLists,
       getCheckLists,
       insertCheckList,
       updateCheckList,

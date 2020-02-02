@@ -24,7 +24,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
 
     useEffect(
         () => {
-         console.log("useEffect 1");
+         console.log("Load Card Id :"+ cardid);
             loadDataEvent(cardid);
         },[]
     );
@@ -32,7 +32,8 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
     const listData=props.lists.map( (listElem:CardCheckList)=>{
         const key_:string="_"+cardid+"_"+listElem.checklistid+"_"; 
 
-        const itemRows=listElem.items.map((elem:CardCheckListItem)=>{
+        const itemRows=listElem.items?
+                       listElem.items.map((elem:CardCheckListItem)=>{
             
             return  <React.Fragment key={"ReactFrag"+key_+elem.itemListId}> 
                     <tr id={"tr_" + key_+elem.itemListId} >
@@ -72,7 +73,8 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                     </div>
                 </td></tr>
                 </React.Fragment> 
-        });
+        })
+        :[];
 
         return <React.Fragment key={"ReactFragTable"+key_}>  
             <div id={"ChackListDiv"+key_}> 
@@ -85,7 +87,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                         defaultValue={listElem.title}
                         //value={listElem.checkListTitle}
                         onChange={(event:any)=>{
-                            var elem_={...listElem,checkListTitle:event.target.value};
+                            var elem_={...listElem,title:event.target.value};
                              updateListEvent(elem_);
                         }}
                          >
@@ -117,6 +119,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
     
 
     return <div>
+            <b>cardid={cardid}</b>
             <button
                 onClick={(event)=>{
                     insertListEvent({

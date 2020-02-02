@@ -146,6 +146,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var topValue = 100;
         var leftValue = 50;
         
+        /*
         var checkListArr:CardCheckList[]=[{
             checklistid:1000,
             title:"List Title",
@@ -172,6 +173,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                 }
             ]
         }];
+*/
 
         /*var cardCheckLists=
             <CardCheckListComp

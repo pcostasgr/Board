@@ -79,9 +79,9 @@ export class CheckListsApi
 
         getByCardId=(cardId:number)=>{
             return (dispatch:any)=>{
-                return ApiBase.get(`api/checklists/${cardId}`,{headers:fullHeader()})
+                return ApiBase.get(`api/checklists/cardid/${cardId}`,{headers:fullHeader()})
                     .then(response=>{
-                        dispatch(ch.getCheckLists(cardId));
+                        dispatch(ch.setCheckLists(response.data));
                         console.log(response);
                     })
                     .catch(error => {
