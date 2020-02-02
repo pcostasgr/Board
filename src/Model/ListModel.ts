@@ -18,9 +18,10 @@ export type CardCheckListItem={
 }
 
 export type CardCheckList={
-    checkListId:number,
-    checkListTitle:string,
-    cardId:number,
+    checklistid:number,
+    title:string,
+    cardid:number,
+    userid:number,
     items:CardCheckListItem[]
 }
 

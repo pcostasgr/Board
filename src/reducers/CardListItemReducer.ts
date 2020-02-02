@@ -6,12 +6,11 @@ import {boardFacade} from '../store/Repository';
 const getListItemByIdSelector=(state:CardCheckList[],listId:number):number=>{
     
     var index= state.findIndex( (elem) => {
-        return elem.checkListId===listId
+        return elem.checklistid===listId
     } );
     
     return index;
 }
-
 
 
 const getListDetailItemSelector=(list:CardCheckList,itemId:number):number=>{
@@ -28,7 +27,7 @@ const getMaxListSelector=(state:CardCheckList[]):number=>{
     if(state.length==0) return 1;
 
     var maxItemId:number=Math.max.apply(Math,state.map((elem)=>{
-        return elem.checkListId;
+        return elem.checklistid;
     }));
     return maxItemId+1;
 }
@@ -71,19 +70,19 @@ const cardListItemSlice=createSlice(
         },
         insertCheckList(state:CardCheckList[],action:PayloadAction<CardCheckList>){
 
-            console.log("Action Check Id:" + action.payload.checkListId);
+            console.log("Action Check Id:" + action.payload.checklistid);
 
-            var maxCheckListId=action.payload.checkListId<0?
+            var maxCheckListId=action.payload.checklistid<0?
             getMaxListSelector(state)
-            :action.payload.checkListId;
+            :action.payload.checklistid;
 
             console.log("Max Check Id:" + maxCheckListId);
 
             state.push(
                     {
                         ...action.payload,
-                        checkListId:maxCheckListId,
-                        checkListTitle:"New List" + maxCheckListId,
+                        checklistid:maxCheckListId,
+                        title:"New List" + maxCheckListId,
                     }
             );
 
@@ -96,10 +95,10 @@ const cardListItemSlice=createSlice(
             return state;
         },
         updateCheckList(state:CardCheckList[],action:PayloadAction<CardCheckList>){
-            var index=getListItemByIdSelector(state,action.payload.checkListId);
+            var index=getListItemByIdSelector(state,action.payload.checklistid);
             if(index<0) return state;
             
-            state[index]={...state[index],checkListTitle:action.payload.checkListTitle};
+            state[index]={...state[index],title:action.payload.title};
             return state;
         },
         insertCheckListItem(state:CardCheckList[],action:PayloadAction<CardCheckListItem>){

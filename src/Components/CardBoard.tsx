@@ -147,9 +147,10 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var leftValue = 50;
         
         var checkListArr:CardCheckList[]=[{
-            checkListId:1000,
-            checkListTitle:"List Title",
-            cardId:1,
+            checklistid:1000,
+            title:"List Title",
+            cardid:1,
+            userid:authenticationService.currentUserValue.userId,
             items:[
                 {
                     itemListId:1

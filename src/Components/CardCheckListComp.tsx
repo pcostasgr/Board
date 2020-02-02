@@ -2,7 +2,8 @@ import React,{useState,useEffect} from 'react';
 import {connect} from 'react-redux';
 import { CardCheckList, CardCheckListItem } from '../Model/ListModel';
 import * as cr from '../reducers/CardListItemReducer';
-import { EventEmitter } from 'events';
+import { authenticationService } from '../Model/Users';
+import { boardFacade } from '../store/Repository';
 
 type CardCheckListCompProps={
     cardid:number,
@@ -29,7 +30,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
     );
 
     const listData=props.lists.map( (listElem:CardCheckList)=>{
-        const key_:string="_"+cardid+"_"+listElem.checkListId+"_"; 
+        const key_:string="_"+cardid+"_"+listElem.checklistid+"_"; 
 
         const itemRows=listElem.items.map((elem:CardCheckListItem)=>{
             
@@ -81,7 +82,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                 <td>
                      <textarea id={"ListtextArea"+key_} 
                         rows={1} cols={50} 
-                        defaultValue={listElem.checkListTitle}
+                        defaultValue={listElem.title}
                         //value={listElem.checkListTitle}
                         onChange={(event:any)=>{
                             var elem_={...listElem,checkListTitle:event.target.value};
@@ -96,13 +97,13 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                                 itemListId:-1,
                                 itemTitle:"New List Item",
                                 ischecked:false,
-                                checkListId:listElem.checkListId
+                                checkListId:listElem.checklistid
                             }
                         );
                 }}>Add list item</button>
                  <button
                     onClick={() => {    
-                        deleteListEvent(listElem.checkListId);
+                        deleteListEvent(listElem.checklistid);
                 }}>Delete list</button>
                 </td>
             </tr>
@@ -119,9 +120,10 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
             <button
                 onClick={(event)=>{
                     insertListEvent({
-                        cardId:cardid,
-                        checkListId:-1,
-                        checkListTitle:"New List",
+                        cardid:cardid,
+                        checklistid:-1,
+                        title:"New List",
+                        userid:authenticationService.currentUserValue.userId,
                         items:[]
                     });
                 }}
@@ -141,7 +143,7 @@ const mapStateToProps = (state:any) => {
 function mapDispatchToProps(dispatch:any) {
     return {
         loadDataEvent:(cardId:number)=>{
-            dispatch(cr.getCheckLists(cardId))
+            dispatch(boardFacade.checkListApi.getByCardId(cardId))
         },
         insertItemEvent: (checkListItem:CardCheckListItem) => {
             dispatch(cr.insertCheckListItem(checkListItem));
@@ -153,13 +155,13 @@ function mapDispatchToProps(dispatch:any) {
             dispatch(cr.updateCheckListItem(checkListItem));
         },
         insertListEvent:(checkList:CardCheckList)=>{
-            dispatch(cr.insertCheckList(checkList));
+            dispatch(boardFacade.checkListApi.insertCheckList(checkList));
         },
         deleteListEvent:(checkListId:number)=>{
-            dispatch(cr.deleteCheckList(checkListId));
+            dispatch(boardFacade.checkListApi.deleteCheckList(checkListId));
         },
         updateListEvent:(checkList:CardCheckList)=>{
-            dispatch(cr.updateCheckList(checkList));
+            dispatch(boardFacade.checkListApi.updateCheckList(checkList));
         },
 	}
 };

@@ -1,11 +1,14 @@
 import {getComponentDb,getCheckListsDb,getLabelItemsDb} from './mockdb';
 import * as lm from '../Model/ListModel';
 import { IListApi,ListApi,ListApiMock}  from '../Api/ListsApi';
-import { ICardApi, CardApiMock, CardApi } from '../Api/CardApi';
+import { ICardApi, CardApiMock, CardApi } from '../Api/CardsApi';
+import { ICheckListsApi,CheckListsApiMock,CheckListsApi } from '../Api/CheckListsApi';
 
 interface IRepository {
     listApi:IListApi;
     cardApi:ICardApi;
+    checkListApi:ICheckListsApi
+
     GetData(userId:number):lm.ListDataArray;
     GetCheckListData(cardId:number):lm.CardCheckList[];
     GetLabelItemsData(cardId:number):lm.LabelItem[];
@@ -17,10 +20,12 @@ class MockRepository
 
     private _listApi:IListApi;
     private _cardApi:ICardApi;
+    private _checkListApi:ICheckListsApi;
 
     constructor(){
         this._listApi=new ListApiMock();
         this._cardApi=new CardApiMock();
+        this._checkListApi=new CheckListsApiMock();
     }
 
     get listApi() {
@@ -29,6 +34,10 @@ class MockRepository
 
     get cardApi(){
         return this._cardApi;
+    }
+
+    get checkListApi(){
+        return this._checkListApi;
     }
 
     GetData(userId:number=0){
@@ -49,10 +58,12 @@ class NetCoreRepository
     
     private _listApi:IListApi;
     private _cardApi:ICardApi;
+    private _checkListApi:ICheckListsApi;
 
     constructor(){
         this._listApi=new ListApi();
         this._cardApi=new CardApi();
+        this._checkListApi=new CheckListsApi();
     }
 
     public get listApi() {
@@ -61,6 +72,10 @@ class NetCoreRepository
 
     public get cardApi(){
         return this._cardApi;
+    }
+
+    public get checkListApi(){
+        return this._checkListApi;
     }
 
     GetData(userId:number=0){
@@ -91,6 +106,10 @@ export class StoreFacade {
 
     public get cardApi(){
         return this.repo.cardApi;
+    }
+
+    public get checkListApi(){
+        return this.repo.checkListApi;
     }
 
     GetData(userId:number=0){

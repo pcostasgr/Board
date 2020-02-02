@@ -1,6 +1,6 @@
 import ApiBase,{contentTypeHeader,fullHeader} from './ApiBase';
 import {addCard,updateCard,deleteCard} from '../reducers/ListReducer';
-import { ListDataArray,ListData, CardData} from '../Model/ListModel';
+import {CardData} from '../Model/ListModel';
 
 export interface ICardApi{
     getByListIdApi:(listId:number)=>(dispatch:any)=>Promise<void>;

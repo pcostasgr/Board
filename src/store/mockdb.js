@@ -283,9 +283,10 @@ export function getComponentDb() {
 
 export function getCheckListsDb(cardid){
     return [{
-            checkListId:1000,
-            checkListTitle:"List Title",
-            cardId:cardid,
+            checklistid:1000,
+            title:"List Title",
+            cardid:cardid,
+            userid:-1,
             items:[
                 {
                     itemListId:1
