@@ -5,6 +5,7 @@ import CardComponent from './CardComponent';
 import {MenuPosType,CardData,ListData,Nullable} from '../Model/ListModel';
 import TextField from '@material-ui/core/TextField';
 import {updateListTitle} from '../reducers/ListReducer'
+import { CommunicationSpeakerPhone } from 'material-ui/svg-icons';
 
 type CardComponentListProps={
     listId:number;
@@ -89,7 +90,7 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
                     menuEvent={me}/>;
 
             }, this):[]:[];
-
+        
         return (
             <div
                 style={{

@@ -66,9 +66,6 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 		this.props.setPopUpTextTitleEvent(e.target.value);
 	}
 
-	handleDateChange=(date:any)=> {
-        //this.dateValue=date;
-    };
 	render(){
 
 		return (	
@@ -102,43 +99,7 @@ class PopUpDim extends React.Component<PopUpDimProps>{
 					</colgroup>
 					<tbody>
 					<tr id="DetailsMainRow">
-						<td id="MainLeftPanel" >
-							<table><tbody>
-							<tr>
-								<td>Labels</td>
-								<td>
-									<KeyboardDatePicker
-										disableToolbar
-										variant="inline"
-										margin="normal"
-										id="date-picker-inline"
-										value={new Date()}
-										format="dd/MM/yyyy"
-										onChange={this.handleDateChange}
-										autoOk={true}
-										KeyboardButtonProps={{
-											'aria-label': 'change date',
-										}}
-										InputProps={{
-											disableUnderline: true,
-										}}
-									/>    
-								</td>
-							</tr>
-							
-							<tr>
-								<td>
-									<TextField
-									id="ListNameTextId"
-									label="Value"
-									multiline rowsMax="1"
-									defaultValue="New TextField"
-									/>
-								</td>
-							</tr>
-                        </tbody></table>
-						</td>
-						<td id="MainRightPanel" >
+												<td id="MainRightPanel" >
 							<List component="nav" aria-label="Stack actions">
 								<ListItem button>
         						    <ListItemText primary="Save list Title" onClick={this.buttonClick_} />
@@ -168,7 +129,7 @@ function mapDispatchToProps(dispatch:any) {
 				cardtitle:cardTitle,
 				listid:listId,
 				userid:userid,
-				carddate:"",
+				carddate:null,
 				listItems:[],
 				labelItems:[]
 			}));

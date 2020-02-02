@@ -101,6 +101,7 @@ export class CardApi
         return (dispatch:any)=>{
             return ApiBase.post('api/cards',card,{headers:fullHeader()})
             .then(response=>{
+                console.log(response);
                 const newcard:CardData=response.data;
                 dispatch(addCard({
                         cardid:newcard.cardid
@@ -108,7 +109,6 @@ export class CardApi
                         ,userid:newcard.userid
                         ,listId:newcard.listid
                     }));
-                console.log(response);
             })
             .catch(error => {
                 console.log(error.response);

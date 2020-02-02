@@ -104,10 +104,10 @@
 }
 .popup-div {
     z-index: 1;
-    width: 650px;
+    width: 350px;
     height: 100%;
     position: absolute;
-    background-color: red;
+    background-color:#ffffff;
     overflow: scroll;
 }
 
@@ -147,6 +147,7 @@
     background-color: #4CAF50;
     color: white;
 }
+
 .card-menu-list li a:hover:not(.active) {
     background-color: #555;
     color: white;
