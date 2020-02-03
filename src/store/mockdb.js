@@ -289,22 +289,25 @@ export function getCheckListsDb(cardid){
             userid:-1,
             items:[
                 {
-                    itemListId:1
-                    ,itemTitle:"Title 1"
+                    clitemid:1
+                    ,itemtitle:"Title 1"
                     ,ischecked:false
-                    ,checkListId:1000
+                    ,checklistid:1000
+                    ,userid:-1
                 },
                 {
-                    itemListId:2
-                    ,itemTitle:"Title 2"
+                    clitemid:2
+                    ,itemtitle:"Title 2"
                     ,ischecked:true
-                    ,checkListId:1000
+                    ,checklistid:1000
+                    ,userid:-1
                 },
                 {
-                    itemListId:3
-                    ,itemTitle:"Title 3"
+                    clitemid:3
+                    ,itemtitle:"Title 3"
                     ,ischecked:false
-                    ,checkListId:1000
+                    ,checklistid:1000
+                    ,userid:-1
                 }
             ]
         }];

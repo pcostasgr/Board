@@ -16,7 +16,7 @@ const getListItemByIdSelector=(state:CardCheckList[],listId:number):number=>{
 const getListDetailItemSelector=(list:CardCheckList,itemId:number):number=>{
 
     var index= list.items.findIndex( (elem) => {
-        return elem.itemListId===itemId
+        return elem.clitemid===itemId
     } );
 
     return index;
@@ -34,8 +34,8 @@ const getMaxListSelector=(state:CardCheckList[]):number=>{
 
 const getMaxItemSelector=(state:CardCheckList[],item:CardCheckListItem):number=>{
 
-    if(item.itemListId>0) {
-        return item.itemListId;
+    if(item.clitemid>0) {
+        return item.clitemid;
     }
 
     var maxItemId:number=Math.max.apply(Math,state.map((elem)=>{
@@ -48,7 +48,7 @@ const getMaxItemSelector=(state:CardCheckList[],item:CardCheckListItem):number=>
 
         return Math.max.apply(Math,items.map(
             (item_:CardCheckListItem)=>{
-                return item_.itemListId;
+                return item_.clitemid;
             }
             ));
         
@@ -109,7 +109,7 @@ const cardListItemSlice=createSlice(
             return state;
         },
         insertCheckListItem(state:CardCheckList[],action:PayloadAction<CardCheckListItem>){
-            var itemId=action.payload.itemListId;
+            var itemId=action.payload.clitemid;
 
             if(itemId<0){
                 itemId=getMaxItemSelector(state,action.payload);
@@ -117,21 +117,21 @@ const cardListItemSlice=createSlice(
 
             if(itemId<=0) return state;
 
-            var listIndex=getListItemByIdSelector(state,action.payload.checkListId);
+            var listIndex=getListItemByIdSelector(state,action.payload.checklistid);
             if(listIndex<0) return state;
 
             var list=state[listIndex];
-            list.items.push({...action.payload,itemListId:itemId,itemTitle:"New Item"+itemId });
+            list.items.push({...action.payload,clitemid:itemId,itemtitle:"New Item"+itemId });
 
             return state;
         },
         deleteCheckListItem(state:CardCheckList[],action:PayloadAction<CardCheckListItem>){
-            var listIndex=getListItemByIdSelector(state,action.payload.checkListId);
+            var listIndex=getListItemByIdSelector(state,action.payload.checklistid);
             if(listIndex<0) return state;
 
             var list=state[listIndex];
 
-            var index=getListDetailItemSelector(list,action.payload.itemListId);
+            var index=getListDetailItemSelector(list,action.payload.clitemid);
             if(index<0) return state;
 
             //console.log("deleted item index:" + index);
@@ -140,12 +140,12 @@ const cardListItemSlice=createSlice(
             return state;
         },
         updateCheckListItem(state:CardCheckList[],action:PayloadAction<CardCheckListItem>){
-            var listIndex=getListItemByIdSelector(state,action.payload.checkListId);
+            var listIndex=getListItemByIdSelector(state,action.payload.checklistid);
             if(listIndex<0) return state;
 
             var list=state[listIndex];
 
-            var index=getListDetailItemSelector(list,action.payload.itemListId);
+            var index=getListDetailItemSelector(list,action.payload.clitemid);
             if(index<0) return state;
 
             list.items[index]={...action.payload};

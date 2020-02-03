@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {connect} from 'react-redux';
 import { CardCheckList, CardCheckListItem } from '../Model/ListModel';
-import * as cr from '../reducers/CardListItemReducer';
 import { authenticationService } from '../Model/Users';
 import { boardFacade } from '../store/Repository';
 
@@ -34,39 +33,41 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
 
         const itemRows=listElem.items?
                        listElem.items.map((elem:CardCheckListItem)=>{
-            
-            return  <React.Fragment key={"ReactFrag"+key_+elem.itemListId}> 
-                    <tr id={"tr_" + key_+elem.itemListId} >
+            if(elem==null){
+                return null;
+            } 
+            return  <React.Fragment key={"ReactFrag"+key_+elem.clitemid}> 
+                    <tr id={"tr_" + key_+elem.clitemid} >
                     <td>
-                        <div id={"divItem"+key_+elem.itemListId}>
+                        <div id={"divItem"+key_+elem.clitemid}>
                         <input type="checkbox"
-                        id={"item"+key_+elem.itemListId} 
+                        id={"item"+key_+elem.clitemid} 
                         onChange={(event:any)=>{
                             var elem_={...elem,ischecked:event.target.checked};
                              updateItemEvent(elem_);
                         }}
                         checked={elem.ischecked}
-                        value={elem.itemListId}
+                        value={elem.clitemid}
                         >
                         </input>
-                        <textarea id={"textArea"+key_+elem.itemListId} 
+                        <textarea id={"textArea"+key_+elem.clitemid} 
                         rows={1} cols={30} 
-                        defaultValue={elem.itemTitle}
+                        defaultValue={elem.itemtitle}
                         //value={elem.itemTitle}
                         onChange={(event:any)=>{
-                            var elem_={...elem,itemTitle:event.target.value};
+                            var elem_={...elem,itemTitle:event.target.value,cardid:cardid};
                              updateItemEvent(elem_);
                         }}
                          >
                         </textarea>
                         <button 
-                            id={"button" + key_ + elem.itemListId}
+                            id={"button" + key_ + elem.clitemid}
                             type="button"
                             onClick={(event:any)=>{
                                 var elem_={...elem};
                                 deleteItemEvent(elem_);
                             }}
-                            value={[elem.itemListId.toString(),elem.checkListId.toString()]}
+                            value={[elem.clitemid.toString(),elem.checklistid.toString()]}
                         >
                             Delete
                         </button> 
@@ -75,6 +76,8 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                 </React.Fragment> 
         })
         :[];
+
+        const userid=authenticationService.currentUserValue.userId;
 
         return <React.Fragment key={"ReactFragTable"+key_}>  
             <div id={"ChackListDiv"+key_}> 
@@ -96,10 +99,11 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                     onClick={() => {
                         insertItemEvent(
                             {
-                                itemListId:-1,
-                                itemTitle:"New List Item",
+                                clitemid:-1,
+                                itemtitle:"New List Item",
                                 ischecked:false,
-                                checkListId:listElem.checklistid
+                                checklistid:listElem.checklistid,
+                                userid:userid
                             }
                         );
                 }}>Add list item</button>
@@ -149,13 +153,13 @@ function mapDispatchToProps(dispatch:any) {
             dispatch(boardFacade.checkListApi.getByCardId(cardId))
         },
         insertItemEvent: (checkListItem:CardCheckListItem) => {
-            dispatch(cr.insertCheckListItem(checkListItem));
+            dispatch(boardFacade.checkListApi.insertCheckListItem(checkListItem));
         },
 		deleteItemEvent:(checkListItem:CardCheckListItem)=>{
-            dispatch(cr.deleteCheckListItem(checkListItem));
+            dispatch(boardFacade.checkListApi.deleteCheckListItem(checkListItem));
 		},
 		updateItemEvent:(checkListItem:CardCheckListItem)=>{
-            dispatch(cr.updateCheckListItem(checkListItem));
+            dispatch(boardFacade.checkListApi.updateCheckListItem(checkListItem));
         },
         insertListEvent:(checkList:CardCheckList)=>{
             dispatch(boardFacade.checkListApi.insertCheckList(checkList));
