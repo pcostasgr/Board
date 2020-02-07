@@ -146,42 +146,7 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var topValue = 100;
         var leftValue = 50;
         
-        /*
-        var checkListArr:CardCheckList[]=[{
-            checklistid:1000,
-            title:"List Title",
-            cardid:1,
-            userid:authenticationService.currentUserValue.userId,
-            items:[
-                {
-                    itemListId:1
-                    ,itemTitle:"Title 1"
-                    ,ischecked:false
-                    ,checkListId:1000
-                },
-                {
-                    itemListId:2
-                    ,itemTitle:"Title 2"
-                    ,ischecked:true
-                    ,checkListId:1000
-                },
-                {
-                    itemListId:3
-                    ,itemTitle:"Title 3"
-                    ,ischecked:false
-                    ,checkListId:1000
-                }
-            ]
-        }];
-*/
-
-        /*var cardCheckLists=
-            <CardCheckListComp
-                    key={"ListComp1"}
-                    cardid={1}
-                />;*/
-
-        return (
+                return (
             <div className="list-header">
                 <button
                     id="newListButton1"
@@ -210,7 +175,6 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
                     id="Test Api"
                     onClick={() => {
                         console.log("Test Api call");
-                        //store.dispatch(addListApi(-1000,"Costas Rules",20));
                         const value=1;
                         const str=`this is some ${value}`;
                         console.log('str:'+str);

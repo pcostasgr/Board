@@ -1,21 +1,33 @@
 import React,{useState} from 'react';
+import {useDispatch} from 'react-redux';
+
 import {Redirect,useHistory,useLocation} from 'react-router-dom'
 import { EROFS } from 'constants';
+import {doLoginUser} from './../Api/LoginApi';
+import { authenticationService } from '../Model/Users';
 
-const Login=():any=>{
+const Login=()=>{
 
     const history=useHistory();
-
+    const dispatch=useDispatch();
     const [userMail,setUserMail]=useState("user@supermail.com");
     const [userPass,setUserPass]=useState("");
     const [errorMsg,setErrorMsg]=useState("");
 
-    const loginAction=():any=>{
-        console.log("user Mail:"+ userMail);
+    const loginAction=async ()=>{
+        
         if(userMail && userPass==='123456'){
-            history.push("/board");
+                history.push("/board");
         }else{
-            setErrorMsg("Invalid passwod,see tip below !");
+            const response=await doLoginUser(userMail,userPass);
+            var userid=authenticationService.currentUserValue.userId;
+            console.log("userid:" + userid);
+            if(userid>0){
+                history.push('/board');
+            }else{
+                setErrorMsg("Invalid password,see tip below !");
+            }
+            
         }
         
     };
@@ -66,7 +78,7 @@ const Login=():any=>{
 
                     <button onClick={ ()=>{ loginAction();} } >login</button>
                     <p></p><span style={{color:"#ff0000"}} >{errorMsg}</span>
-                   <p></p> <span>tip password:123456</span>
+                   <p></p> <span>tip password:123456 if net server not running else use test/test</span>
                    
         </div>
 };
