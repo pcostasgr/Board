@@ -17,6 +17,9 @@ type CardComponentListProps={
 
 type CardComponentListState={
     listTitle:string;
+    fieldMultiline:boolean;
+    fieldRows:number;
+    headerSaveButtonVisible:"hidden" | "visible";
 }
     
 class CardComponentList extends React.PureComponent<CardComponentListProps,CardComponentListState> {
@@ -30,8 +33,15 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         this.onListTitleChange = this
             .onListTitleChange
             .bind(this);
+
+        this.onTextFieldSave= 
+        this.onTextFieldSave.bind(this);
+
         this.state = {
-            listTitle: this.props.listTitle
+            listTitle: this.props.listTitle,
+            fieldMultiline:false,
+            fieldRows:1,
+            headerSaveButtonVisible:"hidden"
         };
         this.onHandleTitleChange=this.onHandleTitleChange.bind(this);
         this.name = "CardListContainer";
@@ -48,6 +58,7 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         this.props.updateListTitleEvent(this.props.listId,event.target.value);
     }
 
+
     flatButtonClick() {
         var component:any = ReactDOM.findDOMNode(this);
         var rect:any = component.getBoundingClientRect();
@@ -63,6 +74,10 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         this
             .props
             .menuEvent(menuPos, this);
+    }
+
+    onTextFieldSave(){
+        console.log("Save list title:"+this.state.listTitle);
     }
 
     render() {
@@ -93,6 +108,16 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
         
         return (
             <div
+                onMouseOut={
+                    ()=>{
+                        console.log("test field mouse is out ");   
+                        this.setState({
+                            fieldMultiline:false,
+                            fieldRows:1,
+                            headerSaveButtonVisible:"hidden"
+                    });
+                    }
+                }
                 style={{
                     width:350,
                     height:"100%",
@@ -106,13 +131,28 @@ class CardComponentList extends React.PureComponent<CardComponentListProps,CardC
                                  <td>
                                     <div className="list-header-div-content" 
                                     id={"ListHeaderFieldIdv"+listid}
+                                   
                                     >
                                        <span> 
                                             <TextField
                                                 key={listHeaderTextId}
                                                 value={this.state.listTitle}
-                                                //defaultValue={this.state.listTitle}
+                                                multiline={this.state.fieldMultiline}
+                                                rows={this.state.fieldRows}
+
                                                 onChange={this.onHandleTitleChange}
+
+                                                onClick={ ()=>{
+                                                    console.log("Text field is clicked");
+                                                    this.setState({
+                                                        fieldMultiline:true,
+                                                        fieldRows:3,
+                                                        headerSaveButtonVisible:"visible"
+                                                    });
+                                                } }
+
+                                              
+
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
