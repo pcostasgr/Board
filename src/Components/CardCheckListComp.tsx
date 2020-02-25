@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { CardCheckList, CardCheckListItem } from '../Model/ListModel';
 import { authenticationService } from '../Model/Users';
 import { boardFacade } from '../store/Repository';
+import {TextField} from '@material-ui/core';
 
 type CardCheckListCompProps={
     cardid:number,
@@ -23,7 +24,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
 
     useEffect(
         () => {
-         console.log("Load Card Id :"+ cardid);
+         //console.log("Load Card Id :"+ cardid);
             loadDataEvent(cardid);
         },[]
     );
@@ -39,39 +40,47 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
             return  <React.Fragment key={"ReactFrag"+key_+elem.clitemid}> 
                     <tr id={"tr_" + key_+elem.clitemid} >
                     <td>
-                        <div id={"divItem"+key_+elem.clitemid}>
-                        <input type="checkbox"
-                        id={"item"+key_+elem.clitemid} 
-                        onChange={(event:any)=>{
-                            var elem_={...elem,ischecked:event.target.checked};
-                             updateItemEvent(elem_);
-                        }}
-                        checked={elem.ischecked}
-                        value={elem.clitemid}
-                        >
-                        </input>
-                        <textarea id={"textArea"+key_+elem.clitemid} 
-                        rows={1} cols={30} 
-                        defaultValue={elem.itemtitle}
-                        //value={elem.itemTitle}
-                        onChange={(event:any)=>{
-                            var elem_={...elem,itemTitle:event.target.value,cardid:cardid};
-                             updateItemEvent(elem_);
-                        }}
-                         >
-                        </textarea>
-                        <button 
-                            id={"button" + key_ + elem.clitemid}
-                            type="button"
-                            onClick={(event:any)=>{
-                                var elem_={...elem};
-                                deleteItemEvent(elem_);
-                            }}
-                            value={[elem.clitemid.toString(),elem.checklistid.toString()]}
-                        >
-                            Delete
-                        </button> 
+                        <div id={"divItem"+key_+elem.clitemid} className="card-list-details-horizontal">
+                            <div>
+                                <input type="checkbox" className="largeCheckbox"
+                                    id={"item"+key_+elem.clitemid} 
+                                    onChange={(event:any)=>{
+                                        var elem_={...elem,ischecked:event.target.checked};
+                                        updateItemEvent(elem_);
+                                    }}
+                                    checked={elem.ischecked}
+                                    value={elem.clitemid}
+                                    >
+                                </input>
+                            </div>
+                            <div>
+                                <TextField id={"textArea"+key_+elem.clitemid} 
+                                    rows={1} 
+                                    fullWidth={true}
+                                    defaultValue={elem.itemtitle}
+                                    onChange={(event:any)=>{
+                                        console.log("textfield value:" +event.target.value);
+                                        var elem_={...elem,itemtitle:event.target.value,cardid:cardid};
+                                        updateItemEvent(elem_);
+                                    }}
+                                >
+                            </TextField>
+                            </div>
+                            <div>
+                                <button 
+                                    id={"button" + key_ + elem.clitemid}
+                                    type="button"
+                                    onClick={(event:any)=>{
+                                        var elem_={...elem};
+                                        deleteItemEvent(elem_);
+                                        }}
+                                            value={[elem.clitemid.toString(),elem.checklistid.toString()]}
+                                        >
+                                    Delete
+                                </button> 
+                            </div>
                     </div>
+
                 </td></tr>
                 </React.Fragment> 
         })
@@ -85,17 +94,22 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
             <tbody>
             <tr>
                 <td>
-                     <textarea id={"ListtextArea"+key_} 
-                        rows={1} cols={50} 
+                     <TextField id={"ListtextArea"+key_} 
+                        rows={1}
+                        fullWidth={true}
                         defaultValue={listElem.title}
-                        //value={listElem.checkListTitle}
                         onChange={(event:any)=>{
                             var elem_={...listElem,title:event.target.value};
                              updateListEvent(elem_);
                         }}
                          >
-                        </textarea>
-                    <button
+                        </TextField>
+                
+                 
+                </td>
+            </tr>
+            <tr>
+                <button
                     onClick={() => {
                         insertItemEvent(
                             {
@@ -106,12 +120,14 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                                 userid:userid
                             }
                         );
-                }}>Add list item</button>
-                 <button
+                    }}>Add item
+                </button>
+                
+                    <button
                     onClick={() => {    
                         deleteListEvent(listElem.checklistid);
-                }}>Delete list</button>
-                </td>
+                    }}>Delete list</button>
+                
             </tr>
             {itemRows}
             </tbody>
@@ -123,7 +139,6 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
     
 
     return <div>
-            <b>cardid={cardid}</b>
             <button
                 onClick={(event)=>{
                     insertListEvent({

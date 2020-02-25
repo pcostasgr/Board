@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {selectCard} from '../reducers/ListReducer';
 import {connect} from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,8 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import {CardData} from '../Model/ListModel';
-import { throwStatement } from '@babel/types';
-import { isThisISOWeek } from 'date-fns';
 import CardCheckListComp from './CardCheckListComp';
 import {boardFacade} from '../store/Repository'
 
@@ -126,7 +122,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 			<div id={"cardlist"+this.props.cardData.cardid} className="card-menu-list" 
 			style={{ top:this.props.topValue,left:this.props.leftValue,
 				visibility:this.props.visibility,
-				width:800
+				width:600
 				}}>
 				<table>
 					<colgroup>
@@ -142,7 +138,6 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 								multiline rowsMax="10"
 								defaultValue={this.props.cardData.cardtitle}
 								onChange={this.handleTextFieldChange}
-								//fullWidth={true}
 							/>
 						</td>
 					</tr>
@@ -159,21 +154,14 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 						<td id="MainLeftPanel" >
 							<table>
 				            <tbody>
+						    <tr>
+								{dateField}
+				            </tr>
 							<tr>
 								<td>Labels</td>
-								<td>
-								{dateField}
-								</td>
 							</tr>
 							<tr>
 								<td>
-									{/*<TextField
-									id="ListNameTextId"
-									label="Value"
-									multiline rowsMax="1"
-									defaultValue="New TextField"
-									/>*/}
-
 								<CardCheckListComp
 				                    key={"ListComp1"}
 				                    cardid={this.props.cardData.cardid}
@@ -186,13 +174,10 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 						<td id="MainRightPanel" >
 							<List component="nav" aria-label="Stack actions">
 								<ListItem button>
-								<ListItemText primary="Save card" onClick={this.saveCardEvent} />
+								<ListItemText primary="Close" onClick={this.saveCardEvent} />
 								</ListItem>
 								<ListItem button>
 								<ListItemText primary="Delete card" onClick={this.deleteCardEvent} />
-								</ListItem>
-								<ListItem button>
-								<ListItemText primary="Cancel" onClick={this.closeControl} />
 								</ListItem>
       						</List>
 						</td>
