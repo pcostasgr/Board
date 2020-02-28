@@ -125,39 +125,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				visibility:this.props.visibility,
 				width:600
 				}}>
-				<table>
-					<colgroup>
-					<col width="450px"></col>
-					<col width="150px"></col>
-					</colgroup>
-					<tbody>
-					<tr id="DetailTitleText" >
-						<td>
-							<TextField
-								key={"TextFiledView"+this.props.cardData.cardid}
-								id="popUpDimId"
-								name="description_field"
-								multiline rowsMax="10"
-								fullWidth={true}
-								defaultValue={this.props.cardData.cardtitle}
-								onChange={this.handleTextFieldChange}
-							/>
-						</td>
-						<td>
-							<List component="nav" aria-label="Stack actions">
-								<ListItem button>
-								<ListItemText primary="Close" onClick={this.saveCardEvent} />
-								</ListItem>
-								<ListItem button>
-								<ListItemText primary="Delete card" onClick={this.deleteCardEvent} />
-								</ListItem>
-      						</List>
-					    </td>
-					</tr>
-					</tbody>
-				</table>
-
-				<table>
+								<table>
 					<colgroup>
 				    <col width="75%"></col>
 					<col width="25%"></col>
@@ -167,6 +135,18 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 						<td id="MainLeftPanel" >
 							<table>
 				            <tbody>
+							<td>
+								<TextField
+									key={"TextFiledView"+this.props.cardData.cardid}
+									id="popUpDimId"
+									name="description_field"
+									multiline rowsMax="10"
+									fullWidth={true}
+									defaultValue={this.props.cardData.cardtitle}
+									onChange={this.handleTextFieldChange}
+								/>
+							</td>
+
 						    <tr>
 								{dateField}
 				            </tr>
@@ -184,7 +164,15 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				        </tbody>
                         </table>
 						</td>
-						<td id="MainRightPanel" >
+						<td valign="top">
+								<List component="nav" aria-label="Stack actions">
+									<ListItem button>
+									<ListItemText primary="Close" onClick={this.saveCardEvent} />
+									</ListItem>
+									<ListItem button>
+									<ListItemText primary="Delete card" onClick={this.deleteCardEvent} />
+									</ListItem>
+								</List>
 						</td>
 					</tr>
 					</tbody>
