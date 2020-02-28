@@ -98,6 +98,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 					format="dd/MM/yyyy"
 					onChange={this.handleDateChange}
 					autoOk={true}
+					fullWidth={false}
 					value={new Date(this.props.cardData.carddate)}
 					defaultValue={new Date(this.props.cardData.carddate)}
 					KeyboardButtonProps={{
@@ -126,7 +127,8 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 				}}>
 				<table>
 					<colgroup>
-					<col width="100%"></col>
+					<col width="450px"></col>
+					<col width="150px"></col>
 					</colgroup>
 					<tbody>
 					<tr id="DetailTitleText" >
@@ -136,18 +138,29 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 								id="popUpDimId"
 								name="description_field"
 								multiline rowsMax="10"
+								fullWidth={true}
 								defaultValue={this.props.cardData.cardtitle}
 								onChange={this.handleTextFieldChange}
 							/>
 						</td>
+						<td>
+							<List component="nav" aria-label="Stack actions">
+								<ListItem button>
+								<ListItemText primary="Close" onClick={this.saveCardEvent} />
+								</ListItem>
+								<ListItem button>
+								<ListItemText primary="Delete card" onClick={this.deleteCardEvent} />
+								</ListItem>
+      						</List>
+					    </td>
 					</tr>
 					</tbody>
 				</table>
 
 				<table>
 					<colgroup>
-				    <col width="80%"></col>
-					<col width="20%"></col>
+				    <col width="75%"></col>
+					<col width="25%"></col>
 					</colgroup>
 					<tbody>
 					<tr id="DetailsMainRow">
@@ -158,7 +171,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 								{dateField}
 				            </tr>
 							<tr>
-								<td>Labels</td>
+								<td>Lists</td>
 							</tr>
 							<tr>
 								<td>
@@ -172,14 +185,6 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
                         </table>
 						</td>
 						<td id="MainRightPanel" >
-							<List component="nav" aria-label="Stack actions">
-								<ListItem button>
-								<ListItemText primary="Close" onClick={this.saveCardEvent} />
-								</ListItem>
-								<ListItem button>
-								<ListItemText primary="Delete card" onClick={this.deleteCardEvent} />
-								</ListItem>
-      						</List>
 						</td>
 					</tr>
 					</tbody>

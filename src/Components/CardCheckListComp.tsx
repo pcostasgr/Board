@@ -149,7 +149,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                         items:[]
                     });
                 }}
-            >Create List</button>
+            >Create New List</button>
             <br></br>
             {listData}
            </div>
