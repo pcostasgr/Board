@@ -148,7 +148,7 @@ class CardDetailView extends React.Component<CardDetailViewProps>{
 							</td>
 
 						    <tr>
-								{dateField}
+								<td align="left">{dateField}</td>
 				            </tr>
 							<tr>
 								<td>Lists</td>
