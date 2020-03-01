@@ -10,9 +10,9 @@ export type User={
 }
 
 
-const getEmptyUser=():User => {
+const getEmptyUser=(userid:number):User => {
     return {
-        userId:-1,
+        userId:userid,
         firstName:"",
         lastName:"",
         username:"",
@@ -25,7 +25,7 @@ const getEmptyUser=():User => {
 const getUserFromStorage=():User => {
     var ls=localStorage.getItem("currentUser");   
     if(ls ==='undefined'){
-        return getEmptyUser(); 
+        return getEmptyUser(-1); 
     }else{
         return JSON.parse(ls?ls:"{}");
     } 
@@ -36,6 +36,11 @@ const currentUserSubject = new BehaviorSubject<User>(getUserFromStorage());
 
 export const authenticationService = {
     currentUser: currentUserSubject.asObservable(),
+    clearUser:()=>{
+        currentUserSubject.next(getEmptyUser(0));
+        localStorage.removeItem('currentUser');
+    },
+    get getDummyUser() { return getEmptyUser(-1); },
     get currentUserValue () { return currentUserSubject.value },
     logIn:(user:User)=>{
          localStorage.setItem('currentUser', JSON.stringify(user));
@@ -52,6 +57,6 @@ export const authenticationService = {
     },
     logOut:()=>{
         localStorage.removeItem('currentUser');
-        currentUserSubject.next(getEmptyUser());
+        currentUserSubject.next(getEmptyUser(0));
     }
 };

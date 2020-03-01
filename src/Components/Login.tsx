@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {Redirect,useHistory,useLocation} from 'react-router-dom'
 import { EROFS } from 'constants';
 import {doLoginUser} from './../Api/LoginApi';
-import { authenticationService } from '../Model/Users';
+import { authenticationService, User } from '../Model/Users';
 
 const Login=()=>{
 
@@ -15,13 +15,19 @@ const Login=()=>{
     const [errorMsg,setErrorMsg]=useState("");
 
     const loginAction=async ()=>{
-        
-        if(userMail && userPass==='123456'){
+        console.log("username:" + userMail + " password:" + userPass);
+        authenticationService.clearUser();
+
+        if(userMail==="user@supermail.com" && userPass==='123456'){
+               const user:User=authenticationService.getDummyUser;
+               authenticationService.logIn(user);
                 history.push("/board");
         }else{
             const response=await doLoginUser(userMail,userPass);
+            console.log(response);
+
             var userid=authenticationService.currentUserValue.userId;
-            console.log("userid:" + userid);
+            console.log("api userid:" + userid);
             if(userid>0){
                 history.push('/board');
             }else{

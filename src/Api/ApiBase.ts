@@ -2,7 +2,7 @@ import axios from 'axios';
 import {authenticationService} from '../Model/Users';
 
 export default axios.create({
-    baseURL:"http://localhost:4000/"
+    baseURL:"https://localhost:5006/"
 });
 
 export const contentTypeHeader={
@@ -33,6 +33,7 @@ export const authHeaderStr=()=> {
 export const fullHeader=()=>{
     return {
         'Content-type':'application/json',
-        'Authorization':authHeaderStr()
+        'Authorization':authHeaderStr(),
+	'crossDomain':true
     }
 }

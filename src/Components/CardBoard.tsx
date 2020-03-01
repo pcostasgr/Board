@@ -125,6 +125,10 @@ class CardBoard extends React.Component<CardBoardProps,CardBoardState> {
         var popup_=this.popup;
         var menuEvent=this.disableContainer_;
 
+        //console.log("Userid=>:"+user);
+        var userid=authenticationService.currentUserValue.userId;
+
+        console.log("userid:" + userid);
         console.log("Rendering All List");
 
         var listData = cardList.map(function (e) {

@@ -23,8 +23,10 @@ export const loginUser=({username,password}:LoginUserType)=>{
     };
 };
 
-export const doLoginUser=(username:string,password:string):any=>{
-         ApiBase.post('users/authenticate',{username:username,password:password},{headers:contentTypeHeader})
+export const  doLoginUser=async (username:string,password:string):Promise<User>=>{
+         var _user:User=authenticationService.getDummyUser;
+
+         var _promise=ApiBase.post('users/authenticate',{username:username,password:password},{headers:contentTypeHeader})
         .then(response=>{
             var user:User=response.data;
             console.log("---------------------------------------------------------------");
@@ -35,12 +37,16 @@ export const doLoginUser=(username:string,password:string):any=>{
                 authenticationService.logIn(response.data);
             }
             
+            _user=authenticationService.currentUserValue;
         })
         .catch(error => {
             console.log("Error loginUser "+ error);
             console.log(error.response);
+
         });
 
+        await _promise;
+        return _user;
 }
 
 export const loginGetUsers=()=>{
