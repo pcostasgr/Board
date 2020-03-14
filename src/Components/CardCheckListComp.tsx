@@ -4,6 +4,8 @@ import { CardCheckList, CardCheckListItem } from '../Model/ListModel';
 import { authenticationService } from '../Model/Users';
 import { boardFacade } from '../store/Repository';
 import {TextField} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/styles';
 
 type CardCheckListCompProps={
     cardid:number,
@@ -28,6 +30,14 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
             loadDataEvent(cardid);
         },[]
     );
+    
+    const useButtonStyle=makeStyles({
+        label:{
+            textTransform:'capitalize'
+        },
+    });
+
+    const classes=useButtonStyle();
 
     const listData=props.lists.map( (listElem:CardCheckList)=>{
         const key_:string="_"+cardid+"_"+listElem.checklistid+"_"; 
@@ -67,9 +77,13 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                             </TextField>
                             </div>
                             <div>
-                                <button 
+                                <Button 
                                     id={"button" + key_ + elem.clitemid}
-                                    type="button"
+                                    variant="text"
+                                    size="large"
+                                    classes={{
+                                        label:classes.label
+                                    }}
                                     onClick={(event:any)=>{
                                         var elem_={...elem};
                                         deleteItemEvent(elem_);
@@ -77,7 +91,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                                             value={[elem.clitemid.toString(),elem.checklistid.toString()]}
                                         >
                                     Delete
-                                </button> 
+                                </Button> 
                             </div>
                     </div>
 
@@ -109,7 +123,11 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                 </td>
             </tr>
             <tr>
-                <button
+                <Button
+                    variant="text"
+                    classes={{
+                        label:classes.label
+                    }}
                     onClick={() => {
                         insertItemEvent(
                             {
@@ -121,12 +139,16 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                             }
                         );
                     }}>Add item
-                </button>
+                </Button>
                 
-                    <button
+                    <Button
+                    variant="text"
+                    classes={{
+                        label:classes.label
+                    }}
                     onClick={() => {    
                         deleteListEvent(listElem.checklistid);
-                    }}>Delete list</button>
+                    }}>Delete list</Button>
                 
             </tr>
             {itemRows}
@@ -139,7 +161,11 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
     
 
     return <div>
-            <button
+            <Button
+                variant="text"
+                classes={{
+                    label:classes.label
+                }} 
                 onClick={(event)=>{
                     insertListEvent({
                         cardid:cardid,
@@ -149,7 +175,7 @@ const CardCheckListComp=(props:CardCheckListCompProps) => {
                         items:[]
                     });
                 }}
-            >Create New List</button>
+            >Create New List</Button>
             <br></br>
             {listData}
            </div>
