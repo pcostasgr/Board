@@ -5,11 +5,12 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { boardFacade } from "../store/Repository";
 import { authenticationService as auth } from "../Model/Users";
-type SomeProps = {
+
+type NewCardLayerProps = {
   listId: number;
 };
 
-const NewCardLayerComp = (props: SomeProps) => {
+const NewCardLayerComp = (props: NewCardLayerProps) => {
   const { listId } = props;
 
   const buttonId = "NCBListId" + listId;
