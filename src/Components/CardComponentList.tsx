@@ -164,16 +164,13 @@ class CardComponentList extends React.PureComponent<
             </tr>
             <tr>
               <td>
-                <div className="card-container">{cardData}
-                <NewCardLayerComp listId={this.props.listId} />
+                <div className="card-container">
+                  {cardData}
+                  <NewCardLayerComp listId={this.props.listId} />
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>
-              
-              </td>
-            </tr>
+            <tr></tr>
           </tbody>
         </table>
       </div>

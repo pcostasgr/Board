@@ -51,10 +51,11 @@ const NewCardLayerComp = (props: NewCardLayerProps) => {
 
   const renderButton = (): any => {
     return (
-      <div id={"Div" + buttonId}>
+      <div id={"Div" + buttonId} style={{ position:"absolute" }} >
         <Button
           id={buttonId}
           variant="text"
+          fullWidth={true}
           classes={{
             label: classes.label
           }}
@@ -72,6 +73,9 @@ const NewCardLayerComp = (props: NewCardLayerProps) => {
     return (
       <table id={"Tab" + buttonId}>
         <tbody>
+          <colgroup>
+            <col width="300px" />
+          </colgroup>
           <tr>
             <td>
               <TextField
