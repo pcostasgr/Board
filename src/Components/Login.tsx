@@ -1,92 +1,101 @@
-import React,{useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import {Redirect,useHistory,useLocation} from 'react-router-dom'
-import { EROFS } from 'constants';
-import {doLoginUser} from './../Api/LoginApi';
-import { authenticationService, User } from '../Model/Users';
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { EROFS } from "constants";
+import { doLoginUser } from "./../Api/LoginApi";
+import { authenticationService, User } from "../Model/Users";
 
-const Login=()=>{
+const Login = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [userMail, setUserMail] = useState("user@supermail.com");
+  const [userPass, setUserPass] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-    const history=useHistory();
-    const dispatch=useDispatch();
-    const [userMail,setUserMail]=useState("user@supermail.com");
-    const [userPass,setUserPass]=useState("");
-    const [errorMsg,setErrorMsg]=useState("");
+  const loginAction = async () => {
+    console.log("username:" + userMail + " password:" + userPass);
+    authenticationService.clearUser();
 
-    const loginAction=async ()=>{
-        console.log("username:" + userMail + " password:" + userPass);
-        authenticationService.clearUser();
+    if (userMail === "user@supermail.com" && userPass === "123456") {
+      const user: User = authenticationService.getDummyUser;
+      authenticationService.logIn(user);
+      history.push("/board");
+    } else {
+      const response = await doLoginUser(userMail, userPass);
+      console.log(response);
 
-        if(userMail==="user@supermail.com" && userPass==='123456'){
-               const user:User=authenticationService.getDummyUser;
-               authenticationService.logIn(user);
-                history.push("/board");
-        }else{
-            const response=await doLoginUser(userMail,userPass);
-            console.log(response);
-
-            var userid=authenticationService.currentUserValue.userId;
-            console.log("api userid:" + userid);
-            if(userid>0){
-                history.push('/board');
-            }else{
-                setErrorMsg("Invalid password,see tip below !");
-            }
-            
-        }
-        
-    };
-
-    const onMailChange=(event:any)=>{
-        setUserMail(event.target.value);
+      var userid = authenticationService.currentUserValue.userId;
+      console.log("api userid:" + userid);
+      if (userid > 0) {
+        history.push("/board");
+      } else {
+        setErrorMsg("Invalid password,see tip below !");
+      }
     }
+  };
 
-    const onPassChange=(event:any)=>{
-        setUserPass(event.target.value);
-    }
+  const onMailChange = (event: any) => {
+    setUserMail(event.target.value);
+  };
 
-    return <div>
-                Trello Clone Yeditech 2020 pcostasgr@gmail.com
-                <hr></hr>
-                <table><tbody>
-                    <tr>
-                        <td>
-                            <label >Email</label>
-                        </td>
-                        <td>
-                            <input
-                                type="text"
-                                name="email"
-                                value={userMail}
-                                onChange={onMailChange}
-                                id="email"
-                                placeholder="Enter your email address."
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label >Password</label>
-                        </td>
-                        <td>
-                            <input
-                                type="password"
-                                name="password"
-                                value={userPass}
-                                onChange={onPassChange}
-                                id="password"
-                                placeholder="Enter your password."
-                            />
-                        </td>
-                    </tr>
-                </tbody></table>
+  const onPassChange = (event: any) => {
+    setUserPass(event.target.value);
+  };
 
-                    <button onClick={ ()=>{ loginAction();} } >login</button>
-                    <p></p><span style={{color:"#ff0000"}} >{errorMsg}</span>
-                   <p></p> <span>tip password:123456 if net server not running else use test/test</span>
-                   
-        </div>
+  return (
+    <div>
+      Trello Clone Yeditech 2020 pcostasgr@gmail.com
+      <hr></hr>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <label>Email</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="email"
+                value={userMail}
+                onChange={onMailChange}
+                id="email"
+                placeholder="Enter your email address."
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Password</label>
+            </td>
+            <td>
+              <input
+                type="password"
+                name="password"
+                value={userPass}
+                onChange={onPassChange}
+                id="password"
+                placeholder="Enter your password."
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        onClick={() => {
+          loginAction();
+        }}
+      >
+        login
+      </button>
+      <p></p>
+      <span style={{ color: "#ff0000" }}>{errorMsg}</span>
+      <p></p>{" "}
+      <span>
+        tip password:123456 if net server not running else use test/test
+      </span>
+    </div>
+  );
 };
 
 export default Login;

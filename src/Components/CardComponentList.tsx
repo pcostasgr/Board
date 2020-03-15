@@ -5,7 +5,8 @@ import CardComponent from "./CardComponent";
 import { MenuPosType, CardData, ListData, Nullable } from "../Model/ListModel";
 import TextField from "@material-ui/core/TextField";
 import { updateListTitle } from "../reducers/ListReducer";
-import NewCardLayerComp from "./NewCardLayer";
+import NewCardTitleLayerComp from "./NewCardTitleLayerComp";
+import NewListTitleLayerComp from "./NewListTitleLayerComp";
 
 type CardComponentListProps = {
   listId: number;
@@ -104,7 +105,6 @@ class CardComponentList extends React.PureComponent<
     return (
       <div
         onMouseOut={() => {
-          console.log("test field mouse is out ");
           this.setState({
             fieldMultiline: false,
             fieldRows: 1,
@@ -113,7 +113,6 @@ class CardComponentList extends React.PureComponent<
         }}
         style={{
           width: 350,
-          height: "100%",
           background: "#FFFFFF"
         }}
       >
@@ -166,7 +165,7 @@ class CardComponentList extends React.PureComponent<
               <td>
                 <div className="card-container">
                   {cardData}
-                  <NewCardLayerComp listId={this.props.listId} />
+                  <NewCardTitleLayerComp listId={this.props.listId} />
                 </div>
               </td>
             </tr>

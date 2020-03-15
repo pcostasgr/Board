@@ -6,11 +6,11 @@ import { makeStyles } from "@material-ui/styles";
 import { boardFacade } from "../store/Repository";
 import { authenticationService as auth } from "../Model/Users";
 
-type NewCardLayerProps = {
+type NewCardTitleLayerProps = {
   listId: number;
 };
 
-const NewCardLayerComp = (props: NewCardLayerProps) => {
+const NewCardTitleLayerComp = (props: NewCardTitleLayerProps) => {
   const { listId } = props;
 
   const buttonId = "NCBListId" + listId;
@@ -28,9 +28,9 @@ const NewCardLayerComp = (props: NewCardLayerProps) => {
       textTransform: "none"
     },
     root: {
-      background: "red",
+      background: "green",
       color: "white"
-    }
+    },
   });
 
   const classes = useButtonStyle();
@@ -93,12 +93,12 @@ const NewCardLayerComp = (props: NewCardLayerProps) => {
             <td>
               <Button
                 id={"SB" + buttonId}
-                variant="contained"
+                variant="text"
                 classes={{
                   root: classes.root,
                   label: classes.label
                 }}
-                size="large"
+                size="small"
                 onClick={(event: any) => {
                   createNewCard(title);
                   setButtonVisible(true);
@@ -108,8 +108,8 @@ const NewCardLayerComp = (props: NewCardLayerProps) => {
               </Button>
               <Button
                 id={"EB" + buttonId}
-                variant="contained"
-                size="large"
+                variant="text"
+                size="small"
                 classes={{
                   label: classes.label
                 }}
@@ -137,4 +137,4 @@ const NewCardLayerComp = (props: NewCardLayerProps) => {
   return renderControl();
 };
 
-export default NewCardLayerComp;
+export default NewCardTitleLayerComp;

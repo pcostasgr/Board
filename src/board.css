@@ -189,3 +189,7 @@
 .button-mat-text-lower {
     text-transform: capitalize;
 }
+
+.div-new-list {
+    vertical-align: top;
+}
