@@ -190,6 +190,19 @@
     text-transform: capitalize;
 }
 
-.div-new-list {
+.td-elem-new-list {
     vertical-align: top;
+    width:"300px";
+}
+
+.div-new-list {
+    width:"300px";
+    background-color:#4286f4;
+    position: absolute;;
+}
+
+.div-new-list-exp {
+    width:"300px";
+    background-color:#E6E6FA;
+    position: absolute;;
 }

@@ -48,7 +48,6 @@ const NewListTitleLayerComp = () => {
 
   const renderButton = (): any => {
     return (
-      <div id={"Div" + buttonId} style={{ position:"relative",width:"300px" }} >
         <Button
           id={buttonId}
           variant="text"
@@ -62,7 +61,6 @@ const NewListTitleLayerComp = () => {
         >
           + Add another list
         </Button>
-      </div>
     );
   };
 
@@ -126,11 +124,11 @@ const NewListTitleLayerComp = () => {
   };
 
   const renderControl = (): any => {
-    if (buttonVisible) {
-      return renderButton();
-    } else {
-      return renderInputText();
-    }
+    const comp:JSX.Element=buttonVisible?renderButton():renderInputText();
+    const className=buttonVisible?"div-new-list":"div-new-list-exp";
+    return <div id={"Div" + buttonId} className={className} >
+            {comp}
+          </div>;
   };
 
   return renderControl();

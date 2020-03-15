@@ -154,7 +154,7 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
     }, this);
 
     listData.push(
-      <td className="div-new-list">
+      <td className="td-elem-new-list">
         <NewListTitleLayerComp />
       </td>
     );

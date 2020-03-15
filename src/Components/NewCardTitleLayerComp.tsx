@@ -5,6 +5,7 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { boardFacade } from "../store/Repository";
 import { authenticationService as auth } from "../Model/Users";
+import { render } from "react-dom";
 
 type NewCardTitleLayerProps = {
   listId: number;
@@ -51,7 +52,7 @@ const NewCardTitleLayerComp = (props: NewCardTitleLayerProps) => {
 
   const renderButton = (): any => {
     return (
-      <div id={"Div" + buttonId} style={{ position:"absolute" }} >
+     
         <Button
           id={buttonId}
           variant="text"
@@ -65,7 +66,6 @@ const NewCardTitleLayerComp = (props: NewCardTitleLayerProps) => {
         >
           + Add another card
         </Button>
-      </div>
     );
   };
 
@@ -127,11 +127,8 @@ const NewCardTitleLayerComp = (props: NewCardTitleLayerProps) => {
   };
 
   const renderControl = (): any => {
-    if (buttonVisible) {
-      return renderButton();
-    } else {
-      return renderInputText();
-    }
+    const comp=buttonVisible?renderButton():renderInputText();
+    return  <div id={"Div" + buttonId} style={{ position:"absolute" }} >{comp}</div>
   };
 
   return renderControl();
