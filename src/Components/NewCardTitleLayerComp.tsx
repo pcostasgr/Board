@@ -128,7 +128,7 @@ const NewCardTitleLayerComp = (props: NewCardTitleLayerProps) => {
 
   const renderControl = (): any => {
     const comp=buttonVisible?renderButton():renderInputText();
-    return  <div id={"Div" + buttonId} style={{ position:"absolute" }} >{comp}</div>
+    return  <div id={"Div" + buttonId} className="div-new-card" >{comp}</div>
   };
 
   return renderControl();

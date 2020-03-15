@@ -1,5 +1,11 @@
+.body {
+    background-color: #4286f4;
+}
+
 .list-header {
     background-color: #4286f4;
+    display:inline-block;
+    margin-right:-1200px;
 }
 
 .card-list-head {
@@ -190,19 +196,27 @@
     text-transform: capitalize;
 }
 
-.td-elem-new-list {
+.td-elem-new-list-cell {
     vertical-align: top;
-    width:"300px";
+    width:300px;
+    height:100%;
+    background-color:#4286f4;;
+}
+
+.div-new-card {
+    position:relative;
+    float: left;
 }
 
 .div-new-list {
-    width:"300px";
+    width:300px;
     background-color:#4286f4;
-    position: absolute;;
+    position: absolute;
+    text-align: left;
 }
 
 .div-new-list-exp {
-    width:"300px";
+    width:300px;
     background-color:#E6E6FA;
-    position: absolute;;
+    position: relative;
 }

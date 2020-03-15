@@ -139,7 +139,7 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
 
     var listData = cardList.map(function(e) {
       return (
-        <React.Fragment key={"fraglist" + e.listid}>
+       // <div id={"fraglist" + e.listid}>
           <td id={"tdlist" + e.listid} className="board-table-cell">
             <CardComponentList
               key={"CardComponentList" + e.listid}
@@ -149,12 +149,12 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
               data={e}
             />
           </td>
-        </React.Fragment>
+       // </div>
       );
     }, this);
 
     listData.push(
-      <td className="td-elem-new-list">
+      <td className="td-elem-new-list-cell">
         <NewListTitleLayerComp />
       </td>
     );
@@ -165,15 +165,6 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
 
     return (
       <div className="list-header">
-        <button
-          id="newListButton1"
-          onClick={() => {
-            this.props.createNewListEvent();
-          }}
-        >
-          Add new list
-        </button>
-
         <button
           id="newListButton2"
           onClick={() => {
@@ -240,7 +231,7 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
             opacity: this.state.opacity
           }}
         >
-          <table>
+          <table >
             <tbody>
               <tr>{listData}</tr>
             </tbody>
