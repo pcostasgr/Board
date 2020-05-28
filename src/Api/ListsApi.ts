@@ -2,6 +2,7 @@ import ApiBase,{contentTypeHeader,fullHeader} from './ApiBase';
 import {addList,getList,updateListTitle,deleteList} from '../reducers/ListReducer';
 import { ListDataArray,ListData} from '../Model/ListModel';
 import {getComponentDb,getCheckListsDb,getLabelItemsDb} from '../store/mockdb';
+import { resolve } from 'dns';
 
 
 
@@ -16,6 +17,7 @@ const initCardData={
 };
 
 export interface IListApi{
+    //getListByUserApiInitP:(userid:number)=>Promise<ListDataArray>;
     getListByUserApiInit:(userid:number)=>ListDataArray;
     getListByUserApi:(userid:number)=>(dispatch:any)=>Promise<void>;
     insertListApi:(listid:number,listtitle:string,userid:number)=>(dispatch:any)=>Promise<void>;
@@ -27,6 +29,12 @@ export class ListApiMock
     implements IListApi{
 
     constructor() {}
+
+   /* getListByUserApiInitP=(userid:number):Promise<ListDataArray>=>{
+        return new Promise( (resolve,reject) =>{
+                resolve(getComponentDb());
+            });
+    }*/
 
     getListByUserApiInit=(userid:number):ListDataArray=>{
         return getComponentDb();
@@ -42,6 +50,7 @@ export class ListApiMock
         };
     };
 
+    
     insertListApi=(listid:number,listtitle:string,userid:number)=>{
         return (dispatch:any)=>{
                     console.log('1 insertListApi Promise');
@@ -83,16 +92,11 @@ export class ListApi
 
     constructor() {}
 
-    getListByUserApiInit=(userid:number):ListDataArray=>{
-            ApiBase.get(`api/lists/userid/${userid}`,{headers:fullHeader()})
-            .then(response=>{
-                return {lists:response.data,cardData:initCardData};
-            })
-            .catch(error => {
-                return {lists:[],cardData:initCardData};
-            });
 
-            return {lists:[],cardData:initCardData};
+    getListByUserApiInit=(userid:number) :ListDataArray=>{
+        var data:ListDataArray={lists:[],cardData:initCardData};
+        return data;
+            
     }
 
     getListByUserApi=(userid:number)=>{

@@ -26,7 +26,7 @@ export const loginUser=({username,password}:LoginUserType)=>{
 export const  doLoginUser=async (username:string,password:string):Promise<User>=>{
          var _user:User=authenticationService.getDummyUser;
 
-         var _promise=ApiBase.post('users/authenticate',{username:username,password:password},{headers:contentTypeHeader})
+         const  _promise=ApiBase.post('users/authenticate',{username:username,password:password},{headers:contentTypeHeader})
         .then(response=>{
             var user:User=response.data;
             console.log("---------------------------------------------------------------");

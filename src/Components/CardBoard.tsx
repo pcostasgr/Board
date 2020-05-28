@@ -18,6 +18,8 @@ import { authenticationService } from "../Model/Users";
 import store from "../store/indexStore";
 import { boardFacade } from "./../store/Repository";
 import NewListTitleLayerComp from "./NewListTitleLayerComp";
+import {Redirect,withRouter } from "react-router-dom"
+import { configureStore } from "@reduxjs/toolkit";
 
 type CardBoardProps = {
   boardList: ListData[];
@@ -28,6 +30,8 @@ type CardBoardProps = {
   showCardDetail: (cardId: number, listId: number) => void;
   loginUserEvent: (username: string, password: string) => void;
   getUsersEvent: () => void;
+  reloadUserList:(userid:number)=> void;
+
 };
 
 type CardBoardState = {
@@ -125,6 +129,12 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
       this.listContainer.onCardMenuEvent(e);
     }
   }
+ 
+  componentDidMount(){
+    console.log("CardBoard Component did mount");
+    const user = authenticationService.currentUserValue;
+    this.props.reloadUserList(user.userId);
+  }
 
   render() {
     var cardList = this.props.boardList;
@@ -137,6 +147,7 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
     console.log("userid:" + userid);
     console.log("Rendering All List");
 
+    
     var listData = cardList.map(function(e) {
       return (
        // <div id={"fraglist" + e.listid}>
@@ -184,7 +195,8 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
         <button
           id="newListButton4"
           onClick={() => {
-            authenticationService.logOut();
+           authenticationService.logOut();
+          return function() { return <Redirect to="/login" />; }
           }}
         >
           Logout
@@ -251,6 +263,14 @@ const mapStateToProps = (state: any) => {
 
 function mapDispatchToProps(dispatch: any) {
   return {
+
+    reloadUserList:(userid:number)=>{
+      
+      dispatch(
+        boardFacade.listApi.getListByUserApi(userid)
+      );
+    },
+
     createNewListEvent: () => {
       const user = authenticationService.currentUserValue;
       dispatch(

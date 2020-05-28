@@ -9,6 +9,7 @@ const MainRouter=()=>(
     <main>
         <Switch>
             <Route exact path='/' component={Login} />
+            <Route exact path='/login' component={Login} />
             <BoardRouter exact path='/board' component={CardBoard}  />
             <Route path='*' component={NotFound} />
         </Switch>

@@ -40,7 +40,7 @@ class MockRepository
         return this._checkListApi;
     }
 
-    GetData(userId:number=0){
+    GetData(userId:number=0):lm.ListDataArray{
         return getComponentDb();
     }
 
@@ -78,9 +78,9 @@ class NetCoreRepository
         return this._checkListApi;
     }
 
-    GetData(userId:number=0){
-        var response=this.listApi.getListByUserApiInit(userId);
-        return response;
+    GetData(userId:number=0):lm.ListDataArray{
+        var data=this.listApi.getListByUserApiInit(userId);
+        return data;
     }
 
     GetCheckListData(cardId:number){
