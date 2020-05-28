@@ -196,7 +196,6 @@ class CardBoard extends React.Component<CardBoardProps, CardBoardState> {
           id="newListButton4"
           onClick={() => {
            authenticationService.logOut();
-          return function() { return <Redirect to="/login" />; }
           }}
         >
           Logout
