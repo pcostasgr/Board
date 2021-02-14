@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <div>
-      Trello Clone Yeditech 2020 pcostasgr@gmail.com
+      Trello Clone Yeditech { new Date().getFullYear()} pcostasgr@gmail.com
       <hr></hr>
       <table>
         <tbody>
