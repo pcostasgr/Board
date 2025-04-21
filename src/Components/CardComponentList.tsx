@@ -45,6 +45,8 @@ class CardComponentList extends React.PureComponent<
     this.onHandleTitleChange = this.onHandleTitleChange.bind(this);
     this.name = "CardListContainer";
   }
+  private cardListRef = React.createRef<HTMLDivElement>();
+
 
   componentDidMount() {}
 
@@ -56,8 +58,17 @@ class CardComponentList extends React.PureComponent<
     this.setState({ listTitle: event.target.value });
     this.props.updateListTitleEvent(this.props.listId, event.target.value);
   }
+
   flatButtonClick() {
-    const component = document.getElementById('cardList') as HTMLElement;
+
+    console.log("flatButtonClick onButtonClick " );
+    const component = this.cardListRef.current;
+    if (!component) {
+      console.error("Ref is null, the DOM element is not available.");
+      return;
+    }
+
+  
     const rect = component.getBoundingClientRect();
     const offsetWidth = component.offsetWidth;
     const menuPos = {
@@ -102,7 +113,7 @@ class CardComponentList extends React.PureComponent<
       : [];
 
     return (
-      <div
+      <div ref={this.cardListRef}
         onMouseOut={() => {
           this.setState({
             fieldMultiline: false,
