@@ -1,0 +1,222 @@
+.body {
+    background-color: #4286f4;
+}
+
+.list-header {
+    background-color: #4286f4;
+    display:inline-block;
+    margin-right:-1200px;
+}
+
+.card-list-head {
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    width: 320px;
+    background-color: #e1e4ea;
+}
+
+.card-container {
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.cardeditbutton {
+    width: 10px;
+}
+
+.card {
+    width: 330px;
+    position: relative;
+    border-radius: 0px;
+    background-color: #ffffff;
+}
+.card:hover {
+    background-color: #e1e4ea;
+
+}
+
+.simple-header {
+   background-color: #e1e4ea;
+}
+
+.flat_button {
+    color: inherit;
+    width: 30px;
+    height: 30px;
+    background-color: #e1e4ea;
+    text-shadow: -1px 1px #417cb8;
+    border: none;
+}
+.flat_button:hover {
+    background-color: #bac1b4;
+    text-shadow: -1px 1px #ccffff;
+}
+.section.flat_button:active {
+    background-color: inherit;
+    text-shadow: -1px 1px #193047;
+}
+
+.flat_button_z {
+    color: inherit;
+    width: 30px;
+    height: 30px;
+    background-color: inherit;
+    text-shadow: -1px 1px #417cb8;
+    border: none;
+    z-index: 9999;
+    position: absolute;
+    right: 3px;
+    top: 10px;
+}
+.flat_button_z:hover {
+    background-color: #b4b8c1;
+    text-shadow: -1px 1px #ccffff;
+}
+.section.flat_button_z:active {
+    background-color: inherit;
+    text-shadow: -1px 1px #193047;
+}
+
+.bottom-card-section {
+    background-color: #e1e4ea;
+    height: 10px;
+}
+
+.board-header-table-div{
+    width:600;
+    background-color: #4286f4;
+}
+
+.board-header-table {
+    width: 100%;
+    z-index: 0;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    table-layout:auto;
+    border:none;
+    background-color:#4CAF50;
+}
+
+.board-table-row {
+    width:240px
+}
+.board-table-cell {
+    background-color: #4286f4;
+    padding:0 20px;
+    border:0;
+
+}
+.popup-div {
+    z-index: 1;
+    width: 350px;
+    height: 100%;
+    position: absolute;
+    background-color:#ffffff;
+    overflow: scroll;
+}
+
+.disable-buttons {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.list-menu {
+    z-index: 1;
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    background-color: #ffffff;
+}
+
+.card-menu-list {
+    z-index: 1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: absolute;
+    height: 100%;
+    overflow: auto;
+}
+
+.card-menu-list a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.card-menu-list a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.card-menu-list li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.list-header-div-content {
+  display:flex;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 0 auto;
+  background: #f1f1f1;
+  padding: 0 0;
+}
+
+.list-header-save-button {
+    background: green;
+    color:white;
+    border:0;
+    width:60px;
+    height:25px;
+}
+
+.largeCheckbox {
+    width: 0px;
+    height:0px;
+    position: relative;
+}
+
+.card-list-details-horizontal {
+    float: left;
+    margin-left:10px;
+}
+
+.card-list-details-horizontal > *{
+    display: inline-block;
+    margin-left:10px;
+}
+
+.button-mat-text-lower {
+    text-transform: capitalize;
+}
+
+.td-elem-new-list-cell {
+    vertical-align: top;
+    width:300px;
+    height:100%;
+    background-color:#4286f4;;
+}
+
+.div-new-card {
+    position:relative;
+    float: left;
+}
+
+.div-new-list {
+    width:300px;
+    background-color:#4286f4;
+    position: absolute;
+    text-align: left;
+}
+
+.div-new-list-exp {
+    width:300px;
+    background-color:#E6E6FA;
+    position: relative;
+}

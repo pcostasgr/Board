@@ -1,0 +1,39 @@
+import axios from 'axios';
+import {authenticationService} from '../Model/Users';
+
+export default axios.create({
+    baseURL:"https://localhost:5006/"
+});
+
+export const contentTypeHeader={
+    'Content-type':'application/json',
+};
+
+
+export const authHeader=()=> {
+    const currentUser = authenticationService.currentUserValue;
+    if (currentUser && currentUser.token) {
+        return { 'Authorization': `Bearer ${currentUser.token}` };
+    } else {
+        return { 'Authorization':''};
+    }
+
+};
+
+export const authHeaderStr=()=> {
+    const currentUser = authenticationService.currentUserValue;
+    if (currentUser && currentUser.token) {
+        return  `Bearer ${currentUser.token}` ;
+    } else {
+        return '';
+    }
+
+};
+
+export const fullHeader=()=>{
+    return {
+        'Content-type':'application/json',
+        'Authorization':authHeaderStr(),
+	'crossdomain':'true'
+    }
+}
